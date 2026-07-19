@@ -1,0 +1,14 @@
+
+
+ - Las tareas puramente mecánicas (retirada de harnesses temporales, comentarios de depuración, logs de validación, etc.)
+podrán realizarse directamente por el desarrollador cuando no afecten a la arquitectura ni al contrato del latido.
+
+- Si la responsabilidad arquitectónica ya está decidida
+y el objetivo consiste únicamente en integrar
+o reutilizar infraestructura existente,
+
+→ auditar directamente con Butch.
+
+Solo acudir a Jack cuando exista una decisión
+arquitectónica abierta o varias alternativas de diseño.
+
