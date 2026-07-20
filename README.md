@@ -1,189 +1,51 @@
-# 🧪 MetalLabs Framework - An experimental laboratory for AI-assisted software engineering workflows.
+# EXP-002: Asset Trace Utility
 
-**Language**
+This is an MVP application designed to maintain a JSON-based catalog of game assets. It specifically follows the philosophy of "doing one thing and doing it well." It tracks new, modified, and missing assets based on SHA-256 hashes without relying on external dependencies or complex architectures.
 
-- 🇬🇧 English (Primary)
-- 🇪🇸 Español
+## Requirements
 
----
+- Python 3.12+
+- `tkinter` support built into the Python installation.
 
-# 🧪 MetalLabs Framework
+## Usage
 
-> **An experimental laboratory for AI-assisted software engineering.**
+To start the utility:
 
----
-
-## What is MetalLabs Framework?
-
-MetalLabs Framework is my personal laboratory for researching, documenting and refining software development workflows in the age of AI.
-
-This repository is not intended to prove that one model is better than another, nor to promote a definitive methodology.
-
-Its purpose is much simpler.
-
-While building real software projects, I document the questions, experiments, successes, failures and observations that emerge along the way. Some ideas survive. Others are discarded. Every experiment teaches something.
-
-If these notes happen to help another developer improve their own workflow, that's a welcome side effect—not the primary objective.
-
----
-
-## Why this project exists
-
-The arrival of AI has changed my own development process far more than I initially expected.
-
-Over time I noticed that less effort was being invested in writing code itself, and more effort was being invested in understanding problems, documenting architecture, defining constraints and transferring context.
-
-That observation led to a simple question:
-
-> **Can software engineering workflows evolve to collaborate effectively with AI without sacrificing architecture, maintainability or human judgement?**
-
-MetalLabs Framework exists to explore that question.
-
----
-
-## What you will find here
-
-This repository documents practical experiments around topics such as:
-
-* AI-assisted development workflows
-* Architecture and technical decision making
-* Context engineering
-* Agent collaboration
-* Prompt and context templates
-* Software documentation
-* Engineering experiments
-* Lessons learned while developing real projects
-
-Most of the material is intentionally lightweight and based on practical experience rather than theoretical research.
-
----
-
-## What you will **not** find here
-
-MetalLabs Framework is **not**:
-
-* a benchmark of AI models;
-* a collection of "magic prompts";
-* a framework for replacing software developers;
-* a universal methodology that everyone should follow.
-
-Every project, every team and every developer work under different constraints.
-
-The goal is not to provide answers.
-
-The goal is to document observations.
-
----
-
-## Principles
-
-A few ideas currently shape this laboratory.
-
-### Real projects first
-
-Ideas are only interesting once they survive contact with a real project.
-
-Experiments should emerge from genuine engineering problems, not from artificial demonstrations.
-
-### Document before implementing
-
-Architecture, constraints and decisions deserve to exist before code.
-
-Writing often exposes problems long before the compiler does.
-
-### Reproducibility matters
-
-Whenever possible, experiments should be reproducible, documented and auditable.
-
-Results should depend as little as possible on a specific AI provider or model.
-
-### Human judgement remains essential
-
-AI can accelerate implementation.
-
-It should never replace architectural responsibility, critical thinking or technical review.
-
----
-
-## About the author
-
-I am **not** a software engineer by profession.
-
-I am documenting my own learning process while building real software projects.
-
-Nothing in this repository should be interpreted as an industry standard or a definitive guide.
-
-These are simply the conclusions I have reached under my own circumstances, with my own tools and my own constraints.
-
-I encourage every reader to question them, adapt them and draw their own conclusions.
-
----
-
-## Current status
-
-🧪 **Experimental**
-
-MetalLabs Framework is continuously evolving.
-
-Many ideas will change.
-
-Some will disappear.
-
-Others will become part of the workflow.
-
-That evolution is part of the project itself.
-
----
-
-## Related projects
-
-Although MetalLabs Framework is independent, many of the ideas documented here are explored while developing real software projects.
-
-Those projects act as experimental vehicles where workflows, methodologies and engineering practices can be validated under real conditions.
-
----
-
-## Philosophy
-
-> *Document the process, not the hype.*
-
-Technology changes.
-
-Models come and go.
-
-Good engineering practices should outlive the tools that inspired them.
-
-If that happens, then the experiment has been worthwhile.
-
-## Repository Structure
-
-The English documentation is the primary source of truth.
-
-The Spanish documentation is maintained as a translated version whenever possible.
-
-```text
-.
-├── en
-│   ├── Framework
-│   ├── Chaos Labs
-│   ├── Agent Dossiers
-│   ├── Tools
-│   └── Articles
-│
-└── es
-    ├── Framework
-    ├── Chaos Labs
-    ├── Agent Dossiers
-    ├── Tools
-    └── Articles
+```bash
+python main.py
 ```
 
-### Folder Overview
+### Steps:
+1. **Open Project**: Select the root folder of your project. The tool expects folders like `assets/` and `raw-textures/` to exist relative to this root. If this is a new project, it will start a new catalog. If an `asset_catalog.json` exists in the root, it will be loaded.
+2. **Scan**: Searches through the `scan_roots` (e.g. `assets`, `raw-textures`) and evaluates the `scan_status` of the assets based on SHA-256 hashes.
+    - `NEW`: File encountered for the first time.
+    - `OK`: File hasn't changed.
+    - `MODIFIED`: File changed.
+    - `MISSING`: Tracked file is missing from disk.
+3. **Save**: Persists changes manually made in the Inspector and the scan results back to `asset_catalog.json` in the project root.
 
-| Folder | Purpose |
-|---------|---------|
-| **Framework** | Core principles, methodology and reusable documentation. |
-| **Chaos Labs** | Experimental protocols, studies and reproducible experiments. |
-| **Agent Dossiers** | Long-term observations, strengths, weaknesses and behavioural notes for each AI agent. |
-| **Tools** | Utilities developed to support the workflow. |
-| **Articles** | Essays, reflections and technical write-ups derived from the project. |
+## Testing
+
+Run tests with standard `unittest`:
+
+```bash
+python -m unittest discover tests
+```
+
+## Design Decisions
+
+- **Pure Python standard library**: The app only uses the built-in libraries (`tkinter` for UI, `json` for persistence, `hashlib` for hashing, `dataclasses` for models).
+- **Separation of Concerns**: Split code cleanly into models, catalog (in-memory manager), scanner (I/O logic), persistence (JSON dumping/loading), and UI.
+- **Resilient Models**: Manual inputs are preserved during scans. `asset_catalog.json` dictates the single source of truth.
+- **Excluded Items**: `.git`, `.godot`, hidden files (`.*`), `__pycache__`, symlinks, and the `asset_catalog.json` file itself are intentionally bypassed to avoid recursive headaches and unnecessary tracing.
+
+## Future Ideas (Out of Scope)
+
+The following items were identified but explicitly rejected for this MVP:
+
+- Configuration UI to manage and edit `scan_roots` and valid folders.
+- Management of a robust `Sources` list (creating Source templates such as "Itch.io", "Humble Bundle") with specific licenses.
+- Automated cleanup/archiving of `MISSING` assets.
+- Thumbnails/preview panel inside the Inspector.
+- Advanced filtering capabilities (e.g., filtering by Tag or Asset Type).
+- Integration to move/rename tracked assets without generating duplicate logs.
