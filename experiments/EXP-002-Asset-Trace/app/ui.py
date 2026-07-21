@@ -12,10 +12,11 @@ from app.constants import AUDIT_STATES
 from app.preview import AssetPreviewPanel
 from app.source_panel import SourcePanel
 
+
 class Application(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("EXP-002: Asset Trace Utility")
+        self.title("Asset Trace")
         self.geometry("1024x768")
         self.manager: Optional[CatalogManager] = None
         self.current_asset = None
@@ -33,13 +34,21 @@ class Application(tk.Tk):
 
         project_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Project", menu=project_menu)
-        project_menu.add_command(label="Sources...", command=self._open_sources_dialog, state=tk.DISABLED)
+        project_menu.add_command(
+            label="Sources...", command=self._open_sources_dialog, state=tk.DISABLED
+        )
         self.project_menu = project_menu
 
-        ttk.Button(toolbar_frame, text="Open Project", command=self._open_project).pack(side=tk.LEFT, padx=2)
-        self.scan_btn = ttk.Button(toolbar_frame, text="Scan", command=self._scan, state=tk.DISABLED)
+        ttk.Button(toolbar_frame, text="Open Project", command=self._open_project).pack(
+            side=tk.LEFT, padx=2
+        )
+        self.scan_btn = ttk.Button(
+            toolbar_frame, text="Scan", command=self._scan, state=tk.DISABLED
+        )
         self.scan_btn.pack(side=tk.LEFT, padx=2)
-        self.save_btn = ttk.Button(toolbar_frame, text="Save", command=self._save, state=tk.DISABLED)
+        self.save_btn = ttk.Button(
+            toolbar_frame, text="Save", command=self._save, state=tk.DISABLED
+        )
         self.save_btn.pack(side=tk.LEFT, padx=2)
 
         ttk.Separator(self, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=2)
@@ -51,7 +60,9 @@ class Application(tk.Tk):
         ttk.Label(filter_frame, text="Search:").pack(side=tk.LEFT, padx=2)
         self.search_var = tk.StringVar()
         self.search_var.trace_add("write", lambda *args: self._apply_filters())
-        ttk.Entry(filter_frame, textvariable=self.search_var, width=30).pack(side=tk.LEFT, padx=2)
+        ttk.Entry(filter_frame, textvariable=self.search_var, width=30).pack(
+            side=tk.LEFT, padx=2
+        )
 
         ttk.Label(filter_frame, text="Status:").pack(side=tk.LEFT, padx=(10, 2))
         self.status_var = tk.StringVar(value="ALL")
@@ -59,8 +70,11 @@ class Application(tk.Tk):
         statuses = ["ALL", "NEW", "OK", "MODIFIED", "MISSING"]
         for status in statuses:
             ttk.Radiobutton(
-                filter_frame, text=status, value=status,
-                variable=self.status_var, command=self._apply_filters
+                filter_frame,
+                text=status,
+                value=status,
+                variable=self.status_var,
+                command=self._apply_filters,
             ).pack(side=tk.LEFT, padx=2)
 
         ttk.Separator(self, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=2)
@@ -83,13 +97,15 @@ class Application(tk.Tk):
         self.tree.column("relative_path", width=250)
         self.tree.column("scan_status", width=80)
 
-        scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, command=self.tree.yview)
+        scrollbar = ttk.Scrollbar(
+            list_frame, orient=tk.VERTICAL, command=self.tree.yview
+        )
         self.tree.configure(yscroll=scrollbar.set)
 
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        self.tree.bind('<<TreeviewSelect>>', self._on_select_asset)
+        self.tree.bind("<<TreeviewSelect>>", self._on_select_asset)
 
         # Right: Inspector
         inspector_frame = ttk.Frame(main_paned, padding=5)
@@ -106,49 +122,80 @@ class Application(tk.Tk):
             ("Type", "asset_type", False),
             ("Scan Status", "scan_status", True),
             ("Audit State", "audit_state", False),
-            ("Tags", "tags", False), # Will handle conversion to list
+            ("Tags", "tags", False),  # Will handle conversion to list
         ]
 
         self.inspector_vars = {}
         row = 0
         for label_text, attr, read_only in self.fields:
-            ttk.Label(inspector_frame, text=label_text).grid(row=row, column=0, sticky=tk.W, pady=2)
+            ttk.Label(inspector_frame, text=label_text).grid(
+                row=row, column=0, sticky=tk.W, pady=2
+            )
             var = tk.StringVar()
 
             if attr == "audit_state":
-                self.audit_state_combo = ttk.Combobox(inspector_frame, textvariable=var, width=38, state="readonly", values=AUDIT_STATES)
-                self.audit_state_combo.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
-                self.audit_state_combo.bind("<<ComboboxSelected>>", lambda e: self._on_field_edit("audit_state", var))
-                var.trace_add("write", lambda *args, a=attr, v=var: self._on_field_edit(a, v))
+                self.audit_state_combo = ttk.Combobox(
+                    inspector_frame,
+                    textvariable=var,
+                    width=38,
+                    state="readonly",
+                    values=AUDIT_STATES,
+                )
+                self.audit_state_combo.grid(
+                    row=row, column=1, sticky=tk.EW, pady=2, padx=5
+                )
+                self.audit_state_combo.bind(
+                    "<<ComboboxSelected>>",
+                    lambda e: self._on_field_edit("audit_state", var),
+                )
+                var.trace_add(
+                    "write", lambda *args, a=attr, v=var: self._on_field_edit(a, v)
+                )
             elif read_only:
-                entry = ttk.Entry(inspector_frame, textvariable=var, state="readonly", width=40)
+                entry = ttk.Entry(
+                    inspector_frame, textvariable=var, state="readonly", width=40
+                )
                 entry.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
             else:
                 entry = ttk.Entry(inspector_frame, textvariable=var, width=40)
-                var.trace_add("write", lambda *args, a=attr, v=var: self._on_field_edit(a, v))
+                var.trace_add(
+                    "write", lambda *args, a=attr, v=var: self._on_field_edit(a, v)
+                )
                 entry.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
 
             self.inspector_vars[attr] = var
             row += 1
 
-        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
+        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(
+            row=row, column=0, columnspan=2, sticky=tk.EW, pady=10
+        )
         row += 1
 
         # Embedded Source Panel
-        self.source_panel = SourcePanel(inspector_frame, None, on_source_changed=self._on_source_assigned_to_asset)
-        self.source_panel.grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=2, padx=5)
+        self.source_panel = SourcePanel(
+            inspector_frame, None, on_source_changed=self._on_source_assigned_to_asset
+        )
+        self.source_panel.grid(
+            row=row, column=0, columnspan=2, sticky=tk.EW, pady=2, padx=5
+        )
         row += 1
 
-        ttk.Label(inspector_frame, text="Notes").grid(row=row, column=0, sticky=tk.NW, pady=2)
+        ttk.Label(inspector_frame, text="Notes").grid(
+            row=row, column=0, sticky=tk.NW, pady=2
+        )
         self.notes_text = tk.Text(inspector_frame, height=5, width=40)
         self.notes_text.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
         self.notes_text.bind("<<Modified>>", self._on_notes_edit)
         row += 1
 
-        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
+        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(
+            row=row, column=0, columnspan=2, sticky=tk.EW, pady=10
+        )
         row += 1
 
-        ttk.Label(inspector_frame, text="Preview").grid(row=row, column=0, sticky=tk.NW, pady=2)
+        ttk.Label(inspector_frame, text="Preview").grid(
+            row=row, column=0, sticky=tk.NW, pady=2
+        )
 
         # Will be initialized after project load, or we can instantiate empty
         self.preview_panel = None
@@ -157,11 +204,55 @@ class Application(tk.Tk):
 
         inspector_frame.columnconfigure(1, weight=1)
 
+        # QW-005: Welcome screen — shown when no project is open
+        self.welcome_frame = ttk.Frame(main_paned)
+        self.welcome_label = ttk.Label(
+            self.welcome_frame,
+            text='No project open.\nUse "Open Project" to begin.',
+            justify=tk.CENTER,
+            anchor=tk.CENTER,
+        )
+        self.welcome_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        main_paned.add(self.welcome_frame, weight=3)
+
         # Handle window close
         self.protocol("WM_DELETE_WINDOW", self._on_closing)
 
+        # QW-005: show welcome on startup
+        self._show_welcome()
+
+    # --- QW-005 ---
+
+    def _show_welcome(self):
+        """Show the welcome screen and hide list + inspector panes."""
+        main_paned = self.welcome_frame.master
+        for pane in main_paned.panes():
+            widget = self.nametowidget(pane)
+            if widget is not self.welcome_frame:
+                main_paned.forget(widget)
+        if str(self.welcome_frame) not in [str(p) for p in main_paned.panes()]:
+            main_paned.add(self.welcome_frame, weight=3)
+
+    def _hide_welcome(self):
+        """Hide the welcome screen and restore list + inspector panes."""
+        main_paned = self.welcome_frame.master
+        pane_names = [str(p) for p in main_paned.panes()]
+
+        if str(self.welcome_frame) in pane_names:
+            main_paned.forget(self.welcome_frame)
+
+        list_frame = self.tree.master
+        inspector_frame = self.source_panel.master
+
+        if str(list_frame) not in [str(p) for p in main_paned.panes()]:
+            main_paned.add(list_frame, weight=2)
+        if str(inspector_frame) not in [str(p) for p in main_paned.panes()]:
+            main_paned.add(inspector_frame, weight=1)
+
+    # --- end QW-005 ---
+
     def _on_closing(self):
-        if hasattr(self, 'preview_panel') and self.preview_panel:
+        if hasattr(self, "preview_panel") and self.preview_panel:
             self.preview_panel.cleanup()
         self.destroy()
 
@@ -181,6 +272,7 @@ class Application(tk.Tk):
         self.save_btn.config(state=tk.NORMAL)
         self.project_menu.entryconfig("Sources...", state=tk.NORMAL)
 
+        self._hide_welcome()  # QW-005
         self.source_panel.manager = self.manager
 
         # Init preview panel
@@ -267,14 +359,18 @@ class Application(tk.Tk):
 
             # Apply text search (name or path)
             if search_term:
-                if search_term not in asset.display_name.lower() and search_term not in asset.relative_path.lower():
+                if (
+                    search_term not in asset.display_name.lower()
+                    and search_term not in asset.relative_path.lower()
+                ):
                     continue
 
-            self.tree.insert("", tk.END, iid=asset.relative_path, values=(
-                asset.display_name,
-                asset.relative_path,
-                asset.scan_status
-            ))
+            self.tree.insert(
+                "",
+                tk.END,
+                iid=asset.relative_path,
+                values=(asset.display_name, asset.relative_path, asset.scan_status),
+            )
 
     def _on_select_asset(self, event):
         selected = self.tree.selection()
@@ -300,10 +396,10 @@ class Application(tk.Tk):
 
             # Display current observed hash and size if available
             if attr == "sha256":
-                current_sha = getattr(self.current_asset, '_current_sha256', "")
+                current_sha = getattr(self.current_asset, "_current_sha256", "")
                 val = current_sha if current_sha else val
             elif attr == "file_size":
-                current_size = getattr(self.current_asset, '_current_file_size', 0)
+                current_size = getattr(self.current_asset, "_current_file_size", 0)
                 val = current_size if current_size > 0 else val
             elif attr == "tags":
                 val = ", ".join(val)
@@ -315,9 +411,9 @@ class Application(tk.Tk):
 
         self.notes_text.delete("1.0", tk.END)
         self.notes_text.insert(tk.END, self.current_asset.notes)
-        self.notes_text.edit_modified(False) # reset modified flag
+        self.notes_text.edit_modified(False)  # reset modified flag
 
-        if hasattr(self, 'preview_panel') and self.preview_panel:
+        if hasattr(self, "preview_panel") and self.preview_panel:
             self.preview_panel.show_preview(self.current_asset)
 
     def _on_field_edit(self, attr_name, var):
@@ -359,7 +455,7 @@ class Application(tk.Tk):
 
         panel = SourcePanel(dialog, self.manager)
         panel.pack(fill=tk.BOTH, expand=True)
-        panel.set_source("") # Initialize the list
+        panel.set_source("")  # Initialize the list
         # We need to refresh in case source changes happen here and we close
 
         def on_close():
@@ -367,6 +463,7 @@ class Application(tk.Tk):
             dialog.destroy()
 
         dialog.protocol("WM_DELETE_WINDOW", on_close)
+
 
 if __name__ == "__main__":
     app = Application()
