@@ -7,6 +7,8 @@ This is an MVP application designed to maintain a JSON-based catalog of game ass
 - Python 3.12+
 - `tkinter` support built into the Python installation.
 - `Pillow` for image preview capabilities.
+- `pygame` for audio playback.
+- `PyMuPDF` for PDF receipt rendering.
 
 ## Usage
 
@@ -18,36 +20,40 @@ python main.py
 ```
 
 ### Steps:
-1. **Open Project**: Select the root folder of your project. The tool expects folders like `assets/` and `raw-textures/` to exist relative to this root. If this is a new project, it will start a new catalog. If an `asset_catalog.json` exists in the root, it will be loaded.
-2. **Scan**: Searches through the `scan_roots` (e.g. `assets`, `raw-textures`) and evaluates the `scan_status` of the assets based on SHA-256 hashes.
+1. **Open Project**: Select the root folder of your project. The tool manages a hidden `.metallabs` folder. Data is persisted in `.metallabs/asset_catalog.json` and `.metallabs/sources.json`, and files attached as receipts are placed in `.metallabs/receipts/`.
+2. **Scan**: Searches through configured `scan_roots` (e.g. `assets`, `raw-textures`). Only supported assets are indexed based on a strict whitelist of extensions (`png`, `jpg`, `jpeg`, `webp`, `gif`, `ogg`, `wav`, `mp3`, `ttf`, `otf`). Assets are marked as:
     - `NEW`: File encountered for the first time.
     - `OK`: File hasn't changed.
     - `MODIFIED`: File changed.
     - `MISSING`: Tracked file is missing from disk.
-3. **Save**: Persists changes manually made in the Inspector and the scan results back to `asset_catalog.json` in the project root.
+3. **Review & Organize**:
+    - **Audit States**: Assets can be labeled as `PLACEHOLDER`, `DORMANT`, or `PRODUCTION`.
+    - **Sources**: Manage global acquisition sources via `Project -> Sources...` or create/assign them inline from the Asset Inspector. Support associating receipts (PDF/images) with Source records.
+    - **Preview**: Select an image or audio asset to view a rendered thumbnail or play playback controls directly inside the inspector. Sources with attached receipts will display a receipt preview thumbnail as well.
+4. **Save**: Persists changes, newly created Sources, and hash differences to the respective JSON files inside `.metallabs/`.
 
 ## Testing
 
 Run tests with standard `unittest`:
 
 ```bash
-python -m unittest discover tests
+python -m unittest discover test/
 ```
 
 ## Design Decisions
 
-- **Pure Python standard library**: The app only uses the built-in libraries (`tkinter` for UI, `json` for persistence, `hashlib` for hashing, `dataclasses` for models).
-- **Separation of Concerns**: Split code cleanly into models, catalog (in-memory manager), scanner (I/O logic), persistence (JSON dumping/loading), and UI.
-- **Resilient Models**: Manual inputs are preserved during scans. `asset_catalog.json` dictates the single source of truth.
-- **Excluded Items**: `.git`, `.godot`, hidden files (`.*`), `__pycache__`, symlinks, and the `asset_catalog.json` file itself are intentionally bypassed to avoid recursive headaches and unnecessary tracing.
+- **Restricted Tooling**: Only standard library components and 3 approved external packages (`Pillow`, `pygame`, `PyMuPDF`) are used.
+- **Separation of Concerns**: Splitting code across logical domain models, persistence layers, and UI components cleanly.
+- **Strict Hash Semantic Pipeline**: Hash values (`sha256`) observed during scans are kept separate from the persisted baseline until a full transaction Save occurs.
+- **Whitelist Enforcement Policy**: Only specific whitelisted asset extensions are processed and hashed, eliminating clutter from `.json`, `.gd`, `.md`, or hidden project files.
 
 ## Future Ideas (Out of Scope)
 
-The following items were identified but explicitly rejected for this MVP:
+The following items were identified but explicitly rejected for this Sprint:
 
-- Configuration UI to manage and edit `scan_roots` and valid folders.
-- Management of a robust `Sources` list (creating Source templates such as "Itch.io", "Humble Bundle") with specific licenses.
-- Automated cleanup/archiving of `MISSING` assets.
-- Thumbnails/preview panel inside the Inspector.
-- Advanced filtering capabilities (e.g., filtering by Tag or Asset Type).
-- Integration to move/rename tracked assets without generating duplicate logs.
+- Waveform generation or thumbnail generation caches.
+- Bulk Asset editing or multi-Asset source assignment.
+- Drag-and-drop support.
+- Advanced database/ORM migration.
+- Automatic metadata and license extraction/validation.
+- Configuration UI to manage `scan_roots`.

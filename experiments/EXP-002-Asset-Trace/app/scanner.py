@@ -4,6 +4,7 @@ from typing import Set
 from app.catalog import CatalogManager
 from app.models import Asset
 from app.hashing import calculate_sha256
+from app.constants import SUPPORTED_ASSET_EXTENSIONS
 
 class Scanner:
     def __init__(self, manager: CatalogManager):
@@ -49,6 +50,16 @@ class Scanner:
         # Temporarily mark everything as MISSING
         self.manager.mark_all_missing()
 
+        # Remove unsupported legacy assets
+        unsupported_paths = []
+        for asset in self.manager.catalog.assets:
+            ext = os.path.splitext(asset.relative_path)[1].lower()
+            if ext not in SUPPORTED_ASSET_EXTENSIONS:
+                unsupported_paths.append(asset.relative_path)
+
+        for path in unsupported_paths:
+            self.manager.remove_asset_by_path(path)
+
         seen_paths: Set[str] = set()
 
         for root_dir in valid_roots:
@@ -62,6 +73,10 @@ class Scanner:
 
                     full_path = os.path.join(root, file)
                     if os.path.islink(full_path) or not os.path.isfile(full_path):
+                        continue
+
+                    ext = os.path.splitext(file)[1].lower()
+                    if ext not in SUPPORTED_ASSET_EXTENSIONS:
                         continue
 
                     rel_path = os.path.relpath(full_path, project_root)
