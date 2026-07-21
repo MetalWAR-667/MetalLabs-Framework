@@ -112,15 +112,15 @@ class Application(tk.Tk):
         # Asset Fields mapping
         # Label text, attr_name, read_only
         self.fields = [
-            ("Asset UUID", "asset_uuid", True),
+            # QW-004: asset_uuid removed from Inspector (remains in model and JSON)
             ("Name", "display_name", False),
             ("Relative Path", "relative_path", True),
-            ("SHA-256", "sha256", True),
-            ("File Size", "file_size", True),
-            ("Type", "asset_type", False),
+            ("SHA-256", "sha256", True),       # QW-004: displayed truncated, Copy button
+            ("File Size", "file_size", True),  # QW-004: displayed as human-readable
+            ("Type", "asset_type", True),      # QW-004: converted to read-only
             ("Scan Status", "scan_status", True),
             ("Audit State", "audit_state", False),
-            ("Tags", "tags", False), # Will handle conversion to list
+            ("Tags", "tags", False),
         ]
 
         self.inspector_vars = {}
@@ -134,6 +134,14 @@ class Application(tk.Tk):
                 self.audit_state_combo.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
                 self.audit_state_combo.bind("<<ComboboxSelected>>", lambda e: self._on_field_edit("audit_state", var))
                 var.trace_add("write", lambda *args, a=attr, v=var: self._on_field_edit(a, v))
+            elif attr == "sha256":  # QW-004: truncated display + Copy button
+                sha_frame = ttk.Frame(inspector_frame)
+                sha_frame.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
+                sha_frame.columnconfigure(0, weight=1)
+                sha_entry = ttk.Entry(sha_frame, textvariable=var, state="readonly", width=20)
+                sha_entry.grid(row=0, column=0, sticky=tk.EW)
+                self.copy_sha_btn = ttk.Button(sha_frame, text="Copy", width=6, command=self._copy_sha)
+                self.copy_sha_btn.grid(row=0, column=1, padx=(4, 0))
             elif read_only:
                 entry = ttk.Entry(inspector_frame, textvariable=var, state="readonly", width=40)
                 entry.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
@@ -248,6 +256,33 @@ class Application(tk.Tk):
         )
 
     # --- end QW-001 ---
+
+    # --- QW-004 ---
+
+    def _format_file_size(self, size: int) -> str:
+        """Returns a human-readable file size string."""
+        if size < 1024:
+            return f"{size} B"
+        elif size < 1024 * 1024:
+            return f"{size / 1024:.1f} KB"
+        else:
+            return f"{size / (1024 * 1024):.1f} MB"
+
+    def _get_full_sha(self) -> str:
+        """Returns the most current SHA-256 hash for the selected asset."""
+        if not self.current_asset:
+            return ""
+        current = getattr(self.current_asset, '_current_sha256', "")
+        return current if current else self.current_asset.sha256
+
+    def _copy_sha(self):
+        """Copies the full SHA-256 hash to the clipboard."""
+        full_sha = self._get_full_sha()
+        if full_sha:
+            self.clipboard_clear()
+            self.clipboard_append(full_sha)
+
+    # --- end QW-004 ---
 
     def _on_closing(self):
         if hasattr(self, 'preview_panel') and self.preview_panel:
@@ -402,17 +437,23 @@ class Application(tk.Tk):
         for attr, var in self.inspector_vars.items():
             val = getattr(self.current_asset, attr)
 
-            # Display current observed hash and size if available
-            if attr == "sha256":
-                current_sha = getattr(self.current_asset, '_current_sha256', "")
-                val = current_sha if current_sha else val
-            elif attr == "file_size":
+            if attr == "sha256":  # QW-004: show truncated, manage Copy button state
+                full_sha = self._get_full_sha()
+                if full_sha:
+                    var.set(full_sha[:12] + "...")
+                    self.copy_sha_btn.config(state=tk.NORMAL)
+                else:
+                    var.set("—")
+                    self.copy_sha_btn.config(state=tk.DISABLED)
+                continue
+            elif attr == "file_size":  # QW-004: human-readable size
                 current_size = getattr(self.current_asset, '_current_file_size', 0)
-                val = current_size if current_size > 0 else val
+                raw_size = current_size if current_size > 0 else val
+                var.set(self._format_file_size(raw_size))
+                continue
             elif attr == "tags":
                 val = ", ".join(val)
 
-            # Temporarily disable tracing by blocking writes or just let it fire (might cause minor overhead but safe)
             var.set(str(val))
 
         self.source_panel.set_source(self.current_asset.source_uuid)
