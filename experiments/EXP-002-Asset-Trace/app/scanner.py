@@ -12,14 +12,21 @@ class Scanner:
     def should_ignore(self, name: str) -> bool:
         """
         Check if a file or directory should be ignored.
-        Ignores: hidden files/folders (starts with .), __pycache__, asset_catalog.json
+        Ignores: .git, .godot, .import, __pycache__, .metallabs,
+                 *.import, *.uid, asset_catalog.json, sources.json, hidden files/folders
         """
+        if name in ('.git', '.godot', '.import', '.metallabs', '__pycache__'):
+            return True
+
+        if name.endswith('.import') or name.endswith('.uid'):
+            return True
+
+        if name in ('asset_catalog.json', 'sources.json'):
+            return True
+
         if name.startswith('.'):
             return True
-        if name == '__pycache__':
-            return True
-        if name == 'asset_catalog.json':
-            return True
+
         return False
 
     def scan(self) -> None:
@@ -71,13 +78,17 @@ class Scanner:
         existing_asset = self.manager.get_asset_by_path(rel_path)
 
         if existing_asset:
-            # Check modification
-            if existing_asset.sha256 == sha256:
+            # Save the current observed hash and size in temporary fields
+            existing_asset._current_sha256 = sha256
+            existing_asset._current_file_size = file_size
+
+            if not existing_asset.sha256:
+                # If persisted hash is empty, it's still NEW across scans without save
+                existing_asset.scan_status = "NEW"
+            elif existing_asset.sha256 == sha256:
                 existing_asset.scan_status = "OK"
             else:
                 existing_asset.scan_status = "MODIFIED"
-                existing_asset.sha256 = sha256
-                existing_asset.file_size = file_size
 
             self.manager.add_or_update_asset(existing_asset)
         else:
@@ -91,9 +102,11 @@ class Scanner:
                 asset_uuid=str(uuid.uuid4()),
                 display_name=display_name,
                 relative_path=rel_path,
-                sha256=sha256,
-                file_size=file_size,
+                sha256="",  # Don't persist hash until save
+                file_size=0,
                 asset_type=asset_type,
                 scan_status="NEW"
             )
+            new_asset._current_sha256 = sha256
+            new_asset._current_file_size = file_size
             self.manager.add_or_update_asset(new_asset)
