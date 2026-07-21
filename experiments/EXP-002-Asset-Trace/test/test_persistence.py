@@ -37,5 +37,24 @@ class TestPersistenceAndCatalog(unittest.TestCase):
         self.assertEqual(len(manager2.catalog.assets), 1)
         self.assertEqual(manager2.catalog.assets[0].display_name, "test")
 
+    def test_source_attribution_fields(self):
+        from app.models import Source
+        manager = CatalogManager(self.project_root)
+        manager.load()
+        source = Source(
+            source_uuid="src-1",
+            requires_attribution=True,
+            attribution_text="Please credit me."
+        )
+        manager.add_or_update_source(source)
+        manager.save()
+
+        manager2 = CatalogManager(self.project_root)
+        self.assertTrue(manager2.load())
+        sources = manager2.get_sources()
+        self.assertEqual(len(sources), 1)
+        self.assertTrue(sources[0].requires_attribution)
+        self.assertEqual(sources[0].attribution_text, "Please credit me.")
+
 if __name__ == '__main__':
     unittest.main()

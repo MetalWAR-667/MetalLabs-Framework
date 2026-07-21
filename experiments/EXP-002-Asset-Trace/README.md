@@ -6,12 +6,14 @@ This is an MVP application designed to maintain a JSON-based catalog of game ass
 
 - Python 3.12+
 - `tkinter` support built into the Python installation.
+- `Pillow` for image preview capabilities.
 
 ## Usage
 
-To start the utility:
+To start the utility, ensure requirements are installed:
 
 ```bash
+pip install -r requirements.txt
 python main.py
 ```
 

@@ -45,6 +45,9 @@ class TestScanner(unittest.TestCase):
         scanner = Scanner(self.manager)
         scanner.scan()
 
+        # We must save so the NEW item gets persisted hash, changing to OK
+        self.manager.save()
+
         # Change file1
         with open(self.file1, "w") as f:
             f.write("changed_content")
@@ -86,6 +89,65 @@ class TestScanner(unittest.TestCase):
         scanner = Scanner(self.manager)
         with self.assertRaises(ValueError):
             scanner.scan()
+
+    def test_repeated_scans_without_save(self):
+        scanner = Scanner(self.manager)
+        scanner.scan()
+
+        assets = self.manager.get_assets()
+        self.assertEqual(assets[0].scan_status, "NEW")
+
+        # Scan again without saving
+        scanner.scan()
+        assets = self.manager.get_assets()
+        self.assertEqual(assets[0].scan_status, "NEW")
+
+        self.manager.save()
+        scanner.scan()
+        assets = self.manager.get_assets()
+        self.assertEqual(assets[0].scan_status, "OK")
+
+        # Change file
+        with open(self.file1, "w") as f:
+            f.write("modified_content_here")
+
+        scanner.scan()
+        assets = self.manager.get_assets()
+        self.assertEqual(assets[0].scan_status, "MODIFIED")
+
+        # Scan again without saving
+        scanner.scan()
+        assets = self.manager.get_assets()
+        self.assertEqual(assets[0].scan_status, "MODIFIED")
+
+
+    def test_stable_uuid_and_metadata_across_transitions(self):
+        scanner = Scanner(self.manager)
+        scanner.scan()
+
+        assets = self.manager.get_assets()
+        asset = assets[0]
+        original_uuid = asset.asset_uuid
+
+        # Manually edit metadata
+        asset.tags = ["test_tag"]
+        asset.notes = "test note"
+
+        self.manager.save()
+
+        # Change file to trigger modification
+        with open(self.file1, "w") as f:
+            f.write("changed_for_metadata_test")
+
+        scanner.scan()
+        assets = self.manager.get_assets()
+        asset = assets[0]
+
+        # UUID and metadata should be stable
+        self.assertEqual(asset.asset_uuid, original_uuid)
+        self.assertEqual(asset.tags, ["test_tag"])
+        self.assertEqual(asset.notes, "test note")
+        self.assertEqual(asset.scan_status, "MODIFIED")
 
 if __name__ == '__main__':
     unittest.main()
