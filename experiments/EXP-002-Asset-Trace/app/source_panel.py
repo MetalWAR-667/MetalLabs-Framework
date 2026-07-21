@@ -21,18 +21,19 @@ except ImportError:
 from app.models import Source
 
 class SourcePanel(ttk.Frame):
-    def __init__(self, master, manager, on_source_changed=None):
+    def __init__(self, master, manager, on_source_changed=None, on_manage_sources=None):
         super().__init__(master)
         self.manager = manager
         self.on_source_changed = on_source_changed
+        self.on_manage_sources = on_manage_sources  # V2-002: callback to open global Sources dialog
         self.current_source = None
 
         self._build_ui()
 
     def _build_ui(self):
-        # Header/Selector
+        # Header/Selector — V2-002: two-row layout with action bar
         header_frame = ttk.Frame(self)
-        header_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
+        header_frame.pack(side=tk.TOP, fill=tk.X, pady=(5, 2))
 
         ttk.Label(header_frame, text="Source:").pack(side=tk.LEFT, padx=(0, 5))
 
@@ -41,12 +42,20 @@ class SourcePanel(ttk.Frame):
         self.source_combo.pack(side=tk.LEFT, padx=5, fill=tk.X, expand=True)
         self.source_combo.bind("<<ComboboxSelected>>", self._on_combo_selected)
 
-        ttk.Button(header_frame, text="New Source", command=self._create_source).pack(side=tk.LEFT, padx=5)
-
         self.usage_label = ttk.Label(header_frame, text="")
         self.usage_label.pack(side=tk.LEFT, padx=5)
 
-        ttk.Button(header_frame, text="Delete Source", command=self._delete_source).pack(side=tk.RIGHT, padx=5)
+        # V2-002: Action bar — New / Edit / Manage
+        action_frame = ttk.Frame(self)
+        action_frame.pack(side=tk.TOP, fill=tk.X, pady=(0, 4))
+
+        self.btn_new    = ttk.Button(action_frame, text="New",    width=8,  command=self._create_source)
+        self.btn_edit   = ttk.Button(action_frame, text="Edit",   width=8,  command=self._edit_source,   state=tk.DISABLED)
+        self.btn_manage = ttk.Button(action_frame, text="Manage", width=8,  command=self._open_manage)
+
+        self.btn_new.pack(side=tk.LEFT, padx=(0, 2))
+        self.btn_edit.pack(side=tk.LEFT, padx=2)
+        self.btn_manage.pack(side=tk.LEFT, padx=2)
 
         # Content area (hidden if no source selected)
         self.content_frame = ttk.Frame(self)
@@ -158,10 +167,12 @@ class SourcePanel(ttk.Frame):
             self._populate()
             self._enable_content()
             self._update_usage()
+            self.btn_edit.config(state=tk.NORMAL)   # V2-002
         else:
             self.source_combo_var.set("")
             self._disable_content()
             self._update_usage()
+            self.btn_edit.config(state=tk.DISABLED)  # V2-002
 
     def _update_usage(self):
         if not self.current_source:
@@ -188,6 +199,15 @@ class SourcePanel(ttk.Frame):
         self.set_source(new_source.source_uuid)
         if self.on_source_changed:
             self.on_source_changed(new_source.source_uuid)
+
+    def _edit_source(self):  # V2-002: scroll content into view / ensure editor is visible
+        if not self.current_source:
+            return
+        self._enable_content()
+
+    def _open_manage(self):  # V2-002: delegate to global Sources dialog in ui.py
+        if self.on_manage_sources:
+            self.on_manage_sources()
 
     def _delete_source(self):
         if not self.current_source:

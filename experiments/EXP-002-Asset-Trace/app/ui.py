@@ -161,7 +161,7 @@ class Application(tk.Tk):
         row += 1
 
         # Embedded Source Panel
-        self.source_panel = SourcePanel(inspector_frame, None, on_source_changed=self._on_source_assigned_to_asset)
+        self.source_panel = SourcePanel(inspector_frame, None, on_source_changed=self._on_source_assigned_to_asset, on_manage_sources=self._open_sources_dialog)  # V2-002
         self.source_panel.grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=2, padx=5)
         row += 1
 
