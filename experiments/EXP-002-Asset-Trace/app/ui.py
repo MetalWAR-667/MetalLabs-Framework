@@ -79,6 +79,16 @@ class Application(tk.Tk):
 
         ttk.Separator(self, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=2)
 
+        # QW-001: Status Bar — packed BOTTOM before main_paned so it anchors correctly
+        status_bar = ttk.Frame(self, relief=tk.SUNKEN, padding=(4, 2))
+        status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+
+        self.status_left = ttk.Label(status_bar, text="No project loaded", anchor=tk.W)
+        self.status_left.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        self.status_right = ttk.Label(status_bar, text="", anchor=tk.E)
+        self.status_right.pack(side=tk.RIGHT)
+
         # Main content area
         main_paned = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
         main_paned.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
@@ -251,6 +261,37 @@ class Application(tk.Tk):
 
     # --- end QW-005 ---
 
+    # --- QW-001 ---
+
+    def _update_status_bar(self):
+        """Central method — recalculates and updates all status bar counters."""
+        if not self.manager:
+            self.status_left.config(text="No project loaded")
+            self.status_right.config(text="")
+            return
+
+        assets = self.manager.get_assets()
+        total = len(assets)
+        new = sum(1 for a in assets if a.scan_status == "NEW")
+        modified = sum(1 for a in assets if a.scan_status == "MODIFIED")
+        missing = sum(1 for a in assets if a.scan_status == "MISSING")
+        no_src = sum(1 for a in assets if not a.source_uuid)
+
+        project_name = self.manager.catalog.project.name or "Unnamed Project"
+
+        self.status_left.config(
+            text=(
+                f"{project_name}  |  "
+                f"Total: {total}  |  "
+                f"NEW: {new}  |  "
+                f"MODIFIED: {modified}  |  "
+                f"MISSING: {missing}  |  "
+                f"Without Source: {no_src}"
+            )
+        )
+
+    # --- end QW-001 ---
+
     def _on_closing(self):
         if hasattr(self, "preview_panel") and self.preview_panel:
             self.preview_panel.cleanup()
@@ -282,6 +323,7 @@ class Application(tk.Tk):
         self.preview_panel.pack(fill=tk.BOTH, expand=True)
 
         self._refresh_list()
+        self._update_status_bar()  # QW-001
 
     def _scan(self):
         if not self.manager:
@@ -292,6 +334,7 @@ class Application(tk.Tk):
             scanner.scan()
             self._refresh_list()
             messagebox.showinfo("Scan Complete", "Finished scanning project.")
+            self._update_status_bar()  # QW-001
         except Exception as e:
             messagebox.showerror("Scan Error", str(e))
 
@@ -320,6 +363,7 @@ class Application(tk.Tk):
                 self.tree.see(selected_iid)
 
             self._populate_inspector()
+            self._update_status_bar()  # QW-001
 
         except Exception as e:
             messagebox.showerror("Save Error", str(e))
@@ -386,6 +430,7 @@ class Application(tk.Tk):
     def _on_source_assigned_to_asset(self, source_uuid):
         if self.current_asset:
             self.current_asset.source_uuid = source_uuid
+            self._update_status_bar()  # QW-001
 
     def _populate_inspector(self):
         if not self.current_asset:
@@ -430,6 +475,7 @@ class Application(tk.Tk):
             if val not in AUDIT_STATES:
                 val = "PLACEHOLDER"
             setattr(self.current_asset, attr_name, val)
+            self._update_status_bar()  # QW-001
         else:
             setattr(self.current_asset, attr_name, val)
 
