@@ -119,6 +119,12 @@ class CatalogManager:
         else:
             self.catalog.assets.append(asset)
 
+    def remove_asset_by_path(self, relative_path: str) -> None:
+        """
+        Removes an asset from the catalog by its relative path.
+        """
+        self.catalog.assets = [a for a in self.catalog.assets if a.relative_path != relative_path]
+
     def mark_all_missing(self) -> None:
         """
         Temporary sets all assets to MISSING before a scan.
