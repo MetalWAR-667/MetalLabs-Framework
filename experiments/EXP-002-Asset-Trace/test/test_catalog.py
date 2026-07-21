@@ -29,5 +29,37 @@ class TestModels(unittest.TestCase):
         catalog_loaded = Catalog.from_dict(data)
         self.assertEqual(catalog_loaded.project.name, "TestProj")
 
+    def test_save_atomicity(self):
+        import os
+        import stat
+        import tempfile
+        from app.catalog import CatalogManager
+
+        with tempfile.TemporaryDirectory() as project_root:
+            manager = CatalogManager(project_root)
+            manager.load()
+
+            # Manually create a dirty asset
+            asset = Asset(asset_uuid="123", display_name="test", relative_path="test.txt", sha256="", file_size=0, scan_status="NEW")
+            asset._current_sha256 = "dummy_hash"
+            asset._current_file_size = 100
+            manager.catalog.assets.append(asset)
+
+            # Ensure .metallabs exists
+            os.makedirs(manager.metallabs_dir, exist_ok=True)
+
+            # Break save_catalog by making the file readonly or a directory
+            os.makedirs(manager.catalog_path, exist_ok=True)
+
+            try:
+                with self.assertRaises(Exception):
+                    manager.save()
+
+                # Internal state should remain dirty (NEW and empty hash)
+                self.assertEqual(manager.catalog.assets[0].scan_status, "NEW")
+                self.assertEqual(manager.catalog.assets[0].sha256, "")
+            finally:
+                os.rmdir(manager.catalog_path)
+
 if __name__ == '__main__':
     unittest.main()

@@ -386,6 +386,17 @@ class Application(tk.Tk):
             editor_vars[attr] = var
             row_idx += 1
 
+        # Add requires_attribution checkbox
+        req_attr_var = tk.BooleanVar()
+        ttk.Checkbutton(editor_frame, text="Requires Attribution", variable=req_attr_var).grid(row=row_idx, column=1, sticky=tk.W, pady=2)
+        row_idx += 1
+
+        # Add attribution_text multiline text
+        ttk.Label(editor_frame, text="Attribution Text:").grid(row=row_idx, column=0, sticky=tk.NW, pady=2)
+        attr_text_widget = tk.Text(editor_frame, height=4, width=40)
+        attr_text_widget.grid(row=row_idx, column=1, sticky=tk.EW, pady=2)
+        row_idx += 1
+
         current_source_id = [None]
 
         def populate_editor(event):
@@ -400,6 +411,10 @@ class Application(tk.Tk):
             for attr, var in editor_vars.items():
                 var.set(getattr(source, attr))
 
+            req_attr_var.set(source.requires_attribution)
+            attr_text_widget.delete("1.0", tk.END)
+            attr_text_widget.insert(tk.END, source.attribution_text)
+
         sources_list.bind('<<ListboxSelect>>', populate_editor)
 
         def save_current_source():
@@ -413,6 +428,8 @@ class Application(tk.Tk):
             if source:
                 for attr, var in editor_vars.items():
                     setattr(source, attr, var.get())
+                source.requires_attribution = req_attr_var.get()
+                source.attribution_text = attr_text_widget.get("1.0", "end-1c")
                 self.manager.add_or_update_source(source)
                 refresh_sources_list()
                 self._update_source_combobox()
