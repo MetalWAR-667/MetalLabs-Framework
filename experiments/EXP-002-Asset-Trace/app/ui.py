@@ -87,15 +87,19 @@ class Application(tk.Tk):
         list_frame = ttk.Frame(main_paned)
         main_paned.add(list_frame, weight=2)
 
-        columns = ("display_name", "relative_path", "scan_status")
+        columns = ("display_name", "relative_path", "scan_status", "audit_state", "source")
         self.tree = ttk.Treeview(list_frame, columns=columns, show="headings")
         self.tree.heading("display_name", text="Name")
         self.tree.heading("relative_path", text="Path")
         self.tree.heading("scan_status", text="Status")
+        self.tree.heading("audit_state", text="Audit State")  # V2-001
+        self.tree.heading("source", text="Source")            # V2-001
 
-        self.tree.column("display_name", width=150)
-        self.tree.column("relative_path", width=250)
-        self.tree.column("scan_status", width=80)
+        self.tree.column("display_name", width=140)
+        self.tree.column("relative_path", width=200)
+        self.tree.column("scan_status", width=75)
+        self.tree.column("audit_state", width=100)  # V2-001
+        self.tree.column("source", width=150)       # V2-001
 
         scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
@@ -284,6 +288,21 @@ class Application(tk.Tk):
 
     # --- end QW-004 ---
 
+    # --- V2-001 ---
+
+    def _get_source_label(self, source_uuid: str) -> str:
+        """Returns a human-readable label for a source_uuid, or — if none."""
+        if not source_uuid or not self.manager:
+            return "—"
+        sources = self.manager.get_sources()
+        source = next((s for s in sources if s.source_uuid == source_uuid), None)
+        if not source:
+            return "—"
+        parts = [p for p in (source.product_name, source.store_name) if p]
+        return " — ".join(parts) if parts else f"Unnamed ({source_uuid[:8]})"
+
+    # --- end V2-001 ---
+
     def _on_closing(self):
         if hasattr(self, 'preview_panel') and self.preview_panel:
             self.preview_panel.cleanup()
@@ -411,7 +430,9 @@ class Application(tk.Tk):
             self.tree.insert("", tk.END, iid=asset.relative_path, values=(
                 asset.display_name,
                 asset.relative_path,
-                asset.scan_status
+                asset.scan_status,
+                asset.audit_state,                              # V2-001
+                self._get_source_label(asset.source_uuid),     # V2-001
             ))
 
     def _on_select_asset(self, event):
@@ -429,6 +450,10 @@ class Application(tk.Tk):
         if self.current_asset:
             self.current_asset.source_uuid = source_uuid
             self._update_status_bar()  # QW-001
+            # V2-001: update the list row immediately without full refresh
+            iid = self.current_asset.relative_path
+            if self.tree.exists(iid):
+                self.tree.set(iid, "source", self._get_source_label(source_uuid))
 
     def _populate_inspector(self):
         if not self.current_asset:
@@ -480,6 +505,10 @@ class Application(tk.Tk):
                 val = "PLACEHOLDER"
             setattr(self.current_asset, attr_name, val)
             self._update_status_bar()  # QW-001
+            # V2-001: update the list row immediately without full refresh
+            iid = self.current_asset.relative_path
+            if self.tree.exists(iid):
+                self.tree.set(iid, "audit_state", val)
         else:
             setattr(self.current_asset, attr_name, val)
 
