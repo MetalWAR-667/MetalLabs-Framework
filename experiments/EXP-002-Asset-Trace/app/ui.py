@@ -160,26 +160,30 @@ class Application(tk.Tk):
         ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
         row += 1
 
+        # Preview — V2-003: moved above Source to reflect natural identification flow
+        ttk.Label(inspector_frame, text="Preview").grid(row=row, column=0, sticky=tk.NW, pady=2)
+
+        # Will be initialized after project load
+        self.preview_panel = None
+        self.preview_container = ttk.Frame(inspector_frame, width=256, height=256)
+        self.preview_container.grid(row=row, column=1, sticky=tk.NW, pady=2, padx=5)
+        row += 1
+
+        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
+        row += 1
+
         # Embedded Source Panel
         self.source_panel = SourcePanel(inspector_frame, None, on_source_changed=self._on_source_assigned_to_asset, on_manage_sources=self._open_sources_dialog)  # V2-002
         self.source_panel.grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=2, padx=5)
+        row += 1
+
+        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
         row += 1
 
         ttk.Label(inspector_frame, text="Notes").grid(row=row, column=0, sticky=tk.NW, pady=2)
         self.notes_text = tk.Text(inspector_frame, height=5, width=40)
         self.notes_text.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=5)
         self.notes_text.bind("<<Modified>>", self._on_notes_edit)
-        row += 1
-
-        ttk.Separator(inspector_frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky=tk.EW, pady=10)
-        row += 1
-
-        ttk.Label(inspector_frame, text="Preview").grid(row=row, column=0, sticky=tk.NW, pady=2)
-
-        # Will be initialized after project load, or we can instantiate empty
-        self.preview_panel = None
-        self.preview_container = ttk.Frame(inspector_frame, width=256, height=256)
-        self.preview_container.grid(row=row, column=1, sticky=tk.NW, pady=2, padx=5)
 
         inspector_frame.columnconfigure(1, weight=1)
 

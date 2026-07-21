@@ -1,289 +1,194 @@
-EXP-002 — Asset Trace Utility MVP
-Objetivo del experimento
+# EXP-002 — Asset Trace Utility
 
-Validar si un agente IA puede implementar una utilidad Python pequeña, autocontenida y de alcance estrictamente limitado a partir de una especificación detallada, respetando el contrato funcional y sin sobrearquitecturar la solución.
+## Estado
 
-Resultado
-✅ EXPERIMENTO APROBADO
-
-No es un aprobado por cortesía.
-
-Es un aprobado técnico.
-
-La hipótesis queda validada.
-
-Valoración
-Área	Valoración
-Respeto del alcance	⭐⭐⭐⭐⭐
-Arquitectura	⭐⭐⭐⭐☆
-Legibilidad	⭐⭐⭐⭐⭐
-UI	⭐⭐⭐⭐☆
-JSON	⭐⭐⭐⭐⭐
-Portabilidad	⭐⭐⭐⭐☆
-Robustez	⭐⭐⭐☆☆
-Necesidad de correcciones	Baja
-Lo que ha hecho muy bien
-Alcance
-
-No ha intentado reinventar nada.
-
-No hay:
-
-base de datos
-ORM
-plugins
-framework web
-dependencias absurdas
-
-Eso ya es una victoria.
-
-Código
-
-El proyecto se entiende.
-
-La separación es limpia:
-
-main
-UI
-Scanner
-Catalog
-Persistence
-Models
-
-Muy apropiado para un MVP.
-
-JSON
-
-Muy cercano al contrato solicitado.
-
-Legible.
-
-Sencillo.
-
-UI
-
-Sorprendentemente usable.
-
-No parece una demo de consola.
-
-Permite trabajar.
-
-Portabilidad
-
-Mover el proyecto a:
-
-experiments/
-    EXP-002/
-
-no rompió nada.
-
-El único fallo fue nuestro.
-
-😂
-
-Observaciones encontradas
-
-Ninguna invalida el experimento.
-
-Son refinamientos propios de una primera versión.
-
-OBS-001
-
-El scanner incorpora archivos internos de Godot.
-
-Ejemplo:
-
-.import
-.uid
-
-Debe existir una política de exclusión.
-
-OBS-002
-
-Los estados NEW/MODIFIED necesitan revisarse.
-
-Actualmente el hash de referencia se actualiza demasiado pronto.
-
-Debe compararse contra el último catálogo persistido.
-
-OBS-003
-
-No existe preview de imágenes.
-
-No es un fallo.
-
-Simplemente mejora UX.
-
-Queda fuera del MVP.
-
-OBS-004
-
-Persistencia mejorable.
-
-No existe escritura atómica.
-
-No existe recuperación ante JSON corrupto.
-
-No bloquea el MVP.
-
-Conclusión técnica
-
-El resultado demuestra que, con una especificación suficientemente precisa, el agente es capaz de producir una herramienta pequeña, funcional y mantenible respetando el alcance solicitado.
-
-Las incidencias encontradas pertenecen al dominio del problema (Godot, política de escaneo, UX y persistencia) y no evidencian problemas estructurales de arquitectura.
-
-No se detecta sobreingeniería ni desviaciones importantes respecto al objetivo inicial.
-
-EXP-002 — Asset Trace Utility
+```text
 STATUS
-PASSED
-Objetivo
-
-Validar la capacidad de un agente de implementación para desarrollar una utilidad de trazabilidad de Assets de alcance reducido siguiendo un proceso de ingeniería asistido por IA.
-
-Resultado
 
 PASSED
+```
 
-La utilidad alcanza un nivel funcional suficiente para incorporarse al flujo de trabajo de Lands of Folklore.
+## Objetivo
 
-Implementa correctamente:
+Validar la capacidad de un equipo de agentes IA para desarrollar una herramienta de escritorio pequeña, autocontenida y orientada a un problema real, siguiendo un proceso de ingeniería asistido y manteniendo un alcance estrictamente controlado.
 
-Workspace .metallabs
-Catálogo persistente de Assets
-Gestión de Sources
-Gestión de recibos
-Hashing y detección de cambios
-Estados editoriales
-Whitelist de Assets
-Preview de imágenes
-Arquitectura modular
-Suite básica de tests
-Observaciones
+El resultado esperado no era únicamente obtener una utilidad funcional, sino validar el propio flujo de trabajo de MetalLabs.
 
-Durante el desarrollo se detectaron diversas mejoras mediante validación manual:
+---
 
-refinamiento del flujo del Inspector;
-integración más natural de Sources;
-mejoras de UX;
-pequeños defectos de sincronización UI;
-oportunidades de ampliación del sistema de previews.
+# Resultado
 
-Estas observaciones no invalidan el resultado del experimento y pasan a formar parte del roadmap normal de la utilidad.
+**PASSED**
 
-Evaluación del Agente (Jules)
-Fortalezas
-Excelente disciplina arquitectónica.
-Respeta el alcance solicitado.
-Implementación limpia y modular.
-Muy buena respuesta al feedback.
-Alta productividad en tareas bien definidas.
-Debilidades observadas
-Tiende a cerrar requisitos parcialmente implementados.
-Necesita criterios de aceptación muy concretos.
-Presenta menor precisión en tareas de UX y flujos de usuario.
-Requiere revisión manual antes del merge.
-Lecciones aprendidas
+Asset Trace Utility alcanza un nivel de madurez suficiente para incorporarse al flujo de trabajo habitual de **Lands of Folklore**.
 
-Las tareas de implementación complejas deben dividirse en cortes pequeños, con criterios de aceptación verificables y una fase explícita de validación manual antes del cierre.
+La herramienta permite:
 
-El proceso MetalLabs:
+* Catalogar Assets del proyecto.
+* Mantener trazabilidad completa.
+* Gestionar Sources compartidas.
+* Asociar documentación de compra.
+* Detectar Assets nuevos, modificados y desaparecidos.
+* Mantener estados editoriales.
+* Identificar Assets mediante Preview.
+* Trabajar con un flujo de catalogación coherente y estable.
 
+Tras varias iteraciones de validación manual, Quick Wins y Roadmap V2, la utilidad se considera **Production Ready**.
+
+---
+
+# Metodología validada
+
+Durante EXP-002 quedó validado el siguiente flujo de trabajo:
+
+```text
 Arquitectura
-    ↓
+        ↓
 Implementación
-    ↓
+        ↓
 Validación Manual
-    ↓
-Revisión Técnica
-    ↓
-Corrección
-    ↓
-Merge
+        ↓
+Auditoría Técnica
+        ↓
+Correcciones
+        ↓
+Production Ready
+```
 
-ha demostrado ser eficaz para aumentar la calidad del resultado final.
+La experiencia demuestra que la calidad final no depende únicamente del agente implementador, sino del proceso completo de revisión.
 
-Veredicto
-EXP-002
+---
 
-STATUS
+# Participantes
 
-PASSED
+## Metal
 
-Observación
+**Director del proyecto**
 
-El tiempo de ejecución de Jules para tareas de implementación resulta elevado para un flujo de trabajo iterativo.
+Responsabilidades:
 
-Durante EXP-002, varias tareas de alcance reducido requirieron esperas de decenas de minutos e incluso horas, lo que dificulta mantener un ciclo rápido de:
+* Definición funcional.
+* Dirección técnica.
+* Arquitectura de producto.
+* Validación manual.
+* Integración.
+* Roadmap.
+* Decisión final de aceptación.
 
-Implementar
-↓
-Probar
-↓
-Corregir
-↓
-Repetir
+**Valoración**
 
-En tareas donde la validación manual descubre pequeños ajustes, la latencia entre iteraciones se convierte en el principal cuello de botella.
+La validación manual continua permitió detectar pequeñas fricciones de uso que difícilmente aparecen durante la implementación aislada, mejorando significativamente la calidad final de la herramienta.
 
-Impacto
-Reduce significativamente la velocidad del ciclo de desarrollo.
-Penaliza la resolución de incidencias pequeñas.
-Favorece acumular demasiados cambios en una sola entrega.
-Recomendación
+---
 
-Utilizar Jules únicamente para:
+## Lumen
 
-implementaciones relativamente grandes y bien definidas;
-tareas que puedan ejecutarse en segundo plano mientras el desarrollador continúa trabajando.
+**Arquitecto técnico**
 
-No utilizar Jules para:
+Responsabilidades:
 
-correcciones pequeñas;
-ajustes de UX;
-ciclos rápidos de prueba-error;
-cambios que requieran varias iteraciones consecutivas.
+* Diseño arquitectónico.
+* Definición del flujo de trabajo.
+* Revisión funcional.
+* Diseño de Quick Wins.
+* Diseño del Roadmap evolutivo.
+* Revisión de UX.
+* Definición de criterios de Production Ready.
 
+**Valoración**
 
-Malo para Jules
-"Rehacer el Inspector."
+Actuó principalmente como arquitecto y facilitador del proceso, ayudando a mantener el alcance controlado y priorizando mejoras basadas en el uso real frente a nuevas funcionalidades.
 
-Porque mezcla:
+---
 
-UI
-UX
-modelo
-persistencia
-preview
-eventos
-Bueno para Jules
-Implementar whitelist.
+## Jules
 
-No tocar nada más.
+**Implementación inicial**
 
-Criterios:
+Responsabilidades:
 
-...
+* Desarrollo del MVP.
+* Workspace MetalLabs.
+* Persistencia inicial.
+* Gestión de Sources.
+* Sistema de escaneo.
+* Base de la arquitectura.
+* Implementación de Sprint 1.
 
-Tests:
+### Fortalezas
 
-...
+* Excelente disciplina arquitectónica.
+* Respeta el alcance cuando está bien definido.
+* Código limpio y modular.
+* Muy buena capacidad para implementar bloques funcionales completos.
+* Buena respuesta a revisiones técnicas.
 
-Eso son 300 líneas.
+### Aspectos observados
 
+* Tiende a considerar terminadas tareas parcialmente implementadas.
+* Necesita criterios de aceptación muy concretos.
+* Menor sensibilidad hacia UX y pequeños detalles de interacción.
+* Requiere validación manual antes del merge.
+* Latencia elevada para tareas pequeñas e iterativas.
 
-Otro ejemplo.
+### Valoración
 
-Malo
-"Haz Sprint 4."
-Bueno
-Implementa CatalogScanner.
+Jules resulta especialmente adecuado para implementaciones de tamaño medio o grande con especificaciones cerradas.
 
-No modifiques UI.
+No es la mejor opción para ciclos rápidos de prueba, UX o pequeños ajustes consecutivos.
 
-No modifiques modelos.
+---
 
-No modifiques persistencia.
+## Butch
 
-Entrega tests.
+**Auditor técnico e implementación de consolidación**
 
+Responsabilidades:
+
+* Revisión crítica del MVP.
+* Eliminación de fricción.
+* Implementación de Quick Wins.
+* Desarrollo del Roadmap V2.
+* Consolidación del flujo de catalogación.
+* Preparación para Production Ready.
+
+### Fortalezas
+
+* Excelente capacidad de análisis previo.
+* Propone alternativas antes de modificar código.
+* Muy buen criterio para separar problemas funcionales de problemas de UX.
+* Mantiene el alcance con disciplina.
+* Identifica responsabilidades correctamente antes de implementar.
+
+### Aspectos observados
+
+* Estilo de comunicación muy directo y técnico.
+* Tiende a detenerse para confirmar decisiones importantes en lugar de asumirlas.
+
+### Valoración
+
+Butch destaca especialmente en fases de consolidación, auditoría técnica, refactorizaciones controladas y eliminación de fricción.
+
+Su forma de trabajar encaja especialmente bien tras un MVP ya funcional.
+
+---
+
+# Lecciones aprendidas
+
+Durante EXP-002 se confirmaron varias conclusiones relevantes:
+
+* Una especificación clara reduce significativamente las iteraciones.
+* Las mejoras de UX aparecen durante el uso real, no durante la implementación.
+* Dividir el trabajo en iteraciones pequeñas produce mejores resultados que intentar resolver un Sprint completo de una sola vez.
+* La validación manual continúa siendo una parte esencial del proceso.
+* No toda buena idea debe implementarse inmediatamente; muchas pertenecen al Roadmap o a Future Seeds.
+
+---
+
+# Veredicto final
+
+EXP-002 valida tanto la utilidad desarrollada como la metodología utilizada para construirla.
+
+Asset Trace Utility pasa a formar parte del conjunto de herramientas internas de MetalLabs y entra oficialmente en fase de uso dentro del desarrollo de **Lands of Folklore**.
+
+Las futuras mejoras deberán surgir exclusivamente del uso real de la herramienta y no de hipótesis de diseño.

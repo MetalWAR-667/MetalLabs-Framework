@@ -49,13 +49,15 @@ class SourcePanel(ttk.Frame):
         action_frame = ttk.Frame(self)
         action_frame.pack(side=tk.TOP, fill=tk.X, pady=(0, 4))
 
-        self.btn_new    = ttk.Button(action_frame, text="New",    width=8,  command=self._create_source)
-        self.btn_edit   = ttk.Button(action_frame, text="Edit",   width=8,  command=self._edit_source,   state=tk.DISABLED)
-        self.btn_manage = ttk.Button(action_frame, text="Manage", width=8,  command=self._open_manage)
+        self.btn_new    = ttk.Button(action_frame, text="New",    width=8, command=self._create_source)
+        self.btn_edit   = ttk.Button(action_frame, text="Edit",   width=8, command=self._edit_source, state=tk.DISABLED)
+        self.btn_manage = ttk.Button(action_frame, text="Manage", width=8, command=self._open_manage)
 
-        self.btn_new.pack(side=tk.LEFT, padx=(0, 2))
+        self.btn_new.pack(side=tk.LEFT, padx=2)
         self.btn_edit.pack(side=tk.LEFT, padx=2)
-        self.btn_manage.pack(side=tk.LEFT, padx=2)
+        # V2-003: only show Manage when a callback is available (hidden inside the Manage dialog itself)
+        if self.on_manage_sources:
+            self.btn_manage.pack(side=tk.LEFT, padx=2)
 
         # Content area (hidden if no source selected)
         self.content_frame = ttk.Frame(self)
@@ -135,6 +137,10 @@ class SourcePanel(ttk.Frame):
         self._disable_content()
 
     def refresh_sources(self):
+        if not self.manager:
+            self.source_map = {}
+            self.source_combo['values'] = [""]
+            return
         sources = self.manager.get_sources()
         # Create map of uuid -> label
         self.source_map = {}
@@ -200,10 +206,30 @@ class SourcePanel(ttk.Frame):
         if self.on_source_changed:
             self.on_source_changed(new_source.source_uuid)
 
-    def _edit_source(self):  # V2-002: scroll content into view / ensure editor is visible
+    def _edit_source(self):  # V2-003: ensure editor is visible and focus first editable field
         if not self.current_source:
             return
         self._enable_content()
+        # Focus the Product Name field so the user can start editing immediately
+        product_name_entry = self.vars.get("product_name")
+        if product_name_entry:
+            # Traverse widget tree to find the Entry widget bound to this var
+            for child in self.winfo_children():
+                self._focus_entry_for_var(child, product_name_entry)
+
+    def _focus_entry_for_var(self, widget, target_var):
+        """Recursively find and focus the Entry widget bound to target_var."""
+        if isinstance(widget, ttk.Entry):
+            try:
+                if str(widget.cget("textvariable")) == str(target_var):
+                    widget.focus_set()
+                    return True
+            except Exception:
+                pass
+        for child in widget.winfo_children():
+            if self._focus_entry_for_var(child, target_var):
+                return True
+        return False
 
     def _open_manage(self):  # V2-002: delegate to global Sources dialog in ui.py
         if self.on_manage_sources:
@@ -247,8 +273,18 @@ class SourcePanel(ttk.Frame):
         self.manager.add_or_update_source(self.current_source)
 
         if attr_name in ("product_name", "store_name"):
-            # Update label in combobox safely without triggering select event immediately
-            pass
+            # V2-003: update combobox label in real time when name fields change
+            new_label = f"{self.current_source.product_name} — {self.current_source.store_name}"                 if self.current_source.product_name or self.current_source.store_name                 else f"Unnamed ({self.current_source.source_uuid})"
+            # Update source_map and combobox values without triggering ComboboxSelected
+            old_labels = list(self.source_map.keys())
+            for old_label in old_labels:
+                if self.source_map[old_label] == self.current_source.source_uuid:
+                    del self.source_map[old_label]
+                    break
+            self.source_map[new_label] = self.current_source.source_uuid
+            values = [""] + list(self.source_map.keys())
+            self.source_combo.config(values=values)
+            self.source_combo_var.set(new_label)
 
     def _on_text_edit(self, event):
         if not self.current_source: return
