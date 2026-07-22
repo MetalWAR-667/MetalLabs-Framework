@@ -788,3 +788,98 @@ No interpreta.
 El trabajo vuelve al Director Técnico.
 
 Solo entonces puede integrarse.
+
+## Lecciones aprendidas (Editor Foundations III)
+
+Las siguientes reglas no nacen de teoría, sino de la experiencia obtenida durante el desarrollo de Editor Foundations III.
+
+Se incorporan al workflow porque demostraron reducir errores, limitar el alcance y mejorar la trazabilidad del proyecto.
+
+## Git pertenece al Director Técnico
+
+Los agentes nunca modifican la historia del repositorio.
+
+Por norma general:
+
+no crean commits;
+no realizan push;
+no crean ni eliminan ramas;
+no ejecutan merge, rebase o cherry-pick.
+
+Los agentes trabajan únicamente sobre el working tree.
+
+La integración mediante Git pertenece exclusivamente al Director Técnico.
+
+## El alcance siempre es explícito
+
+Antes de comenzar cualquier tarea debe quedar definido:
+
+qué archivos pueden modificarse;
+qué archivos están fuera del alcance;
+qué decisiones pueden tomarse;
+qué decisiones requieren volver a Diseño.
+
+Una tarea sin límites claros tiende a expandirse innecesariamente.
+
+Primero auditar, después escribir
+
+Cuando una modificación afecta a arquitectura, documentación o varios sistemas relacionados, el flujo recomendado es:
+
+Auditoría
+    ↓
+Informe
+    ↓
+Aprobación
+    ↓
+Implementación
+
+No al revés.
+
+La documentación se sincroniza
+
+Los documentos describen el estado consolidado del proyecto.
+
+No deben:
+
+anticipar funcionalidades futuras;
+describir implementaciones descartadas como vigentes;
+utilizar nombres distintos a los existentes en el código.
+
+El objetivo es que código, arquitectura y documentación describan exactamente la misma realidad.
+
+## Cada agente trabaja donde aporta más valor
+
+Las tareas deben asignarse según responsabilidad, no según disponibilidad.
+
+Como referencia actual:
+
+Rol	Agente recomendado
+Arquitectura	Lumen
+Auditoría	Butch
+Documentación sincronizada	Jules (con alcance acotado)
+Implementación	Agente de implementación
+Investigación	Jack
+
+Esta asignación podrá modificarse cuando aparezcan herramientas mejores.
+
+## La historia Git también es documentación
+
+Cada commit debe representar una unidad lógica de trabajo.
+
+El historial forma parte del conocimiento del proyecto.
+
+Por ello:
+
+cambios de documentación y código deben separarse cuando tenga sentido;
+los commits deben permanecer pequeños y comprensibles;
+las etiquetas (tags) representan hitos de ingeniería, no únicamente versiones públicas.
+
+## Los documentos también pasan QA
+
+Antes de cerrar una Foundation o una fase importante, la documentación debe auditarse contra HEAD.
+
+El objetivo no es mejorar la redacción.
+
+Es comprobar que describe exactamente el comportamiento implementado.
+
+"La implementación no marca el final de un trabajo. El trabajo termina cuando código, arquitectura, documentación y repositorio cuentan exactamente la misma historia."
