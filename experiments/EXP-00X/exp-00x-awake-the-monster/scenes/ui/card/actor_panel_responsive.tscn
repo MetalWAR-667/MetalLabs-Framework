@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvo4yt22c4v48" path="res://Assets/ui/symbols/attention_icon.png" id="4_kvubg"]
 [ext_resource type="Texture2D" uid="uid://ck6vraromsvf" path="res://Assets/ui/symbols/sanity_icon.png" id="5_v8bml"]
 [ext_resource type="Texture2D" uid="uid://bgrcw4nl22fc6" path="res://Assets/ui/symbols/strength_icon.png" id="6_pbo32"]
+[ext_resource type="Script" uid="uid://dpytmplolja6h" path="res://scripts/ui/actor_panel.gd" id="7_actor_panel_script"]
 
 [node name="ActorPanel" type="Control" unique_id=117018907]
 layout_mode = 3
@@ -17,14 +18,15 @@ offset_right = -1579.0
 offset_bottom = -586.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("7_actor_panel_script")
 
-[node name="ActorIlustration" parent="." unique_id=1238908066 instance=ExtResource("1_xi2hd")]
+[node name="ActorIllustration" parent="." unique_id=1238908066 instance=ExtResource("1_xi2hd")]
 layout_mode = 1
 offset_top = 1.0
 offset_right = 0.0
 offset_bottom = 1.0
 
-[node name="NameLabel" parent="ActorIlustration/PortraitTexture" parent_id_path=PackedInt32Array(1238908066, 1145605436) index="0" unique_id=1252249937]
+[node name="NameLabel" parent="ActorIllustration/PortraitTexture" parent_id_path=PackedInt32Array(1238908066, 1145605436) index="0" unique_id=1252249937]
 offset_bottom = -450.0
 
 [node name="HealthIndicator" type="Control" parent="." unique_id=723997051]
@@ -71,19 +73,26 @@ text = "18"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HealthIndicator" unique_id=990773999]
-layout_mode = 0
-offset_left = 272.0
-offset_top = -330.0
-offset_right = 306.0
-offset_bottom = -297.0
+[node name="StatsColumn" type="Control" parent="." unique_id=1594006920]
+anchors_preset = 0
+offset_left = 270.0
+offset_top = 4.0
+offset_right = 337.0
+offset_bottom = 197.0
 
-[node name="Attention_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer" unique_id=1665645697]
+[node name="HBox_Attention" type="HBoxContainer" parent="StatsColumn" unique_id=990773999]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 61.0
+offset_right = 42.0
+offset_bottom = 94.0
+
+[node name="AttentionStat" type="TextureRect" parent="StatsColumn/HBox_Attention" unique_id=1665645697]
 layout_mode = 2
 texture = ExtResource("4_kvubg")
 expand_mode = 2
 
-[node name="Attention_Stat" type="Label" parent="HealthIndicator/HBoxContainer/Attention_Stat" unique_id=1479951788]
+[node name="AttentionStat" type="Label" parent="StatsColumn/HBox_Attention/AttentionStat" unique_id=1479951788]
 layout_mode = 0
 offset_left = 31.0
 offset_top = -4.0
@@ -96,19 +105,19 @@ text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HealthIndicator" unique_id=1073029883]
+[node name="HBox_Sanity" type="HBoxContainer" parent="StatsColumn" unique_id=1073029883]
 layout_mode = 0
-offset_left = 272.0
-offset_top = -299.0
-offset_right = 305.0
-offset_bottom = -266.0
+offset_left = 8.0
+offset_top = 92.0
+offset_right = 41.0
+offset_bottom = 125.0
 
-[node name="Sanity_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer2" unique_id=1079030106]
+[node name="SanityStat" type="TextureRect" parent="StatsColumn/HBox_Sanity" unique_id=1079030106]
 layout_mode = 2
 texture = ExtResource("5_v8bml")
 expand_mode = 2
 
-[node name="Sanity_Stat" type="Label" parent="HealthIndicator/HBoxContainer2/Sanity_Stat" unique_id=1911604427]
+[node name="SanityStat" type="Label" parent="StatsColumn/HBox_Sanity/SanityStat" unique_id=1911604427]
 layout_mode = 0
 offset_left = 31.0
 offset_top = -4.0
@@ -121,19 +130,19 @@ text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HealthIndicator" unique_id=2066653590]
+[node name="HBox_Strength" type="HBoxContainer" parent="StatsColumn" unique_id=2066653590]
 layout_mode = 0
-offset_left = 272.0
-offset_top = -268.0
-offset_right = 305.0
-offset_bottom = -235.0
+offset_left = 8.0
+offset_top = 123.0
+offset_right = 41.0
+offset_bottom = 156.0
 
-[node name="Strengh_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer3" unique_id=225133464]
+[node name="StrengthStat" type="TextureRect" parent="StatsColumn/HBox_Strength" unique_id=225133464]
 layout_mode = 2
 texture = ExtResource("6_pbo32")
 expand_mode = 2
 
-[node name="Strengh_Stat" type="Label" parent="HealthIndicator/HBoxContainer3/Strengh_Stat" unique_id=1318074512]
+[node name="StrengthStat" type="Label" parent="StatsColumn/HBox_Strength/StrengthStat" unique_id=1318074512]
 layout_mode = 0
 offset_left = 31.0
 offset_top = -4.0
@@ -146,4 +155,4 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[editable path="ActorIlustration"]
+[editable path="ActorIllustration"]

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://hv1vep3q8oxx"]
+[gd_scene load_steps=15 format=3 uid="uid://hv1vep3q8oxx"]
 
 [ext_resource type="Texture2D" uid="uid://c4vjydsdc5b8u" path="res://Assets/ui/card/card_surface_1.png" id="1_surface"]
 [ext_resource type="Texture2D" uid="uid://d24c4btru3hdd" path="res://Assets/ui/card/card_surface_border_bw_2.png" id="2_border"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://515q527gw4l4" path="res://scenes/ui/card/cardthreatbar.tscn" id="7_lqdmo"]
 [ext_resource type="Texture2D" uid="uid://b5nbskqp48lr5" path="res://Assets/ui/card/option_button_normal.png" id="7_option_normal"]
 [ext_resource type="Texture2D" uid="uid://d2cd28kwx6cda" path="res://Assets/ui/card/health_actor_icon2.png" id="8_40c4e"]
+[ext_resource type="Script" path="res://scripts/ui/card_view.gd" id="9_card_view_script"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_normal"]
 
@@ -49,6 +50,7 @@ offset_right = -1213.0
 offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("9_card_view_script")
 
 [node name="CardCenter" type="CenterContainer" parent="." unique_id=1613359146]
 layout_mode = 1

@@ -1,0 +1,83 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_pause_menu_script"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pause_menu_script")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0, 0, 0, 0.72)
+
+[node name="MenuCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuMargin" type="MarginContainer" parent="MenuCenter"]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="MenuLayout" type="VBoxContainer" parent="MenuCenter/MenuMargin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PauseLabel" type="Label" parent="MenuCenter/MenuMargin/MenuLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Partida en pausa"
+horizontal_alignment = 1
+
+[node name="LabelSpacer" type="Control" parent="MenuCenter/MenuMargin/MenuLayout"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ContinueButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../BackToMenuButton")
+focus_mode = 2
+text = "Continuar"
+
+[node name="BackToMenuButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ContinueButton")
+focus_mode = 2
+text = "Volver al menú"
+
+[node name="LeaveConfirmation" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Abandonar partida"
+initial_position = 2
+size = Vector2i(560, 180)
+ok_button_text = "Aceptar"
+cancel_button_text = "Cancelar"
+dialog_text = "¿Deseas abandonar la partida y volver al menú principal?"
