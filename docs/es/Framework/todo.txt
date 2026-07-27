@@ -1,0 +1,52 @@
+Debo crear 
+
+01 - Development Workflow
+02 - Code Audit
+03 - Documentation Audit
+04 - Architecture Review
+05 - Coherence Audit
+06 - Experiment Validation
+07 - Release / Merge Review
+
+y clasificarlos donde corresponda.
+
+
+Cuando reorganices MetalLabs la semana que viene, crea una carpeta o categoría llamada algo como:
+
+Validated Engineering Practices
+
+o
+
+Engineering Patterns
+
+Porque ahí ya tienes material que trasciende completamente a Lands of Folklore:
+
+Documentation Audit
+Coherence Audit
+Architecture Review
+Runtime Validation
+Small-Step Optimization ("Dieta del Hot Loop")
+Prepared Runtime Data
+
+Esos ya no son "documentos del proyecto".
+
+Son piezas del método MetalLabs.
+
+TODO — Reorganización MetalLabs (pendiente)
+Ingeniería
+ Crear sección Engineering Practices (o nombre definitivo).
+ Incorporar Documentation Audit como workflow oficial.
+ Incorporar Documentation Coherence Audit como workflow oficial.
+ Incorporar Architecture Review (contra HEAD).
+ Documentar el patrón Prepared Runtime Data como principio reutilizable.
+ Documentar la metodología Small-Step Optimization / Dieta del Hot Loop.
+ Clasificar qué workflows son específicos de LoF y cuáles son reutilizables para cualquier proyecto.
+Documentación
+ Revisar estructura LegacyEditor.
+ Decidir si editor_architecture.md pasa también a LegacyEditor.
+ Crear un índice de auditorías (Code Audit / Documentation Audit / Architecture Review).
+Artículos futuros
+ "Auditar documentación contra HEAD."
+ "La deuda técnica de la documentación."
+ "Optimizar hasta recuperar la confianza."
+ "Prepared Runtime Data: cuando el Compiler trabaja para el Runtime."

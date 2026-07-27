@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://jao6bafyrh6k"]
+
+[ext_resource type="PackedScene" uid="uid://hv1vep3q8oxx" path="res://scenes/ui/card/card_view_responsive.tscn" id="1_kw0id"]
+[ext_resource type="PackedScene" uid="uid://d2jdeo7d4bqsf" path="res://scenes/ui/card/actor_panel_responsive.tscn" id="2_atyv1"]
+[ext_resource type="PackedScene" uid="uid://dixp4avlvy51y" path="res://scenes/ui/dice/dice.tscn" id="3_6ll6g"]
+[ext_resource type="PackedScene" uid="uid://bo0ddngl068yy" path="res://scenes/ui/card/backgroundFX.tscn" id="4_ig75s"]
+
+[node name="Hud" type="Control" unique_id=1972780713]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardViewResponsive" parent="." unique_id=818702790 instance=ExtResource("1_kw0id")]
+layout_mode = 1
+offset_left = 597.0
+offset_top = 64.0
+offset_right = -641.0
+offset_bottom = -26.0
+
+[node name="ActorPanel" parent="." unique_id=117018907 instance=ExtResource("2_atyv1")]
+layout_mode = 1
+offset_left = 17.0
+offset_top = 572.0
+offset_right = -1564.0
+offset_bottom = -14.0
+
+[node name="Companion" parent="." unique_id=698740220 instance=ExtResource("2_atyv1")]
+layout_mode = 1
+offset_left = 1557.0
+offset_top = 572.0
+offset_right = -24.0
+offset_bottom = -14.0
+
+[node name="DicePlayer" parent="." unique_id=1170217078 instance=ExtResource("3_6ll6g")]
+position = Vector2(103, 751)
+scale = Vector2(3.58, 3.58)
+
+[node name="DiceCompanion" parent="." unique_id=660370 instance=ExtResource("3_6ll6g")]
+position = Vector2(1644.0001, 770)
+scale = Vector2(3.58, 3.58)
+
+[node name="AnimatedSprite2D" parent="DiceCompanion" index="0" unique_id=1141911594]
+position = Vector2(24.58097, 24.022348)
+
+[node name="BackgroundFx" parent="." unique_id=2088691505 instance=ExtResource("4_ig75s")]
+layout_mode = 1
+
+[editable path="DicePlayer"]
+[editable path="DiceCompanion"]

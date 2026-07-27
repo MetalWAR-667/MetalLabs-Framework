@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://d2jdeo7d4bqsf"]
+
+[ext_resource type="PackedScene" uid="uid://muqoqwertsja" path="res://scenes/ui/card/actor_ilustration.tscn" id="1_xi2hd"]
+[ext_resource type="FontFile" uid="uid://cgg5uqmw43a6w" path="res://Assets/fonts/GGBotNet Fonts CC0/Crayon Libre/OpenType (.otf)/CrayonLibre-Regular.otf" id="2_edbrq"]
+[ext_resource type="Texture2D" uid="uid://d2cd28kwx6cda" path="res://Assets/ui/card/health_actor_icon2.png" id="3_pq088"]
+[ext_resource type="Texture2D" uid="uid://cvo4yt22c4v48" path="res://Assets/ui/symbols/attention_icon.png" id="4_kvubg"]
+[ext_resource type="Texture2D" uid="uid://ck6vraromsvf" path="res://Assets/ui/symbols/sanity_icon.png" id="5_v8bml"]
+[ext_resource type="Texture2D" uid="uid://bgrcw4nl22fc6" path="res://Assets/ui/symbols/strength_icon.png" id="6_pbo32"]
+
+[node name="ActorPanel" type="Control" unique_id=117018907]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = -1579.0
+offset_bottom = -586.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActorIlustration" parent="." unique_id=1238908066 instance=ExtResource("1_xi2hd")]
+layout_mode = 1
+offset_top = 1.0
+offset_right = 0.0
+offset_bottom = 1.0
+
+[node name="NameLabel" parent="ActorIlustration/PortraitTexture" parent_id_path=PackedInt32Array(1238908066, 1145605436) index="0" unique_id=1252249937]
+offset_bottom = -450.0
+
+[node name="HealthIndicator" type="Control" parent="." unique_id=723997051]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 9.0
+offset_top = 415.0
+offset_right = 75.0
+offset_bottom = 481.0
+mouse_filter = 2
+
+[node name="HealthIcon" type="TextureRect" parent="HealthIndicator" unique_id=2034535514]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 4.0
+offset_right = 2.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_pq088")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HealthValue" type="Label" parent="HealthIndicator" unique_id=1799778664]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 3.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_edbrq")
+theme_override_font_sizes/font_size = 34
+text = "18"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HealthIndicator" unique_id=990773999]
+layout_mode = 0
+offset_left = 272.0
+offset_top = -330.0
+offset_right = 306.0
+offset_bottom = -297.0
+
+[node name="Attention_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer" unique_id=1665645697]
+layout_mode = 2
+texture = ExtResource("4_kvubg")
+expand_mode = 2
+
+[node name="Attention_Stat" type="Label" parent="HealthIndicator/HBoxContainer/Attention_Stat" unique_id=1479951788]
+layout_mode = 0
+offset_left = 31.0
+offset_top = -4.0
+offset_right = 54.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_edbrq")
+theme_override_font_sizes/font_size = 34
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HealthIndicator" unique_id=1073029883]
+layout_mode = 0
+offset_left = 272.0
+offset_top = -299.0
+offset_right = 305.0
+offset_bottom = -266.0
+
+[node name="Sanity_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer2" unique_id=1079030106]
+layout_mode = 2
+texture = ExtResource("5_v8bml")
+expand_mode = 2
+
+[node name="Sanity_Stat" type="Label" parent="HealthIndicator/HBoxContainer2/Sanity_Stat" unique_id=1911604427]
+layout_mode = 0
+offset_left = 31.0
+offset_top = -4.0
+offset_right = 54.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_edbrq")
+theme_override_font_sizes/font_size = 34
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HealthIndicator" unique_id=2066653590]
+layout_mode = 0
+offset_left = 272.0
+offset_top = -268.0
+offset_right = 305.0
+offset_bottom = -235.0
+
+[node name="Strengh_Stat" type="TextureRect" parent="HealthIndicator/HBoxContainer3" unique_id=225133464]
+layout_mode = 2
+texture = ExtResource("6_pbo32")
+expand_mode = 2
+
+[node name="Strengh_Stat" type="Label" parent="HealthIndicator/HBoxContainer3/Strengh_Stat" unique_id=1318074512]
+layout_mode = 0
+offset_left = 31.0
+offset_top = -4.0
+offset_right = 54.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_edbrq")
+theme_override_font_sizes/font_size = 34
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[editable path="ActorIlustration"]

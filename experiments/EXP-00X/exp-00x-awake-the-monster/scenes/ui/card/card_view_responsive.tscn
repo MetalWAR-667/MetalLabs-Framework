@@ -1,0 +1,373 @@
+[gd_scene format=3 uid="uid://hv1vep3q8oxx"]
+
+[ext_resource type="Texture2D" uid="uid://c4vjydsdc5b8u" path="res://Assets/ui/card/card_surface_1.png" id="1_surface"]
+[ext_resource type="Texture2D" uid="uid://d24c4btru3hdd" path="res://Assets/ui/card/card_surface_border_bw_2.png" id="2_border"]
+[ext_resource type="Texture2D" uid="uid://pctp23kqv7ln" path="res://Assets/illustrations/Cards_Scenes/scene 1.png" id="3_illustration"]
+[ext_resource type="FontFile" uid="uid://cgg5uqmw43a6w" path="res://Assets/fonts/GGBotNet Fonts CC0/Crayon Libre/OpenType (.otf)/CrayonLibre-Regular.otf" id="4_narrative_font"]
+[ext_resource type="Texture2D" uid="uid://dtbj5xi3b262s" path="res://Assets/ui/card/divider.png" id="5_divider"]
+[ext_resource type="FontFile" uid="uid://evvuq3mt2yen" path="res://Assets/fonts/GGBotNet Fonts CC0/Jupiteroid/OpenType (.otf)/Jupiteroid-Bold.otf" id="6_option_font"]
+[ext_resource type="PackedScene" uid="uid://515q527gw4l4" path="res://scenes/ui/card/cardthreatbar.tscn" id="7_lqdmo"]
+[ext_resource type="Texture2D" uid="uid://b5nbskqp48lr5" path="res://Assets/ui/card/option_button_normal.png" id="7_option_normal"]
+[ext_resource type="Texture2D" uid="uid://d2cd28kwx6cda" path="res://Assets/ui/card/health_actor_icon2.png" id="8_40c4e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_normal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
+bg_color = Color(0.427451, 0.294118, 0.14902, 0.22)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
+bg_color = Color(0.427451, 0.294118, 0.14902, 0.12)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.505882, 0.364706, 0.2, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CardViewResponsive" type="Control" unique_id=818702790]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 55.0
+offset_right = -1213.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardCenter" type="CenterContainer" parent="." unique_id=1613359146]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CardCanvas" type="Control" parent="CardCenter" unique_id=1580468386]
+custom_minimum_size = Vector2(680, 1032)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="CardSurface" type="TextureRect" parent="CardCenter/CardCanvas" unique_id=1203197421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_surface")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MainLayout" type="VBoxContainer" parent="CardCenter/CardCanvas" unique_id=1602579893]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 4.0
+offset_right = -11.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ImageRegion" type="Control" parent="CardCenter/CardCanvas/MainLayout" unique_id=782127018]
+custom_minimum_size = Vector2(0, 420)
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="IllustrationPlaceholder" type="ColorRect" parent="CardCenter/CardCanvas/MainLayout/ImageRegion" unique_id=1158475439]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0705882, 0.0627451, 0.054902, 1)
+
+[node name="IllustrationPanArea" type="Control" parent="CardCenter/CardCanvas/MainLayout/ImageRegion" unique_id=1998011688]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Illustration" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/IllustrationPanArea" unique_id=2105645744]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -348.0
+offset_top = -692.0
+offset_right = 1022.0
+offset_bottom = 651.0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("3_illustration")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DividerTop" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout" unique_id=245131685]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_divider")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionRegion" type="MarginContainer" parent="CardCenter/CardCanvas/MainLayout" unique_id=568796652]
+custom_minimum_size = Vector2(680, 280)
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="NarrativeText" type="RichTextLabel" parent="CardCenter/CardCanvas/MainLayout/DescriptionRegion" unique_id=1900943752]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.105882, 0.0784314, 0.0509804, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.827451, 0.3)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("4_narrative_font")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "El despertar no fue un tránsito. Fue una fractura.
+La conciencia regresó como un cristal que se astilla y, cuando abrió los ojos, ya estaba allí.
+
+Suspendido sobre una plataforma que parecía recordar haber sido otra cosa, en otro tiempo.
+Bajo la plataforma no había suelo. Solo un vacío tan inmenso que la palabra caída perdía todo su significado.
+
+El aire, rancio de eones, sabía a color olvidado.
+
+No era un sueño: eras el intruso en una arquitectura nunca diseñada para ojos humanos."
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="DividerBottom" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout" unique_id=639527414]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_divider")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DecisionsRegion" type="VBoxContainer" parent="CardCenter/CardCanvas/MainLayout" unique_id=1755943953]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(80, 0)
+theme_override_constants/separation = 4
+
+[node name="OptionButton01" type="Button" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion" unique_id=1006668715]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../OptionButton02")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=22276820]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 54.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText01" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01/OptionContent" unique_id=707660654]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_option_font")
+theme_override_font_sizes/font_size = 20
+text = "Saltar al vacío"
+vertical_alignment = 1
+
+[node name="OptionIndicator01" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=44329453]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 55.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("7_option_normal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="OptionButton02" type="Button" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion" unique_id=1765630138]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionButton01")
+focus_neighbor_bottom = NodePath("../OptionButton03")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1171711584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 54.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText02" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02/OptionContent" unique_id=385082613]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_option_font")
+theme_override_font_sizes/font_size = 20
+text = "Opción 2"
+vertical_alignment = 1
+
+[node name="OptionIndicator02" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1405350724]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 55.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("7_option_normal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="OptionButton03" type="Button" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion" unique_id=1676827549]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionButton02")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=1776068385]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 54.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText03" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03/OptionContent" unique_id=1155142545]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_option_font")
+theme_override_font_sizes/font_size = 20
+text = "Opción 3"
+vertical_alignment = 1
+
+[node name="OptionIndicator03" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=487293239]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 55.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("7_option_normal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardThreatBar" parent="CardCenter/CardCanvas" unique_id=1968213748 instance=ExtResource("7_lqdmo")]
+layout_mode = 1
+offset_left = 262.0
+offset_top = 756.0
+offset_right = 162.0
+offset_bottom = 276.0
+
+[node name="DamageIndicator" parent="CardCenter/CardCanvas/CardThreatBar" index="1" unique_id=1176558200]
+offset_left = 325.0
+offset_top = 118.0
+offset_right = 391.0
+offset_bottom = 184.0
+
+[node name="DamageIcon" parent="CardCenter/CardCanvas/CardThreatBar/DamageIndicator" index="0" unique_id=314111341]
+texture = ExtResource("8_40c4e")
+
+[node name="DamageText" parent="CardCenter/CardCanvas/CardThreatBar/DamageIndicator" index="1" unique_id=2058455563]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="CardBorder" type="TextureRect" parent="CardCenter/CardCanvas" unique_id=294561146]
+modulate = Color(0.69411767, 0.5372549, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -29.0
+offset_top = -48.0
+offset_right = 37.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_border")
+expand_mode = 1
+
+[editable path="CardCenter/CardCanvas/CardThreatBar"]

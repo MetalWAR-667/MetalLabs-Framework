@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dixp4avlvy51y"]
+
+[ext_resource type="Shader" uid="uid://dm21ubrq6io7k" path="res://scenes/ui/dice/dice.gdshader" id="1_lmngg"]
+[ext_resource type="Gradient" uid="uid://bk4q5hxscjkvs" path="res://Assets/ui/dice/dice_blue_ghost.tres" id="2_qccaj"]
+[ext_resource type="Texture2D" uid="uid://b5s30aghhriu8" path="res://Assets/ui/dice/d6.png" id="3_k6cfb"]
+[ext_resource type="Texture2D" uid="uid://kk8bru5x8a7e" path="res://Assets/ui/dice/d6_numbers.png" id="4_o5hrl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r42mt"]
+gradient = ExtResource("2_qccaj")
+fill_from = Vector2(0.01010101, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_57qmd"]
+shader = ExtResource("1_lmngg")
+shader_parameter/colormap = SubResource("GradientTexture2D_r42mt")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8ssc"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wppok"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgyw2"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajkbp"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cu34"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aipxp"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bswxq"]
+atlas = ExtResource("3_k6cfb")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8ssc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wppok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgyw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajkbp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cu34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aipxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bswxq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k1h1l"]
+gradient = ExtResource("2_qccaj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yf5fn"]
+shader = ExtResource("1_lmngg")
+shader_parameter/colormap = SubResource("GradientTexture2D_k1h1l")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4v7s"]
+atlas = ExtResource("4_o5hrl")
+region = Rect2(7, 249, 35, 33)
+
+[node name="DiceOverlay" type="Node2D" unique_id=1170217078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1141911594]
+texture_filter = 1
+material = SubResource("ShaderMaterial_57qmd")
+position = Vector2(25, 28)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+frame_progress = 0.66709024
+
+[node name="ResultSprite" type="Sprite2D" parent="." unique_id=2087893773]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_yf5fn")
+position = Vector2(25, 28)
+texture = SubResource("AtlasTexture_g4v7s")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1137433238]

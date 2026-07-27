@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://515q527gw4l4"]
+
+[ext_resource type="Texture2D" uid="uid://bgrcw4nl22fc6" path="res://Assets/ui/symbols/strength_icon.png" id="1_1lvyy"]
+[ext_resource type="Texture2D" uid="uid://ck6vraromsvf" path="res://Assets/ui/symbols/sanity_icon.png" id="2_tve35"]
+[ext_resource type="Texture2D" uid="uid://cvo4yt22c4v48" path="res://Assets/ui/symbols/attention_icon.png" id="3_skkn5"]
+[ext_resource type="Texture2D" uid="uid://b2vrjr8s67tgx" path="res://Assets/ui/symbols/health_icon.png" id="4_w28n3"]
+[ext_resource type="FontFile" uid="uid://cgg5uqmw43a6w" path="res://Assets/fonts/GGBotNet Fonts CC0/Crayon Libre/OpenType (.otf)/CrayonLibre-Regular.otf" id="5_1lvyy"]
+
+[node name="CardThreatBar" type="Control" unique_id=1968213748]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1397.0
+offset_bottom = -471.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1376406867]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 60.0
+
+[node name="AttentionIcon" type="Sprite2D" parent="HBoxContainer" unique_id=2018070466]
+unique_name_in_owner = true
+position = Vector2(27.500032, 27.500017)
+scale = Vector2(0.429688, 0.410448)
+texture = ExtResource("3_skkn5")
+
+[node name="SanityIcon" type="Sprite2D" parent="HBoxContainer" unique_id=337425096]
+unique_name_in_owner = true
+position = Vector2(80.50003, 27.500025)
+scale = Vector2(0.429688, 0.410448)
+texture = ExtResource("2_tve35")
+
+[node name="StrengthIcon" type="Sprite2D" parent="HBoxContainer" unique_id=2134405510]
+unique_name_in_owner = true
+position = Vector2(133.50003, 27.500025)
+scale = Vector2(0.429688, 0.410448)
+texture = ExtResource("1_1lvyy")
+
+[node name="DamageIndicator" type="Control" parent="." unique_id=1176558200]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 289.0
+offset_top = 317.0
+offset_right = 355.0
+offset_bottom = 383.0
+mouse_filter = 2
+
+[node name="DamageIcon" type="TextureRect" parent="DamageIndicator" unique_id=314111341]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_w28n3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DamageText" type="Label" parent="DamageIndicator" unique_id=2058455563]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_1lvyy")
+theme_override_font_sizes/font_size = 25
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

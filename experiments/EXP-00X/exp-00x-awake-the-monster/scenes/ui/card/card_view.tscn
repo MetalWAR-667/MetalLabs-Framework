@@ -1,0 +1,442 @@
+[gd_scene format=3 uid="uid://b8uxprpujjs0q"]
+
+[ext_resource type="Script" uid="uid://bclk0xxwwmssp" path="res://scripts/ui/card/card_view.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b6mdu0ll62hyq" path="res://Assets/ui/card/card_shadow.png" id="2_shadow"]
+[ext_resource type="Texture2D" uid="uid://dosxi0up0p148" path="res://Assets/ui/card/card_surface.png" id="3_surface"]
+[ext_resource type="Texture2D" uid="uid://dpp0b6u5yc64q" path="res://Assets/ui/card/illustration_frame.png" id="4_frame"]
+[ext_resource type="Texture2D" uid="uid://dtbj5xi3b262s" path="res://Assets/ui/card/divider.png" id="5_divider"]
+[ext_resource type="Texture2D" uid="uid://dxrshr8wuvuy2" path="res://Assets/ui/card/objective_panel.png" id="6_objective_panel"]
+[ext_resource type="Texture2D" uid="uid://b73upljuugntm" path="res://Assets/ui/card/damage_panel.png" id="7_damage_panel"]
+[ext_resource type="Texture2D" uid="uid://b5nbskqp48lr5" path="res://Assets/ui/card/option_button_normal.png" id="8_option_normal"]
+[ext_resource type="Texture2D" uid="uid://bibu3csk8tr4c" path="res://Assets/ui/card/option_button_hover.png" id="9_option_hover"]
+[ext_resource type="Texture2D" uid="uid://b831vxtqi1ac1" path="res://Assets/ui/card/option_button_pressed.png" id="10_option_pressed"]
+[ext_resource type="Texture2D" uid="uid://cvo4yt22c4v48" path="res://Assets/ui/symbols/attention_icon.png" id="11_attention"]
+[ext_resource type="Texture2D" uid="uid://b2vrjr8s67tgx" path="res://Assets/ui/symbols/health_icon.png" id="12_health"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_normal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
+bg_color = Color(0.0862745, 0.0470588, 0.0235294, 0.28)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
+bg_color = Color(0.176471, 0.117647, 0.0705882, 0.16)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disabled"]
+bg_color = Color(0.113725, 0.0901961, 0.0666667, 0.08)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.286275, 0.196078, 0.105882, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="CardView" type="Control" unique_id=1898409080]
+custom_minimum_size = Vector2(560, 830)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 560.0
+offset_bottom = 830.0
+mouse_filter = 1
+script = ExtResource("1_script")
+option_indicator_normal = ExtResource("8_option_normal")
+option_indicator_hover = ExtResource("9_option_hover")
+option_indicator_pressed = ExtResource("10_option_pressed")
+
+[node name="CardShadow" type="TextureRect" parent="." unique_id=1569268650]
+modulate = Color(1, 1, 1, 0.42)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -25.0
+offset_right = 28.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_shadow")
+expand_mode = 1
+
+[node name="CardSurface" type="NinePatchRect" parent="." unique_id=1896869251]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_surface")
+region_rect = Rect2(0, 0, 1024, 1536)
+patch_margin_left = 56
+patch_margin_top = 56
+patch_margin_right = 56
+patch_margin_bottom = 56
+
+[node name="ContentMargin" type="MarginContainer" parent="." unique_id=2048760274]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = -23.5
+offset_right = -52.0
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="ContentMargin" unique_id=1829610464]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ImageRegion" type="Control" parent="ContentMargin/MainLayout" unique_id=1271635434]
+custom_minimum_size = Vector2(0, 248)
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="IllustrationPlaceholder" type="ColorRect" parent="ContentMargin/MainLayout/ImageRegion" unique_id=1430418732]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 78.5
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0705882, 0.0627451, 0.054902, 1)
+
+[node name="Illustration" type="TextureRect" parent="ContentMargin/MainLayout/ImageRegion" unique_id=2129222012]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="IllustrationFrame" type="NinePatchRect" parent="ContentMargin/MainLayout/ImageRegion" unique_id=2137988730]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = 62.5
+offset_right = 3.0
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_frame")
+region_rect = Rect2(25.918228, 55.54129, 976.5551, 1390.9779)
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 3
+patch_margin_bottom = 12
+
+[node name="DescriptionRegion" type="MarginContainer" parent="ContentMargin/MainLayout" unique_id=1351518732]
+custom_minimum_size = Vector2(0, 136)
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="NarrativeText" type="RichTextLabel" parent="ContentMargin/MainLayout/DescriptionRegion" unique_id=526580794]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.105882, 0.0784314, 0.0509804, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.827451, 0.3)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/normal_font_size = 19
+text = "El despertar no fue un tránsito, sino una fractura.
+
+El aire era una sustancia equivocada. Bajo sus pies, el vacío parecía extenderse hacia abajo y, al mismo tiempo, hacia dentro.
+
+
+
+
+
+"
+fit_content = true
+scroll_active = false
+
+[node name="Divider" type="TextureRect" parent="ContentMargin/MainLayout" unique_id=704975501]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_divider")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DecisionsRegion" type="VBoxContainer" parent="ContentMargin/MainLayout" unique_id=106017925]
+custom_minimum_size = Vector2(0, 176)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="OptionButton01" type="Button" parent="ContentMargin/MainLayout/DecisionsRegion" unique_id=1868938181]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../OptionButton02")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton01" unique_id=1207478500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionIndicator01" type="TextureRect" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton01/OptionContent" unique_id=942114581]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_option_normal")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="OptionText01" type="Label" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton01/OptionContent" unique_id=1633995493]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_font_sizes/font_size = 19
+text = "Saltar al vacío"
+vertical_alignment = 1
+
+[node name="OptionButton02" type="Button" parent="ContentMargin/MainLayout/DecisionsRegion" unique_id=519084779]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionButton01")
+focus_neighbor_bottom = NodePath("../OptionButton03")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton02" unique_id=936316950]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionIndicator02" type="TextureRect" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton02/OptionContent" unique_id=1845684238]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_option_normal")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="OptionText02" type="Label" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton02/OptionContent" unique_id=1761335966]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_font_sizes/font_size = 19
+text = "Aferrarse a la plataforma"
+vertical_alignment = 1
+
+[node name="OptionButton03" type="Button" parent="ContentMargin/MainLayout/DecisionsRegion" unique_id=1301137041]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionButton02")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+
+[node name="OptionContent" type="HBoxContainer" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton03" unique_id=2049035676]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionIndicator03" type="TextureRect" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton03/OptionContent" unique_id=682096884]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_option_normal")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="OptionText03" type="Label" parent="ContentMargin/MainLayout/DecisionsRegion/OptionButton03/OptionContent" unique_id=900983826]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_font_sizes/font_size = 19
+text = "Llamar a aquello que sueña"
+vertical_alignment = 1
+
+[node name="ThreatRow" type="HBoxContainer" parent="." unique_id=181971174]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 0
+offset_left = 52.0
+offset_top = 579.5
+offset_right = 508.0
+offset_bottom = 667.5
+theme_override_constants/separation = 10
+
+[node name="ObjectivePanel" type="NinePatchRect" parent="ThreatRow" unique_id=832857019]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_objective_panel")
+patch_margin_left = 42
+patch_margin_top = 28
+patch_margin_right = 42
+patch_margin_bottom = 28
+
+[node name="ObjectiveMargin" type="MarginContainer" parent="ThreatRow/ObjectivePanel" unique_id=1325722407]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 17.0
+offset_right = -28.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ObjectiveContent" type="HBoxContainer" parent="ThreatRow/ObjectivePanel/ObjectiveMargin" unique_id=941776339]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ObjectiveIcon" type="TextureRect" parent="ThreatRow/ObjectivePanel/ObjectiveMargin/ObjectiveContent" unique_id=1393415]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("11_attention")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ObjectiveText" type="Label" parent="ThreatRow/ObjectivePanel/ObjectiveMargin/ObjectiveContent" unique_id=633449313]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_font_sizes/font_size = 20
+text = "ATENCIÓN ×2"
+vertical_alignment = 1
+
+[node name="DamagePanel" type="NinePatchRect" parent="ThreatRow" unique_id=426027047]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("7_damage_panel")
+patch_margin_left = 42
+patch_margin_top = 28
+patch_margin_right = 42
+patch_margin_bottom = 28
+
+[node name="DamageMargin" type="MarginContainer" parent="ThreatRow/DamagePanel" unique_id=1398097644]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 17.0
+offset_right = -28.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DamageContent" type="HBoxContainer" parent="ThreatRow/DamagePanel/DamageMargin" unique_id=783061969]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="DamageIcon" type="TextureRect" parent="ThreatRow/DamagePanel/DamageMargin/DamageContent" unique_id=818615199]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("12_health")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="DamageText" type="Label" parent="ThreatRow/DamagePanel/DamageMargin/DamageContent" unique_id=560310223]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.152941, 0.0509804, 0.0352941, 1)
+theme_override_font_sizes/font_size = 20
+text = "DAÑO 1"
+vertical_alignment = 1

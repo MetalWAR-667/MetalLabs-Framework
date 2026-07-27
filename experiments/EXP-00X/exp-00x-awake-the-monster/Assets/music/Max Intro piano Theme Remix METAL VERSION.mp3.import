@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cjiwit60ir407"
+path="res://.godot/imported/Max Intro piano Theme Remix METAL VERSION.mp3-4b6312efa14dd504350f8888de932237.mp3str"
+
+[deps]
+
+source_file="res://Assets/music/Max Intro piano Theme Remix METAL VERSION.mp3"
+dest_files=["res://.godot/imported/Max Intro piano Theme Remix METAL VERSION.mp3-4b6312efa14dd504350f8888de932237.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

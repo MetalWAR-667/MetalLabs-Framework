@@ -1,0 +1,283 @@
+[gd_scene format=3 uid="uid://c5cm013uuxy6a"]
+
+[ext_resource type="Texture2D" uid="uid://c4vjydsdc5b8u" path="res://Assets/ui/card/card_surface_1.png" id="1_evpg1"]
+[ext_resource type="Texture2D" uid="uid://d24c4btru3hdd" path="res://Assets/ui/card/card_surface_border_bw_2.png" id="2_4lcm1"]
+[ext_resource type="Texture2D" uid="uid://pctp23kqv7ln" path="res://Assets/illustrations/Cards_Scenes/scene 1.png" id="2_66xkb"]
+[ext_resource type="FontFile" uid="uid://cgg5uqmw43a6w" path="res://Assets/fonts/GGBotNet Fonts CC0/Crayon Libre/OpenType (.otf)/CrayonLibre-Regular.otf" id="4_evpg1"]
+[ext_resource type="Texture2D" uid="uid://dtbj5xi3b262s" path="res://Assets/ui/card/divider.png" id="5_5nb7l"]
+[ext_resource type="FontFile" uid="uid://evvuq3mt2yen" path="res://Assets/fonts/GGBotNet Fonts CC0/Jupiteroid/OpenType (.otf)/Jupiteroid-Bold.otf" id="6_4lcm1"]
+[ext_resource type="Texture2D" uid="uid://b831vxtqi1ac1" path="res://Assets/ui/card/option_button_pressed.png" id="6_66xkb"]
+[ext_resource type="Texture2D" uid="uid://b5nbskqp48lr5" path="res://Assets/ui/card/option_button_normal.png" id="6_knhvm"]
+[ext_resource type="Texture2D" uid="uid://bibu3csk8tr4c" path="res://Assets/ui/card/option_button_hover.png" id="7_5nb7l"]
+[ext_resource type="Texture2D" uid="uid://cvo4yt22c4v48" path="res://Assets/ui/symbols/attention_icon.png" id="10_hn64b"]
+[ext_resource type="Texture2D" uid="uid://ck6vraromsvf" path="res://Assets/ui/symbols/sanity_icon.png" id="11_15cuo"]
+[ext_resource type="Texture2D" uid="uid://bgrcw4nl22fc6" path="res://Assets/ui/symbols/strength_icon.png" id="12_riy2k"]
+[ext_resource type="Texture2D" uid="uid://b2vrjr8s67tgx" path="res://Assets/ui/symbols/health_icon.png" id="13_15cuo"]
+
+[node name="Card2" type="Control" unique_id=1874480529]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardShadow" type="TextureRect" parent="." unique_id=170015663]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_top = 16.0
+offset_right = -1254.0
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_evpg1")
+expand_mode = 1
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=474901193]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 43.0
+offset_top = 24.0
+offset_right = -1251.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ImageRegion" type="Control" parent="MainLayout" unique_id=81599256]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="IllustrationPlaceholder" type="ColorRect" parent="MainLayout/ImageRegion" unique_id=1344894246]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = -13.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0705882, 0.0627451, 0.054902, 1)
+
+[node name="Illustration" type="TextureRect" parent="MainLayout/ImageRegion" unique_id=1145563394]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -3.0
+offset_right = 322.15942
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_66xkb")
+expand_mode = 3
+
+[node name="Divider2" type="TextureRect" parent="MainLayout" unique_id=90376]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_5nb7l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionRegion" type="MarginContainer" parent="MainLayout" unique_id=526551712]
+custom_minimum_size = Vector2(0, 136)
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="NarrativeText" type="RichTextLabel" parent="MainLayout/DescriptionRegion" unique_id=478086172]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.105882, 0.0784314, 0.0509804, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.827451, 0.3)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("4_evpg1")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "El despertar no fue un transito. Fue una fractura.
+La conciencia regresó como un cristal que se astilla y, cuando abrió los ojos, ya estaba allí.
+
+Suspendido sobre una plataforma que parecía recordar haber sido otra cosa, en otro tiempo.
+Bajo la plataforma no había suelo. Solo un vacío tan inmenso que la palabra caída perdía todo su significado.
+
+El aire, rancio de eones, sabía a color olvidado.
+
+No era un sueño: eras el intruso en una arquitectura nunca diseñada para ojos humanos."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="MainLayout" unique_id=1162959312]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_5nb7l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DecisionsRegion" type="VBoxContainer" parent="MainLayout" unique_id=964392910]
+custom_minimum_size = Vector2(0, 176)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Option_Button_01" type="TextureButton" parent="." unique_id=1000831191]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 823.0
+offset_right = 180.0
+offset_bottom = 869.0
+texture_normal = ExtResource("6_knhvm")
+texture_pressed = ExtResource("6_66xkb")
+texture_hover = ExtResource("7_5nb7l")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="OptionContent_01" type="HBoxContainer" parent="Option_Button_01" unique_id=1073730161]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 9.0
+offset_right = 547.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText_01" type="Label" parent="Option_Button_01/OptionContent_01" unique_id=87492247]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_4lcm1")
+theme_override_font_sizes/font_size = 20
+text = "Saltar al vacío"
+vertical_alignment = 1
+
+[node name="Option_Button_02" type="TextureButton" parent="." unique_id=1050761252]
+visible = false
+layout_mode = 0
+offset_left = 130.0
+offset_top = 868.0
+offset_right = 181.0
+offset_bottom = 914.0
+texture_normal = ExtResource("6_knhvm")
+texture_pressed = ExtResource("6_66xkb")
+texture_hover = ExtResource("7_5nb7l")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="OptionContent_02" type="HBoxContainer" parent="Option_Button_02" unique_id=418596241]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 9.0
+offset_right = 547.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText_02" type="Label" parent="Option_Button_02/OptionContent_02" unique_id=91205044]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_4lcm1")
+theme_override_font_sizes/font_size = 20
+text = "Opcion 2"
+vertical_alignment = 1
+
+[node name="Option_Button_03" type="TextureButton" parent="." unique_id=210537278]
+visible = false
+layout_mode = 0
+offset_left = 129.0
+offset_top = 914.0
+offset_right = 180.0
+offset_bottom = 960.0
+texture_normal = ExtResource("6_knhvm")
+texture_pressed = ExtResource("6_66xkb")
+texture_hover = ExtResource("7_5nb7l")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="OptionContent_02" type="HBoxContainer" parent="Option_Button_03" unique_id=1271755439]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 9.0
+offset_right = 547.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText_02" type="Label" parent="Option_Button_03/OptionContent_02" unique_id=1910317980]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("6_4lcm1")
+theme_override_font_sizes/font_size = 20
+text = "Opcion 3"
+vertical_alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1415558245]
+modulate = Color(1, 0.7764706, 0.49803922, 0.98039216)
+self_modulate = Color(1, 1, 1, 0.9843137)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 4.0
+offset_right = 680.0
+offset_bottom = 1032.0
+texture = ExtResource("2_4lcm1")
+region_rect = Rect2(17.976349, 48.072906, 984.9884, 1413.1539)
+
+[node name="Amenaza1" type="Sprite2D" parent="." unique_id=1487458727]
+position = Vector2(113, 455.00003)
+scale = Vector2(0.4296876, 0.41044778)
+texture = ExtResource("10_hn64b")
+
+[node name="Amenaza2" type="Sprite2D" parent="." unique_id=317716575]
+position = Vector2(169, 455)
+scale = Vector2(0.4296876, 0.41044778)
+texture = ExtResource("11_15cuo")
+
+[node name="Amenaza3" type="Sprite2D" parent="." unique_id=1584083940]
+position = Vector2(225.99998, 455)
+scale = Vector2(0.4296876, 0.41044778)
+texture = ExtResource("12_riy2k")
+
+[node name="Damage_Icon" type="Sprite2D" parent="." unique_id=370713949]
+position = Vector2(598.04297, 915.2388)
+scale = Vector2(0.5873936, 0.57522315)
+texture = ExtResource("13_15cuo")
+
+[node name="OptionContent_02" type="HBoxContainer" parent="Damage_Icon" unique_id=473949933]
+offset_left = -15.395004
+offset_top = -12.584299
+offset_right = 16.951248
+offset_bottom = 15.231009
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="OptionText_02" type="Label" parent="Damage_Icon/OptionContent_02" unique_id=168625680]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_4lcm1")
+theme_override_font_sizes/font_size = 20
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

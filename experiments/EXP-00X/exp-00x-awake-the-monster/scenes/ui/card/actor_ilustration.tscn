@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://muqoqwertsja"]
+
+[ext_resource type="Texture2D" uid="uid://do5jf0wsgg2in" path="res://Assets/illustrations/Actors/jack_dream.png" id="1_cpmsv"]
+[ext_resource type="FontFile" uid="uid://cgg5uqmw43a6w" path="res://Assets/fonts/GGBotNet Fonts CC0/Crayon Libre/OpenType (.otf)/CrayonLibre-Regular.otf" id="2_ohngy"]
+
+[node name="ActorIlustration" type="Control" unique_id=1238908066]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1598.0
+offset_bottom = -650.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PortraitTexture" type="TextureRect" parent="." unique_id=1145605436]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_cpmsv")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NameLabel" type="Label" parent="PortraitTexture" unique_id=1252249937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_right = -2.0
+offset_bottom = -393.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ohngy")
+theme_override_font_sizes/font_size = 25
+text = "Jack \"The Dreamer\""
+horizontal_alignment = 1
+vertical_alignment = 1
