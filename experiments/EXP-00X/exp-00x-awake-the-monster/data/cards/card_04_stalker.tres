@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/card_data.gd" id="1_card_data"]
+[ext_resource type="Texture2D" path="res://Assets/illustrations/Cards_Scenes/scene 4.png" id="2_illustration"]
+[ext_resource type="Script" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
+
+[sub_resource type="Resource" id="CardOption_confront"]
+script = ExtResource("3_card_option")
+text = "Hacer frente a la aberración."
+required_stat = 3
+required_successes = 2
+damage = 2
+
+[sub_resource type="Resource" id="CardOption_sneak"]
+script = ExtResource("3_card_option")
+text = "Deslizarse por la sombra mientras la bestia se alimenta."
+required_stat = 1
+damage = 1
+requires_sacrificed_item = true
+
+[resource]
+script = ExtResource("1_card_data")
+illustration = ExtResource("2_illustration")
+description = "Tras el umbral, la arquitectura se vuelve obscena. Las paredes de piedra parecen palpitar con una vida lenta y enferma, y el aire huele a cobre y a encierro milenario. No has caminado mucho cuando lo ves: una silueta que se desprende de las sombras, compuesta por una amalgama de extremidades residuales y fragmentos de cosas que alguna vez tuvieron forma.
+Es el Acechador, el parásito de los que cruzan. Se alimenta de lo que los viajeros traen del mundo despierto."
+options = Array[ExtResource("3_card_option")]([SubResource("CardOption_confront"), SubResource("CardOption_sneak")])

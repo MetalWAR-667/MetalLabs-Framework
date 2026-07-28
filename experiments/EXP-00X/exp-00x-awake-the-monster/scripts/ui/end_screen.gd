@@ -1,6 +1,6 @@
 extends Control
 
-const HUD_SCENE_PATH := "res://scenes/ui/HUD.tscn"
+const ITEM_SELECTION_SCENE_PATH := "res://scenes/ui/menu/ItemSelectionMenu.tscn"
 const MAIN_MENU_SCENE_PATH := "res://scenes/ui/menu/MainMenu.tscn"
 
 @onready var play_again_button: Button = %PlayAgainButton
@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _on_play_again_pressed() -> void:
-	get_tree().change_scene_to_file(HUD_SCENE_PATH)
+	get_tree().change_scene_to_file(ITEM_SELECTION_SCENE_PATH)
 
 
 func _on_back_to_menu_pressed() -> void:

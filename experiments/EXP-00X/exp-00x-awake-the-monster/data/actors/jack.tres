@@ -7,6 +7,7 @@
 script = ExtResource("1_actor_data")
 display_name = "Jack \"The Dreamer\""
 portrait = ExtResource("2_portrait")
+dice_faces = Array[String](["FUERZA", "CORDURA", "ATENCIÓN", "CORDURA", "ATENCIÓN", "CORDURA"])
 health = 18
 attention = 3
 sanity = 3

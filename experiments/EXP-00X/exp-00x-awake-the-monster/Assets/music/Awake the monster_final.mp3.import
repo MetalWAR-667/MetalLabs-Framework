@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ckg8dw682wncu"
+path="res://.godot/imported/Awake the monster_final.mp3-a36ea6bb3cc40fa7fdc062245fb45bfc.mp3str"
+
+[deps]
+
+source_file="res://Assets/music/Awake the monster_final.mp3"
+dest_files=["res://.godot/imported/Awake the monster_final.mp3-a36ea6bb3cc40fa7fdc062245fb45bfc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

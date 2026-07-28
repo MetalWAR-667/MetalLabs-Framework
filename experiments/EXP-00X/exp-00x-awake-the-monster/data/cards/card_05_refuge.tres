@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/card_data.gd" id="1_card_data"]
+[ext_resource type="Texture2D" path="res://Assets/illustrations/Cards_Scenes/scene 5.png" id="2_illustration"]
+[ext_resource type="Script" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
+
+[sub_resource type="Resource" id="CardOption_accept_help"]
+script = ExtResource("3_card_option")
+text = "Aceptar su ayuda antes de que el frío alcance la hoguera."
+required_stat = 2
+damage = 1
+
+[resource]
+script = ExtResource("1_card_data")
+illustration = ExtResource("2_illustration")
+description = "El pasillo de carne y piedra desemboca en una estancia que desafía la lógica del tormento previo. Aquí, las paredes no palpitan; están cubiertas por una biblioteca de volúmenes cuyas páginas son de aire y cuyos lomos están cosidos con hilos de memoria. En el centro, una pequeña hoguera de llamas azules consume sombras en lugar de madera.
+Junto al fuego, una figura se ovilla con una quietud de siglos. Es un hombre, o el envoltorio de uno, cuya piel tiene la textura del pergamino viejo y cuya mirada parece haber visto el envés de la realidad durante demasiado tiempo.
+
+—No eres el primero en caer —dice, y su voz suena como el roce de hojas secas—. Pero podrías ser el primero en no disolverse. Este lugar es un error en la trama del sueño. Un refugio. Pero el sueño no tolera los vacíos por mucho tiempo. Algo está tratando de filtrarse por las grietas del techo.
+
+El Fugitivo Pálido se incorpora con una lentitud geológica y te ofrece una mano temblorosa. No es un guerrero, sino un testigo. Si lo aceptas, cargará con tu miedo, pero tu presencia en el sueño se volverá el doble de pesada."
+options = Array[ExtResource("3_card_option")]([SubResource("CardOption_accept_help")])

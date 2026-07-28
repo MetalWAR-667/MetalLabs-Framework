@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://jao6bafyrh6k"]
+[gd_scene load_steps=14 format=3 uid="uid://jao6bafyrh6k"]
 
 [ext_resource type="PackedScene" uid="uid://hv1vep3q8oxx" path="res://scenes/ui/card/card_view_responsive.tscn" id="1_kw0id"]
 [ext_resource type="PackedScene" uid="uid://d2jdeo7d4bqsf" path="res://scenes/ui/card/actor_panel_responsive.tscn" id="2_atyv1"]
@@ -9,6 +9,10 @@
 [ext_resource type="Resource" path="res://data/actors/jack.tres" id="7_jack"]
 [ext_resource type="Resource" path="res://data/actors/pale_refugee.tres" id="8_pale_refugee"]
 [ext_resource type="Resource" path="res://data/cards/card_01_awaken.tres" id="9_initial_card"]
+[ext_resource type="Resource" path="res://data/cards/card_02_descent.tres" id="10_second_card"]
+[ext_resource type="Resource" path="res://data/cards/card_03_threshold.tres" id="11_third_card"]
+[ext_resource type="Resource" path="res://data/cards/card_04_stalker.tres" id="12_fourth_card"]
+[ext_resource type="Resource" path="res://data/cards/card_05_refuge.tres" id="13_fifth_card"]
 
 [node name="HUD" type="Control" unique_id=1972780713]
 layout_mode = 3
@@ -21,6 +25,10 @@ script = ExtResource("5_hud_script")
 player_data = ExtResource("7_jack")
 companion_data = ExtResource("8_pale_refugee")
 initial_card = ExtResource("9_initial_card")
+second_card = ExtResource("10_second_card")
+third_card = ExtResource("11_third_card")
+fourth_card = ExtResource("12_fourth_card")
+fifth_card = ExtResource("13_fifth_card")
 
 [node name="BackgroundFX" parent="." unique_id=2088691505 instance=ExtResource("4_ig75s")]
 layout_mode = 1

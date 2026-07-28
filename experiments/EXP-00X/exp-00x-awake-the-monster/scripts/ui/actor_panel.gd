@@ -20,3 +20,7 @@ func set_actor(actor_data: ActorData) -> void:
 	attention_value.text = str(actor_data.attention)
 	sanity_value.text = str(actor_data.sanity)
 	strength_value.text = str(actor_data.strength)
+
+
+func set_health(health: int) -> void:
+	health_value.text = str(health)

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/card_data.gd" id="1_card_data"]
+[ext_resource type="Texture2D" path="res://Assets/illustrations/Cards_Scenes/scene 3.png" id="2_illustration"]
+[ext_resource type="Script" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
+
+[sub_resource type="Resource" id="CardOption_leave_item"]
+script = ExtResource("3_card_option")
+text = "Dejar el objeto en el umbral y cruzar."
+
+[sub_resource type="Resource" id="CardOption_retreat"]
+script = ExtResource("3_card_option")
+text = "Aferrarse a lo propio y retroceder."
+
+[sub_resource type="Resource" id="CardOption_force"]
+script = ExtResource("3_card_option")
+text = "Imponer la propia voluntad sobre el umbral."
+required_stat = 2
+required_successes = 2
+damage = 2
+
+[resource]
+script = ExtResource("1_card_data")
+illustration = ExtResource("2_illustration")
+description = "La bruma se rasga. Por un instante, el caos se detiene.
+Ante ti, una estructura emerge del vacío. No es una construcción hecha por manos humanas. Sus líneas no siguen la geometría que conoces, pero hay algo en su forma que sugiere un propósito: una entrada, un paso, un límite.
+
+El siseo se apaga. Los susurros se retiran, como si aquel lugar les infundiera un respeto que no muestran ante ti.
+Frente al umbral, aguarda una inscripción. No está grabada en piedra ni metal, sino en la sustancia misma de la arquitectura onírica. Cuando la miras, las palabras no se leen: se recuerdan.
+\"Quien cruce este umbral deberá abandonar algo de sí mismo.\"
+No hay amenaza visible. No hay susurros. Solo la certeza de que aquella puerta no se abre con llaves, sino con pérdidas.
+Sientes el peso del objeto que llevas contigo. No sabes si lo necesitarás más adelante. Pero sabes que, si lo guardas, este umbral no se abrirá."
+options = Array[ExtResource("3_card_option")]([SubResource("CardOption_leave_item"), SubResource("CardOption_retreat"), SubResource("CardOption_force")])

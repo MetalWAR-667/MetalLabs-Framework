@@ -27,17 +27,50 @@ position = Vector2(27.500032, 27.500017)
 scale = Vector2(0.429688, 0.410448)
 texture = ExtResource("3_skkn5")
 
+[node name="AttentionAmount" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 51.0
+offset_top = 13.0
+offset_right = 91.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("5_1lvyy")
+theme_override_font_sizes/font_size = 22
+text = "×1"
+vertical_alignment = 1
+
 [node name="SanityIcon" type="Sprite2D" parent="HBoxContainer" unique_id=337425096]
 unique_name_in_owner = true
-position = Vector2(80.50003, 27.500025)
+position = Vector2(110.50003, 27.500025)
 scale = Vector2(0.429688, 0.410448)
 texture = ExtResource("2_tve35")
 
+[node name="SanityAmount" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 134.0
+offset_top = 13.0
+offset_right = 174.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("5_1lvyy")
+theme_override_font_sizes/font_size = 22
+text = "×1"
+vertical_alignment = 1
+
 [node name="StrengthIcon" type="Sprite2D" parent="HBoxContainer" unique_id=2134405510]
 unique_name_in_owner = true
-position = Vector2(133.50003, 27.500025)
+position = Vector2(193.50003, 27.500025)
 scale = Vector2(0.429688, 0.410448)
 texture = ExtResource("1_1lvyy")
+
+[node name="StrengthAmount" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 217.0
+offset_top = 13.0
+offset_right = 257.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("5_1lvyy")
+theme_override_font_sizes/font_size = 22
+text = "×1"
+vertical_alignment = 1
 
 [node name="DamageIndicator" type="Control" parent="." unique_id=1176558200]
 unique_name_in_owner = true

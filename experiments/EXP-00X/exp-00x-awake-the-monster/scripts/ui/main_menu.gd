@@ -1,6 +1,6 @@
 extends Control
 
-const HUD_SCENE_PATH := "res://scenes/ui/HUD.tscn"
+const ITEM_SELECTION_SCENE_PATH := "res://scenes/ui/menu/ItemSelectionMenu.tscn"
 
 @onready var new_game_button: Button = %NewGameButton
 @onready var continue_button: Button = %ContinueButton
@@ -17,7 +17,7 @@ func _ready() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	get_tree().change_scene_to_file(HUD_SCENE_PATH)
+	get_tree().change_scene_to_file(ITEM_SELECTION_SCENE_PATH)
 
 
 func _on_fullscreen_pressed() -> void:

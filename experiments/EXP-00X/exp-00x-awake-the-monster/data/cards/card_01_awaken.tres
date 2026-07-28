@@ -1,7 +1,12 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://c870ltryhv23l"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://c870ltryhv23l"]
 
 [ext_resource type="Script" uid="uid://dyuxcwuhjyju3" path="res://scripts/data/card_data.gd" id="1_card_data"]
 [ext_resource type="Texture2D" uid="uid://pctp23kqv7ln" path="res://Assets/illustrations/Cards_Scenes/scene 1.png" id="2_illustration"]
+[ext_resource type="Script" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
+
+[sub_resource type="Resource" id="CardOption_awaken"]
+script = ExtResource("3_card_option")
+text = "Arrojarse al vacío."
 
 [resource]
 script = ExtResource("1_card_data")
@@ -18,4 +23,4 @@ El aire — si es que aquel hálito estancado de eones merecía ese nombre— se
 No estaba soñando.
 
 Era el intruso de una arquitectura onírica que jamás fue diseñada para ser contemplada por ojos humanos."
-option_labels = Array[String](["Arrojarse al vacío."])
+options = Array[ExtResource("3_card_option")]([SubResource("CardOption_awaken")])
