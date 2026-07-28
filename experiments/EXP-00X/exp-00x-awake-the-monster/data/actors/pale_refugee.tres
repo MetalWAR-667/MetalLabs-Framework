@@ -7,6 +7,7 @@
 script = ExtResource("1_actor_data")
 display_name = "Fugitivo Pálido"
 portrait = ExtResource("2_portrait")
+dice_faces = Array[String](["FUERZA", "CORDURA", "CORDURA", "CORDURA", "ATENCIÓN", "CORDURA"])
 health = 10
 attention = 2
 sanity = 2

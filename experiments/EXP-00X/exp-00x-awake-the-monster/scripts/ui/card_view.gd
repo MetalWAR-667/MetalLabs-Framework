@@ -63,6 +63,14 @@ func set_option_enabled(option_index: int, enabled: bool) -> void:
 	option_buttons[option_index].disabled = not enabled
 
 
+func set_option_texts(texts: Array[String]) -> void:
+	for index in range(option_buttons.size()):
+		var has_option := index < texts.size() and not texts[index].is_empty()
+		option_buttons[index].visible = has_option
+		option_buttons[index].disabled = not has_option
+		option_labels[index].text = texts[index] if has_option else ""
+
+
 func show_threat(required_stat: CardOptionData.StatType, amount: int, damage: int) -> void:
 	threat_bar.show()
 	attention_icon.visible = required_stat == CardOptionData.StatType.ATTENTION

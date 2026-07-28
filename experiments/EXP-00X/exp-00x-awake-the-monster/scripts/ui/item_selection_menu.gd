@@ -1,6 +1,6 @@
 extends Control
 
-const HUD_SCENE := preload("res://scenes/ui/HUD.tscn")
+const HUD_SCENE := preload("res://scenes/ui/hud.tscn")
 
 @export var food_data: ItemData
 @export var shotgun_data: ItemData

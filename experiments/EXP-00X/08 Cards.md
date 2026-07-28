@@ -240,24 +240,24 @@ Descripción: Una melodía de piano minimalista y melancólica, muy lejana, envu
 ## Opciones
 
 Opción A: Tender la mano al Fugitivo
-Texto de la acción: "Aceptar su ayuda antes de que el frío alcance la hoguera."
-Amenaza: El Frío que se Filtra
-El techo de la biblioteca se agrieta. Un frío antinatural, una escarcha negra, comienza a descender hacia la hoguera. Debes contenerla antes de que apague vuestro único respiro.
-Símbolo objetivo: CORDURA
-Cantidad base: 1
-Daño por ronda fallida: 1 Salud
-Participantes: Solo el protagonista. El Fugitivo todavía no es aliado.
-Consecuencias (Éxito):
+Texto de la acción: "Aceptar su ayuda antes de abandonar el refugio."
+Resolución:
+- No contiene Amenaza.
+- No se lanzan dados.
+- El Fugitivo se incorpora siempre.
 add_ally: fugitivo_palido
 set_ally_current_health: max_health - 1
-Texto: "Contienes la escarcha antes de que alcance el fuego. El hombre se desvanece y notas un peso nuevo en tu costado. Ahora sois dos, pero el sueño os vigila con el doble de intensidad."
 set_next_card: card_006_icnofago
-Consecuencias (Ronda fallida):
-end_encounter: true
-Texto: "La escarcha apaga la hoguera. Cuando la oscuridad retrocede, el Fugitivo ya no está. Continúas sin él."
+
+Opción B: Rechazar su ayuda
+Texto de la acción: "Apartarse del fuego y continuar solo."
+Resolución:
+- No contiene Amenaza.
+- No se lanzan dados.
+- El Fugitivo no se incorpora.
 set_next_card: card_006_icnofago
-Nota de resolución:
-La ronda fallida aplica una sola vez el daño visible de la carta, termina el encuentro y no incorpora al aliado.
+
+La escarcha permanece como parte de la atmósfera del refugio, pero no constituye una Amenaza mecánica.
 La selección de participantes y el descanso se explicarán en cartas posteriores, cuando el jugador ya disponga de un aliado.
 Ficha Técnica del Aliado: El Fugitivo Pálido
 Dado del Fugitivo:
@@ -268,10 +268,10 @@ Cara 4: Cordura
 Cara 5: Atención
 Cara 6: Cordura
 Auditoría de Mecánicas
-Incorporación de aliado: Depende de superar una Amenaza, conforme a 03_core_rules.
-Fracaso: La ronda fallida termina el encuentro, no incorpora al Fugitivo y permite continuar.
-Alcance tutorial: Esta carta presenta la incorporación condicional. No explica todavía selección de participantes ni descanso.
-Sin "Combate" separado: La escarcha negra es una Amenaza de Cordura, reforzando que criaturas, fenómenos y miedo utilizan el mismo sistema.
+Incorporación de aliado: Depende exclusivamente de la decisión explícita del jugador.
+Rechazo: Permite continuar sin incorporar al Fugitivo.
+Alcance tutorial: Esta carta presenta una decisión binaria y prepara el estado runtime del aliado. No explica todavía selección de participantes ni descanso.
+Sin Amenaza: La primera utilización mecánica del aliado se reserva para la Carta 06.
 
 06. El Icnófago de Nácar
 ID: card_006_icnofago

@@ -1,6 +1,6 @@
 extends Control
 
-const ITEM_SELECTION_SCENE_PATH := "res://scenes/ui/menu/ItemSelectionMenu.tscn"
+const ITEM_SELECTION_SCENE_PATH := "res://scenes/ui/menu/item_selection_menu.tscn"
 
 @onready var new_game_button: Button = %NewGameButton
 @onready var continue_button: Button = %ContinueButton

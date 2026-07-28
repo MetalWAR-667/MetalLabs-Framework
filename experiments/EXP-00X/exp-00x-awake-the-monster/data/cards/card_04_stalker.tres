@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cjghdmrv1cghk"]
 
-[ext_resource type="Script" path="res://scripts/data/card_data.gd" id="1_card_data"]
-[ext_resource type="Texture2D" path="res://Assets/illustrations/Cards_Scenes/scene 4.png" id="2_illustration"]
-[ext_resource type="Script" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
+[ext_resource type="Script" uid="uid://dyuxcwuhjyju3" path="res://scripts/data/card_data.gd" id="1_card_data"]
+[ext_resource type="Texture2D" uid="uid://d3x5hdlg2wn7a" path="res://Assets/illustrations/Cards_Scenes/scene 4.png" id="2_illustration"]
+[ext_resource type="Script" uid="uid://dks3aegxwlmg7" path="res://scripts/data/card_option_data.gd" id="3_card_option"]
 
 [sub_resource type="Resource" id="CardOption_confront"]
 script = ExtResource("3_card_option")

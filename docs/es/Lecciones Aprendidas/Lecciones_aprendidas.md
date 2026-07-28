@@ -151,3 +151,7 @@ DangerWidget
 Y la frase corta:
 
 La arquitectura también se expresa mediante nombres. Si los nombres divergen, la arquitectura empieza a ocultarse.
+
+11. Principio de Aislamiento Mecánico
+
+Cada sprint debe introducir una única mecánica nueva y dejarla completamente jugable antes de combinarla con otra.
