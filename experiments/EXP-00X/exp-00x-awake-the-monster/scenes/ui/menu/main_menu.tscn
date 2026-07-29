@@ -1,8 +1,51 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://y7o2j8or817o"]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main_menu_script"]
+[ext_resource type="Script" uid="uid://gu8yhuiwjeoy" path="res://scripts/ui/main_menu.gd" id="1_main_menu_script"]
+[ext_resource type="Texture2D" uid="uid://dxo6nk7pmj7xr" path="res://Assets/illustrations/ui/main_menu_background.png" id="2_5ssjm"]
+[ext_resource type="Shader" uid="uid://b7ksbsub5x6yp" path="res://shaders/title_main.gdshader" id="3_xgmfj"]
+[ext_resource type="Texture2D" uid="uid://8edwx7cj70jl" path="res://Assets/illustrations/ui/eye_motive.png" id="4_araup"]
+[ext_resource type="FontFile" uid="uid://cyintr7skibo5" path="res://Assets/fonts/greengoth/Greengoth Regular.ttf" id="5_8dn53"]
+[ext_resource type="Texture2D" uid="uid://btxhcrcgos05q" path="res://Assets/illustrations/ui/metallabs-logo.png" id="5_boguu"]
+[ext_resource type="Texture2D" uid="uid://b11vj7cjb1g4h" path="res://Assets/illustrations/ui/awake_the_monster_title2.png" id="5_xgmfj"]
+[ext_resource type="Shader" uid="uid://cmqsdyww0tfcm" path="res://shaders/vortex_umbral.gdshader" id="7_vortex"]
 
-[node name="MainMenu" type="Control"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vortex"]
+shader = ExtResource("7_vortex")
+shader_parameter/custom_time = 0.0
+shader_parameter/rotation_speed = 0.12
+shader_parameter/suction_speed = 0.08
+shader_parameter/noise_scale = 6.0
+shader_parameter/flow_speed = 0.15
+shader_parameter/breath_speed = 0.12
+shader_parameter/color_indigo = Color(0.1019608, 0.0823529, 0.1568627, 1)
+shader_parameter/color_oil_blue = Color(0.0588235, 0.1098039, 0.1490196, 1)
+shader_parameter/color_mist_peak = Color(0.42, 0.36, 0.52, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xgmfj"]
+resource_local_to_scene = true
+shader = ExtResource("3_xgmfj")
+shader_parameter/custom_time = 0.0
+shader_parameter/breath_speed = 0.12
+shader_parameter/glow_intensity = 0.6470000307325
+shader_parameter/tint_indigo = Color(0.1019608, 0.0823529, 0.1568627, 1)
+shader_parameter/wave_amplitude = 0.006000000285
+shader_parameter/wave_frequency = 6.0
+shader_parameter/wave_speed = 0.62000002945
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_no_focus"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxtbd"]
+resource_local_to_scene = true
+shader = ExtResource("3_xgmfj")
+shader_parameter/custom_time = 0.0
+shader_parameter/breath_speed = 0.3290000156275
+shader_parameter/glow_intensity = 0.54800002603
+shader_parameter/tint_indigo = Color(0.1019608, 0.0823529, 0.1568627, 1)
+shader_parameter/wave_amplitude = 0.004
+shader_parameter/wave_frequency = 6.0
+shader_parameter/wave_speed = 0.4
+
+[node name="MainMenu" type="Control" unique_id=1933285429]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main_menu_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=2021221265]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,19 +64,47 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0352941, 0.0313726, 0.0431373, 1)
 
-[node name="MenuCenter" type="CenterContainer" parent="."]
+[node name="BackgroundImage" type="TextureRect" parent="Background" unique_id=916250006]
+layout_mode = 0
+offset_right = 1922.0
+offset_bottom = 1079.0
+texture = ExtResource("2_5ssjm")
+
+[node name="MistVortex" type="ColorRect" parent="Background" unique_id=555000333]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_vortex")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = -32.0
-offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="TextureRect" parent="Background" unique_id=12236004]
+material = SubResource("ShaderMaterial_xgmfj")
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 954.0
+offset_bottom = 547.0
+texture = ExtResource("5_xgmfj")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="MenuCenter" type="CenterContainer" parent="." unique_id=610368499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 590.0
+offset_right = -1360.0
+offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuMargin" type="MarginContainer" parent="MenuCenter"]
+[node name="MenuMargin" type="MarginContainer" parent="MenuCenter" unique_id=175741732]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 48
@@ -41,52 +112,103 @@ theme_override_constants/margin_top = 48
 theme_override_constants/margin_right = 48
 theme_override_constants/margin_bottom = 48
 
-[node name="MenuLayout" type="VBoxContainer" parent="MenuCenter/MenuMargin"]
+[node name="Hbox" type="HBoxContainer" parent="MenuCenter/MenuMargin" unique_id=1924769963]
+layout_mode = 2
+
+[node name="EyeMotiveSelector" type="TextureRect" parent="MenuCenter/MenuMargin/Hbox" unique_id=683708830]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+texture = ExtResource("4_araup")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MenuLayout" type="VBoxContainer" parent="MenuCenter/MenuMargin" unique_id=828239671]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="MenuCenter/MenuMargin/MenuLayout"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 42
-text = "AWAKE THE MONSTER"
-horizontal_alignment = 1
-
-[node name="TitleSpacer" type="Control" parent="MenuCenter/MenuMargin/MenuLayout"]
+[node name="TitleSpacer" type="Control" parent="MenuCenter/MenuMargin/MenuLayout" unique_id=443317430]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="NewGameButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+[node name="NewGameButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout" unique_id=34026233]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../ContinueButton")
-focus_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_8dn53")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = SubResource("StyleBoxEmpty_no_focus")
 text = "Nueva partida"
+flat = true
 
-[node name="ContinueButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+[node name="ContinueButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout" unique_id=1987030795]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_top = NodePath("../NewGameButton")
 focus_neighbor_bottom = NodePath("../FullscreenButton")
-focus_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_8dn53")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = SubResource("StyleBoxEmpty_no_focus")
 disabled = true
 text = "Continuar"
+flat = true
 
-[node name="FullscreenButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+[node name="FullscreenButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout" unique_id=1993466581]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ContinueButton")
 focus_neighbor_bottom = NodePath("../ExitButton")
-focus_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_8dn53")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = SubResource("StyleBoxEmpty_no_focus")
 text = "Pantalla completa"
+flat = true
 
-[node name="ExitButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout"]
+[node name="ExitButton" type="Button" parent="MenuCenter/MenuMargin/MenuLayout" unique_id=1978599768]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_top = NodePath("../FullscreenButton")
-focus_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_8dn53")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/focus = SubResource("StyleBoxEmpty_no_focus")
 text = "Salir"
+flat = true
+
+[node name="LogoMetalLabs" type="TextureRect" parent="." unique_id=798067059]
+material = SubResource("ShaderMaterial_rxtbd")
+layout_mode = 0
+offset_left = 1485.0
+offset_top = 816.0
+offset_right = 2037.0
+offset_bottom = 1062.0
+texture = ExtResource("5_boguu")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="FontCredit" type="Label" parent="." unique_id=1221288444]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -40.0
+offset_right = 400.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.3, 0.28, 0.35, 0.5)
+theme_override_font_sizes/font_size = 12
+text = "Greengoth font by Dimitri Antonov / Blue Curve Designstudio (CC BY 4.0)"
+horizontal_alignment = 1
+vertical_alignment = 1

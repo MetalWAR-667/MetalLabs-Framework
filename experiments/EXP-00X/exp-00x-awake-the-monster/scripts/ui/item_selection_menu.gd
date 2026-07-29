@@ -48,7 +48,6 @@ func _present_item(index: int, item: ItemData) -> void:
 		return
 
 	item_illustrations[index].texture = item.illustration
-	item_names[index].text = item.display_name
 	item_descriptions[index].text = item.description
 
 

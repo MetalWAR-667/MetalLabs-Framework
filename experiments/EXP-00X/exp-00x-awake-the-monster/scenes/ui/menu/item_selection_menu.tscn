@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://dm4upf7ib0xno"]
 
-[ext_resource type="Script" path="res://scripts/ui/item_selection_menu.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://m8tasijeeopt" path="res://scripts/ui/item_selection_menu.gd" id="1_script"]
 [ext_resource type="Resource" path="res://data/items/food.tres" id="2_food"]
 [ext_resource type="Resource" path="res://data/items/shotgun.tres" id="3_shotgun"]
 [ext_resource type="Resource" path="res://data/items/shield.tres" id="4_shield"]
+[ext_resource type="Texture2D" uid="uid://4yecuqsgitkh" path="res://Assets/ui/card/card_surface.png" id="5_p11d4"]
+[ext_resource type="FontFile" uid="uid://cyintr7skibo5" path="res://Assets/fonts/greengoth/Greengoth Regular.ttf" id="6_xl2ge"]
+[ext_resource type="FontFile" uid="uid://dyecf32w6fjta" path="res://Assets/fonts/greengoth/Greengoth Expanded.ttf" id="7_85xrx"]
 
-[node name="ItemSelectionMenu" type="Control"]
+[node name="ItemSelectionMenu" type="Control" unique_id=86691684]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +20,7 @@ food_data = ExtResource("2_food")
 shotgun_data = ExtResource("3_shotgun")
 shield_data = ExtResource("4_shield")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=832937512]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,7 +30,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0352941, 0.0313726, 0.0431373, 1)
 
-[node name="OuterMargin" type="MarginContainer" parent="."]
+[node name="OuterMargin" type="MarginContainer" parent="." unique_id=1854463820]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,37 +42,47 @@ theme_override_constants/margin_top = 56
 theme_override_constants/margin_right = 72
 theme_override_constants/margin_bottom = 56
 
-[node name="PageLayout" type="VBoxContainer" parent="OuterMargin"]
+[node name="PageLayout" type="VBoxContainer" parent="OuterMargin" unique_id=1957002475]
 layout_mode = 2
 theme_override_constants/separation = 28
 
-[node name="Title" type="Label" parent="OuterMargin/PageLayout"]
+[node name="Title" type="Label" parent="OuterMargin/PageLayout" unique_id=687349481]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_fonts/font = ExtResource("7_85xrx")
+theme_override_font_sizes/font_size = 44
 text = "Elige un objeto"
 horizontal_alignment = 1
 
-[node name="ItemsRow" type="HBoxContainer" parent="OuterMargin/PageLayout"]
+[node name="ItemsRow" type="HBoxContainer" parent="OuterMargin/PageLayout" unique_id=1670393559]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 28
 
-[node name="FoodPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow"]
+[node name="FoodPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow" unique_id=454582878]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel"]
+[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel" unique_id=1881111569]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin"]
+[node name="TextureRect" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin" unique_id=1264425017]
+layout_mode = 2
+texture = ExtResource("5_p11d4")
+expand_mode = 1
+
+[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin" unique_id=1842749934]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="FoodIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content"]
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content" unique_id=486220761]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="FoodIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content" unique_id=184459044]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
@@ -77,14 +90,18 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="FoodName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content"]
+[node name="FoodName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content" unique_id=591266532]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_xl2ge")
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 
-[node name="FoodDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content"]
+[node name="FoodDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content" unique_id=489973071]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 size_flags_vertical = 3
@@ -93,30 +110,40 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ChooseFoodButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content"]
+[node name="ChooseFoodButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/FoodPanel/Margin/Content" unique_id=228025282]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_right = NodePath("../../../../ShotgunPanel/Margin/Content/ChooseShotgunButton")
-focus_mode = 2
+theme_override_fonts/font = ExtResource("7_85xrx")
+theme_override_font_sizes/font_size = 44
 text = "Elegir"
 
-[node name="ShotgunPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow"]
+[node name="ShotgunPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow" unique_id=1747282370]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel"]
+[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel" unique_id=1422479062]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin"]
+[node name="TextureRect" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin" unique_id=296447679]
+layout_mode = 2
+texture = ExtResource("5_p11d4")
+expand_mode = 1
+
+[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin" unique_id=453647663]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="ShotgunIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content"]
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content" unique_id=1898906352]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="ShotgunIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content" unique_id=354288776]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
@@ -124,14 +151,16 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ShotgunName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content"]
+[node name="ShotgunName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content" unique_id=329433478]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 
-[node name="ShotgunDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content"]
+[node name="ShotgunDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content" unique_id=828175663]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 size_flags_vertical = 3
@@ -140,31 +169,41 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ChooseShotgunButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content"]
+[node name="ChooseShotgunButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/ShotgunPanel/Margin/Content" unique_id=787756751]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../../FoodPanel/Margin/Content/ChooseFoodButton")
 focus_neighbor_right = NodePath("../../../../ShieldPanel/Margin/Content/ChooseShieldButton")
-focus_mode = 2
+theme_override_fonts/font = ExtResource("7_85xrx")
+theme_override_font_sizes/font_size = 44
 text = "Elegir"
 
-[node name="ShieldPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow"]
+[node name="ShieldPanel" type="PanelContainer" parent="OuterMargin/PageLayout/ItemsRow" unique_id=1015308239]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel"]
+[node name="Margin" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel" unique_id=944952523]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin"]
+[node name="TextureRect" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin" unique_id=762817397]
+layout_mode = 2
+texture = ExtResource("5_p11d4")
+expand_mode = 1
+
+[node name="Content" type="VBoxContainer" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin" unique_id=864274536]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="ShieldIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content"]
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content" unique_id=2082591581]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="ShieldIllustration" type="TextureRect" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content" unique_id=215767082]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
@@ -172,14 +211,16 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ShieldName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content"]
+[node name="ShieldName" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content" unique_id=1522388289]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 
-[node name="ShieldDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content"]
+[node name="ShieldDescription" type="Label" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content" unique_id=1225296078]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 size_flags_vertical = 3
@@ -188,10 +229,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ChooseShieldButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content"]
+[node name="ChooseShieldButton" type="Button" parent="OuterMargin/PageLayout/ItemsRow/ShieldPanel/Margin/Content" unique_id=261596851]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../../ShotgunPanel/Margin/Content/ChooseShotgunButton")
-focus_mode = 2
+theme_override_fonts/font = ExtResource("7_85xrx")
+theme_override_font_sizes/font_size = 44
 text = "Elegir"

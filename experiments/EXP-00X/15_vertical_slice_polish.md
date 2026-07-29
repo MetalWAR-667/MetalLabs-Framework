@@ -241,3 +241,43 @@ Fondo.
 Carta.
 Aparición.
 Daño.
+
+
+
+
+
+
+ORDEN QUIZAS ALGO COMO ESTO:
+
+Gameplay
+
+✅ Mecánicas
+✅ Cartas
+✅ Final
+
+↓
+
+Presentación
+
+Zoom de ilustraciones
+Paneos
+Shader del fondo
+Transiciones
+
+↓
+
+Audio
+
+Música
+Loops
+Stingers
+SFX
+
+↓
+
+Pulido
+
+Balance
+Dificultad
+Feedback
+Publicación
