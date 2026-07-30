@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bt8oa8vukxl4k"]
+
+[ext_resource type="Shader" uid="uid://di4jh4d8b10sp" path="res://shaders/DreamBackground.gdshader" id="1_dream_shader"]
+
+[resource]
+shader = ExtResource("1_dream_shader")
+shader_parameter/fog_density = 0.72
+shader_parameter/fog_speed = 0.018
+shader_parameter/fog_scale = 1.35
+shader_parameter/swirl_strength = 0.0
+shader_parameter/swirl_radius = 0.65
+shader_parameter/swirl_speed = 0.08
+shader_parameter/distortion_strength = 0.003
+shader_parameter/shadow_intensity = 0.0
+shader_parameter/shadow_frequency = 0.08
+shader_parameter/shadow_size = 1.4
+shader_parameter/void_color = Color(0.03, 0.037, 0.055, 1)
+shader_parameter/fog_color = Color(0.19, 0.225, 0.29, 1)

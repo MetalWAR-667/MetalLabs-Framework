@@ -1,0 +1,182 @@
+Yo plantearía un pequeño laboratorio VFX
+
+Ni siquiera lo llamaría sprint.
+
+Lo llamaría:
+
+Visual Discovery
+
+Y tendría una única regla:
+
+Un experimento = una sensación.
+
+No:
+
+"Voy a hacer partículas."
+
+Sino:
+
+"Quiero transmitir soledad."
+
+Entonces buscas:
+
+shader
+partículas
+luz
+sonido
+
+hasta conseguir ESA sensación.
+
+Las sensaciones que buscaría
+
+No efectos.
+
+Sensaciones.
+
+✔ El sueño respira.
+
+✔ El vacío observa.
+
+✔ La realidad se dobla.
+
+✔ Algo acaba de cambiar.
+
+✔ El jugador está solo.
+
+✔ El monstruo está cerca.
+
+Eso cambia completamente la forma de experimentar.
+
+Recursos
+
+Sí.
+
+Aquí sí empezaría a crear una pequeña biblioteca.
+
+No para usarla directamente.
+
+Para desmontarla.
+
+Buscaría recursos gratuitos como:
+
+Shader packs
+
+Porque quiero aprender:
+
+"¿Cómo demonios hicieron esa niebla?"
+
+No para copiarla.
+
+Sino para robar... el conocimiento. 😁
+
+Particle packs
+
+Aunque luego no uses ninguno.
+
+Sirven para estudiar:
+
+tamaños
+velocidades
+curvas
+materiales
+Noise textures
+
+Esto sí.
+
+Una buena colección de:
+
+Perlin
+Voronoi
+FBM
+Clouds
+Smoke
+Curl Noise
+
+vale oro para shaders.
+
+Gradientes
+
+Muchísimo más importantes de lo que parece.
+
+Muchos shaders espectaculares en realidad son:
+
+Ruido
+
+↓
+
+Gradiente bonito
+
+↓
+
+Fin.
+Lo que yo sí buscaría
+
+Hay cuatro efectos que me parecen especialmente interesantes.
+
+1
+
+Tinta en agua.
+
+Eso puede ser brutal para transiciones.
+
+2
+
+Humo procedural.
+
+Nunca sobra.
+
+3
+
+Disoluciones.
+
+Muy útiles para cartas.
+
+4
+
+Distorsiones.
+
+Ondas.
+
+Calor.
+
+Cristal.
+
+Y hay uno que me gustaría intentar...
+
+No ahora.
+
+Más adelante.
+
+Una especie de:
+
+"Respiración del mundo"
+
+Imagina.
+
+Todo está quieto.
+
+Cada...
+
+15 segundos.
+
+Muy lentamente.
+
+El fondo entero hace...
+
+inhala...
+
+...
+
+...
+
+...
+
+exhala...
+
+Pero tan despacio que el jugador no sabe decir cuándo empezó.
+
+Solo siente que el escenario...
+
+...está vivo.
+
+Eso me parece muy "Awake".

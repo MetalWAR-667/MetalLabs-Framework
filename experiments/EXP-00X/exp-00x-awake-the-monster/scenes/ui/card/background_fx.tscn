@@ -1,8 +1,42 @@
 [gd_scene format=3 uid="uid://bo0ddngl068yy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4v7s"]
+[ext_resource type="Material" uid="uid://bt8oa8vukxl4k" path="res://shaders/dream_background_default.tres" id="1_dream_material"]
+
+[sub_resource type="Gradient" id="Gradient_dream_dust"]
+offsets = PackedFloat32Array(0, 0.32, 1)
+colors = PackedColorArray(0.55, 0.62, 0.72, 0, 0.55, 0.62, 0.72, 0.8, 0.55, 0.62, 0.72, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_dream_dust"]
+gradient = SubResource("Gradient_dream_dust")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_dream_dust_lifetime"]
+offsets = PackedFloat32Array(0, 0.12, 0.72, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.85, 1, 1, 1, 0.55, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_dream_dust_lifetime"]
+gradient = SubResource("Gradient_dream_dust_lifetime")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dream_dust"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 540, 1)
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 1.5
+initial_velocity_max = 6.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.85
+color = Color(0.68, 0.72, 0.78, 0.22)
+color_ramp = SubResource("GradientTexture_dream_dust_lifetime")
 
 [node name="BackgroundFx" type="Control" unique_id=2088691505]
+z_index = -10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +45,22 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1974739395]
-material = SubResource("ShaderMaterial_g4v7s")
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+material = ExtResource("1_dream_material")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DreamResidue" type="GPUParticles2D" parent="." unique_id=847576619]
+z_index = 1
+position = Vector2(960, 540)
+amount = 100
+texture = SubResource("GradientTexture_dream_dust")
+lifetime = 24.0
+preprocess = 24.0
+randomness = 0.85
+visibility_rect = Rect2(-1000, -600, 2000, 1200)
+process_material = SubResource("ParticleProcessMaterial_dream_dust")

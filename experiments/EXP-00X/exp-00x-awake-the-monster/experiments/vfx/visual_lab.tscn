@@ -1,0 +1,147 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/visual_lab.gd" id="1_visual_lab"]
+[ext_resource type="PackedScene" path="res://experiments/vfx/shared/preview_surface.tscn" id="2_preview_surface"]
+
+[node name="VisualLab" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_visual_lab")
+
+[node name="LabBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.055, 0.06, 0.07, 1)
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="MainMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="MainMargin/MainLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Visual Lab — Awake the Monster"
+
+[node name="ControlPanel" type="PanelContainer" parent="MainMargin/MainLayout"]
+layout_mode = 2
+
+[node name="ControlMargin" type="MarginContainer" parent="MainMargin/MainLayout/ControlPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="ControlLayout" type="VBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ControlsRow" type="HBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ExperimentLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+layout_mode = 2
+text = "Experiment"
+
+[node name="ExperimentSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActivateButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load / Activate"
+
+[node name="ResetButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset"
+
+[node name="PauseButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Pause"
+
+[node name="BackgroundLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+layout_mode = 2
+text = "Background"
+
+[node name="BackgroundSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Status: Initializing."
+
+[node name="Workspace" type="HSplitContainer" parent="MainMargin/MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 310
+
+[node name="TelemetryPanel" type="PanelContainer" parent="MainMargin/MainLayout/Workspace"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="TelemetryMargin" type="MarginContainer" parent="MainMargin/MainLayout/Workspace/TelemetryPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TelemetryLayout" type="VBoxContainer" parent="MainMargin/MainLayout/Workspace/TelemetryPanel/TelemetryMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TelemetryTitle" type="Label" parent="MainMargin/MainLayout/Workspace/TelemetryPanel/TelemetryMargin/TelemetryLayout"]
+layout_mode = 2
+text = "Telemetry"
+
+[node name="TelemetryLabel" type="Label" parent="MainMargin/MainLayout/Workspace/TelemetryPanel/TelemetryMargin/TelemetryLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Experiment: None
+Preview: 1920 × 1080
+FPS: 0
+Frame: 0 ms
+State: Running"
+
+[node name="PreviewFrame" type="PanelContainer" parent="MainMargin/MainLayout/Workspace"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PreviewAspect" type="AspectRatioContainer" parent="MainMargin/MainLayout/Workspace/PreviewFrame"]
+layout_mode = 2
+ratio = 1.77778
+stretch_mode = 2
+
+[node name="PreviewSurface" parent="MainMargin/MainLayout/Workspace/PreviewFrame/PreviewAspect" instance=ExtResource("2_preview_surface")]
+layout_mode = 2

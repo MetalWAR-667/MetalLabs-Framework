@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+experiments/EXP-00X/exp-00x-awake-the-monster/*.exe
