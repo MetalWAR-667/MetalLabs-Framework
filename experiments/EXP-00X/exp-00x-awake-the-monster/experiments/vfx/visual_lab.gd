@@ -12,24 +12,64 @@ const EXPERIMENTS: Array[Dictionary] = [
 		"label": "EXP-VFX-001 — Dual Drift",
 	},
 	{
-		"id": "exp_vfx_002_heat_distortion",
-		"label": "EXP-VFX-002 — Heat Distortion",
+		"id": "exp_vfx_001b_macro_density",
+		"label": "EXP-VFX-001b - Macro Density",
 	},
 	{
-		"id": "exp_vfx_003_ink",
-		"label": "EXP-VFX-003 — Ink",
+		"id": "exp_vfx_002_presence_oscillation",
+		"label": "EXP-VFX-002 - Presence Oscillation",
 	},
 	{
-		"id": "exp_vfx_004_impossible_shadows",
-		"label": "EXP-VFX-004 — Impossible Shadows",
+		"id": "exp_vfx_003_depth_layers",
+		"label": "EXP-VFX-003 - Depth Layers",
+	},
+	{
+		"id": "exp_vfx_004_geometric_flow_fields",
+		"label": "EXP-VFX-004 - Geometric Flow Fields",
+	},
+	{
+		"id": "exp_vfx_005a_ink_exploration",
+		"label": "EXP-VFX-005A - Ink Exploration",
+	},
+	{
+		"id": "exp_vfx_005b_structural_ink",
+		"label": "EXP-VFX-005B - Structural Ink",
+	},
+	{
+		"id": "exp_vfx_005c_flow_deformation",
+		"label": "EXP-VFX-005C - Flow Deformation",
+	},
+	{
+		"id": "exp_vfx_006_particle_ecology",
+		"label": "EXP-VFX-006 - Particle Ecology",
+	},
+	{
+		"id": "exp_vfx_007_atmospheric_profiles",
+		"label": "EXP-VFX-007 - Atmospheric Profiles",
+	},
+	{
+		"id": "exp_vfx_008_visual_hierarchy",
+		"label": "EXP-VFX-008 - Visual Hierarchy",
+	},
+	{
+		"id": "exp_vfx_009_procedural_network",
+		"label": "EXP-VFX-009 - Procedural Network",
 	},
 ]
 
 const EXPERIMENT_SCENES := {
 	"exp_vfx_001_dual_drift": "res://experiments/vfx/exp_vfx_001_dual_drift/experiment.tscn",
-	"exp_vfx_002_heat_distortion": "res://experiments/vfx/exp_vfx_002_heat_distortion/experiment.tscn",
-	"exp_vfx_003_ink": "res://experiments/vfx/exp_vfx_003_ink/experiment.tscn",
-	"exp_vfx_004_impossible_shadows": "res://experiments/vfx/exp_vfx_004_impossible_shadows/experiment.tscn",
+	"exp_vfx_001b_macro_density": "res://experiments/vfx/exp_vfx_001b_macro_density/experiment.tscn",
+	"exp_vfx_002_presence_oscillation": "res://experiments/vfx/exp_vfx_002_presence_oscillation/experiment.tscn",
+	"exp_vfx_003_depth_layers": "res://experiments/vfx/exp_vfx_003_depth_layers/experiment.tscn",
+	"exp_vfx_004_geometric_flow_fields": "res://experiments/vfx/exp_vfx_004_geometric_flow_fields/experiment.tscn",
+	"exp_vfx_005a_ink_exploration": "res://experiments/vfx/exp_vfx_005a_ink_exploration/experiment.tscn",
+	"exp_vfx_005b_structural_ink": "res://experiments/vfx/exp_vfx_005b_structural_ink/experiment.tscn",
+	"exp_vfx_005c_flow_deformation": "res://experiments/vfx/exp_vfx_005c_flow_deformation/experiment.tscn",
+	"exp_vfx_006_particle_ecology": "res://experiments/vfx/exp_vfx_006_particle_ecology/experiment.tscn",
+	"exp_vfx_007_atmospheric_profiles": "res://experiments/vfx/exp_vfx_007_atmospheric_profiles/experiment.tscn",
+	"exp_vfx_008_visual_hierarchy": "res://experiments/vfx/exp_vfx_008_visual_hierarchy/experiment.tscn",
+	"exp_vfx_009_procedural_network": "res://experiments/vfx/exp_vfx_009_procedural_network/experiment.tscn",
 }
 
 @onready var experiment_selector: OptionButton = %ExperimentSelector
@@ -40,6 +80,8 @@ const EXPERIMENT_SCENES := {
 @onready var status_label: Label = %StatusLabel
 @onready var telemetry_label: Label = %TelemetryLabel
 
+@onready var preview_viewport: SubViewport = \
+	$MainMargin/MainLayout/Workspace/PreviewFrame/PreviewAspect/PreviewSurface/SubViewport
 @onready var reference_background: ColorRect = \
 	$MainMargin/MainLayout/Workspace/PreviewFrame/PreviewAspect/PreviewSurface/SubViewport/ReferenceBackground
 @onready var gradient_background: TextureRect = \
@@ -101,6 +143,11 @@ func _on_pause_pressed() -> void:
 		if preview_paused
 		else Node.PROCESS_MODE_INHERIT
 	)
+	preview_viewport.render_target_update_mode = (
+		SubViewport.UPDATE_DISABLED
+		if preview_paused
+		else SubViewport.UPDATE_ALWAYS
+	)
 	pause_button.text = "Resume" if preview_paused else "Pause"
 	_set_status("Preview paused." if preview_paused else "Preview resumed.")
 
@@ -133,7 +180,7 @@ func _activate_current_experiment() -> void:
 func _clear_experiment_container() -> void:
 	for child in experiment_container.get_children():
 		experiment_container.remove_child(child)
-		child.queue_free()
+		child.free()
 
 
 func _apply_background_reference(index: int) -> void:
@@ -155,7 +202,7 @@ func _apply_background_reference(index: int) -> void:
 
 func _update_telemetry() -> void:
 	var fps := Performance.get_monitor(Performance.TIME_FPS)
-	var frame_time_ms := 1000.0 / fps if fps > 0.0 else 0.0
+	var frame_time_ms := Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
 	telemetry_label.text = (
 		"Experiment: %s\n"
 		+ "Preview: %d × %d\n"

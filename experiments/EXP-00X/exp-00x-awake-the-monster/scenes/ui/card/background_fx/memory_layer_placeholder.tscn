@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+; Research Placeholder
+; Not final implementation.
+; External visual reference.
+; May be replaced by an original implementation.
+;
+; This scene uses only simple authored Godot geometry. It does not contain
+; shader code from the external research reference.
+
+[sub_resource type="Gradient" id="Gradient_node"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0.55, 0.68, 0.82, 0, 0.55, 0.68, 0.82, 0.42, 0.55, 0.68, 0.82, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_node"]
+gradient = SubResource("Gradient_node")
+width = 48
+height = 48
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="MemoryLayer" type="Control"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Void" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.008, 0.011, 0.02, 1)
+
+[node name="Network" type="Node2D" parent="."]
+
+[node name="ConnectionA" type="Line2D" parent="Network"]
+points = PackedVector2Array(260, 350, 610, 510, 980, 285)
+width = 1.5
+default_color = Color(0.42, 0.56, 0.72, 0.22)
+
+[node name="ConnectionB" type="Line2D" parent="Network"]
+points = PackedVector2Array(610, 510, 1050, 720, 1510, 470)
+width = 1.5
+default_color = Color(0.42, 0.56, 0.72, 0.18)
+
+[node name="ConnectionC" type="Line2D" parent="Network"]
+points = PackedVector2Array(980, 285, 1510, 470, 1710, 235)
+width = 1.0
+default_color = Color(0.42, 0.56, 0.72, 0.14)
+
+[node name="NodeA" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(260, 350)
+scale = Vector2(0.55, 0.55)
+
+[node name="NodeB" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(610, 510)
+
+[node name="NodeC" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(980, 285)
+scale = Vector2(0.7, 0.7)
+
+[node name="NodeD" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(1050, 720)
+scale = Vector2(0.8, 0.8)
+
+[node name="NodeE" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(1510, 470)
+
+[node name="NodeF" type="Sprite2D" parent="Network"]
+texture = SubResource("GradientTexture_node")
+position = Vector2(1710, 235)
+scale = Vector2(0.5, 0.5)

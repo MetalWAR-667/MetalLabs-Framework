@@ -1,0 +1,155 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/exp_vfx_002_presence_oscillation/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://experiments/vfx/exp_vfx_001b_macro_density/experiment.tscn" id="2_base"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="PresenceOscillationExperiment" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BaseMacroDensity" parent="." instance=ExtResource("2_base")]
+
+[node name="PresenceControls" type="PanelContainer" parent="."]
+offset_left = 28.0
+offset_top = 500.0
+offset_right = 1010.0
+offset_bottom = 1052.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="PresenceControls"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="PresenceControls/Margin"]
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="PresenceControls/Margin/VBox"]
+text = "Presence — Long-period parameter oscillation"
+
+[node name="Hint" type="Label" parent="PresenceControls/Margin/VBox"]
+text = "Base + Amplitude × sin(Time / Period + Phase)"
+
+[node name="Grid" type="GridContainer" parent="PresenceControls/Margin/VBox"]
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 6
+
+[node name="TargetHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Target"
+[node name="EnabledHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "On"
+[node name="BaseHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Base"
+[node name="AmplitudeHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Amplitude"
+[node name="PeriodHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Period (s)"
+[node name="PhaseHeader" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Phase"
+
+[node name="OpacityLabel" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Opacity"
+[node name="OpacityEnabled" type="CheckBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+[node name="OpacityBase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+[node name="OpacityAmplitude" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 0.2
+step = 0.005
+[node name="OpacityPeriod" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 1.0
+max_value = 180.0
+step = 1.0
+[node name="OpacityPhase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 6.283
+step = 0.1
+
+[node name="MacroInfluenceLabel" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Macro Influence"
+[node name="MacroInfluenceEnabled" type="CheckBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+[node name="MacroInfluenceBase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+[node name="MacroInfluenceAmplitude" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 0.2
+step = 0.005
+[node name="MacroInfluencePeriod" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 1.0
+max_value = 180.0
+step = 1.0
+[node name="MacroInfluencePhase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 6.283
+step = 0.1
+
+[node name="MacroContrastLabel" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Macro Contrast"
+[node name="MacroContrastEnabled" type="CheckBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+[node name="MacroContrastBase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 0.25
+max_value = 3.0
+step = 0.05
+[node name="MacroContrastAmplitude" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 0.3
+step = 0.01
+[node name="MacroContrastPeriod" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 1.0
+max_value = 180.0
+step = 1.0
+[node name="MacroContrastPhase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 6.283
+step = 0.1
+
+[node name="TintBrightnessLabel" type="Label" parent="PresenceControls/Margin/VBox/Grid"]
+text = "Tint Brightness"
+[node name="TintBrightnessEnabled" type="CheckBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+[node name="TintBrightnessBase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 0.5
+max_value = 1.5
+step = 0.01
+[node name="TintBrightnessAmplitude" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 0.2
+step = 0.005
+[node name="TintBrightnessPeriod" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 1.0
+max_value = 180.0
+step = 1.0
+[node name="TintBrightnessPhase" type="SpinBox" parent="PresenceControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 6.283
+step = 0.1
+
+[node name="ResetPresenceDefaults" type="Button" parent="PresenceControls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Reset Defaults"

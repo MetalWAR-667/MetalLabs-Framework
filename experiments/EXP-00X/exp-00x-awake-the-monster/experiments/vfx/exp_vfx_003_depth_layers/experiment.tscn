@@ -1,0 +1,381 @@
+[gd_scene format=3 uid="uid://crofltle2r72j"]
+
+[ext_resource type="Script" uid="uid://be320ojpkqedj" path="res://experiments/vfx/exp_vfx_003_depth_layers/experiment.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://bt650fe6nfxin" path="res://experiments/vfx/exp_vfx_003_depth_layers/depth_layers.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" uid="uid://bd62iuteaj7bj" path="res://Assets/VisualResearch/azureyoshi_seamless_fogs/Clouds1024.png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://cme1fcwf34n6d" path="res://Assets/VisualResearch/azureyoshi_seamless_fogs/Clouds512.png" id="4_mid"]
+[ext_resource type="Texture2D" uid="uid://dfh8fg8phxib0" path="res://Assets/VisualResearch/starshinescribbles_fog_&_noise/Noise 2.png" id="5_fg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_depth"]
+shader = ExtResource("2_shader")
+shader_parameter/background_source = ExtResource("3_bg")
+shader_parameter/mid_source = ExtResource("4_mid")
+shader_parameter/foreground_source = ExtResource("5_fg")
+shader_parameter/background_enabled = true
+shader_parameter/background_scale = 0.45
+shader_parameter/background_speed = 0.0015
+shader_parameter/background_direction = Vector2(0.7, 0.2)
+shader_parameter/background_opacity = 0.4
+shader_parameter/background_contrast = 0.75
+shader_parameter/background_tint = Color(0.18, 0.25, 0.32, 1)
+shader_parameter/mid_enabled = true
+shader_parameter/mid_scale = 1.2
+shader_parameter/mid_speed = 0.006
+shader_parameter/mid_direction = Vector2(-0.35, 0.8)
+shader_parameter/mid_opacity = 0.45
+shader_parameter/mid_contrast = 1.25
+shader_parameter/mid_tint = Color(0.25, 0.33, 0.4, 1)
+shader_parameter/foreground_enabled = true
+shader_parameter/foreground_scale = 2.4
+shader_parameter/foreground_speed = 0.012
+shader_parameter/foreground_direction = Vector2(0.85, -0.25)
+shader_parameter/foreground_opacity = 0.18
+shader_parameter/foreground_contrast = 1.6
+shader_parameter/foreground_tint = Color(0.34, 0.4, 0.45, 1)
+shader_parameter/void_color = Color(0.012, 0.022, 0.04, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="DepthLayersExperiment" type="Node2D" unique_id=904289897]
+script = ExtResource("1_script")
+
+[node name="EffectRoot" type="Node2D" parent="." unique_id=1319443030]
+
+[node name="DepthEffect" type="ColorRect" parent="EffectRoot" unique_id=255540864]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_depth")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Controls" type="PanelContainer" parent="." unique_id=192628815]
+offset_left = 1483.0
+offset_top = 4.0
+offset_right = 1915.0
+offset_bottom = 781.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Controls" unique_id=1012376965]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Margin" unique_id=1970942012]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Controls/Margin/VBox" unique_id=2089752454]
+layout_mode = 2
+text = "EXP-VFX-003 — Depth Layers"
+
+[node name="ComparisonLabel" type="Label" parent="Controls/Margin/VBox" unique_id=966764258]
+layout_mode = 2
+text = "Comparison"
+
+[node name="ComparisonMode" type="OptionButton" parent="Controls/Margin/VBox" unique_id=1399911870]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LayerTabs" type="TabContainer" parent="Controls/Margin/VBox" unique_id=8292697]
+custom_minimum_size = Vector2(390, 610)
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Background" type="VBoxContainer" parent="Controls/Margin/VBox/LayerTabs" unique_id=1254714644]
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 0
+
+[node name="BackgroundEnabled" type="CheckButton" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=340450779]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enable Background"
+
+[node name="BackgroundSourceLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=1501197299]
+layout_mode = 2
+text = "Texture Source"
+
+[node name="BackgroundSource" type="OptionButton" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=163585517]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BackgroundScaleLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=19061784]
+layout_mode = 2
+text = "Scale"
+
+[node name="BackgroundScale" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=1801204346]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.05
+value = 0.1
+
+[node name="BackgroundSpeedLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=2110892727]
+layout_mode = 2
+text = "Speed"
+
+[node name="BackgroundSpeed" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=1683569596]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.05
+step = 0.0005
+
+[node name="BackgroundDirectionLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=1759800463]
+layout_mode = 2
+text = "Direction X / Y"
+
+[node name="BackgroundDirectionRow" type="HBoxContainer" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=141477112]
+layout_mode = 2
+
+[node name="BackgroundDirectionX" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Background/BackgroundDirectionRow" unique_id=55516016]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="BackgroundDirectionY" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Background/BackgroundDirectionRow" unique_id=727897831]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="BackgroundOpacityLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=776138642]
+layout_mode = 2
+text = "Opacity"
+
+[node name="BackgroundOpacity" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=607255448]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="BackgroundContrastLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=267213312]
+layout_mode = 2
+text = "Contrast"
+
+[node name="BackgroundContrast" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=775877436]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 3.0
+step = 0.05
+value = 0.25
+
+[node name="BackgroundTintLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=1867762416]
+layout_mode = 2
+text = "Tint"
+
+[node name="BackgroundTint" type="ColorPickerButton" parent="Controls/Margin/VBox/LayerTabs/Background" unique_id=726625716]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Mid" type="VBoxContainer" parent="Controls/Margin/VBox/LayerTabs" unique_id=1621896646]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 1
+
+[node name="MidEnabled" type="CheckButton" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1180197775]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enable Mid Layer"
+
+[node name="MidSourceLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1314044653]
+layout_mode = 2
+text = "Texture Source"
+
+[node name="MidSource" type="OptionButton" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1058652400]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MidScaleLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=614496390]
+layout_mode = 2
+text = "Scale"
+
+[node name="MidScale" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1901928485]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.05
+value = 0.1
+
+[node name="MidSpeedLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=18879397]
+layout_mode = 2
+text = "Speed"
+
+[node name="MidSpeed" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1052357537]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.05
+step = 0.0005
+
+[node name="MidDirectionLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1274995659]
+layout_mode = 2
+text = "Direction X / Y"
+
+[node name="MidDirectionRow" type="HBoxContainer" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1369187588]
+layout_mode = 2
+
+[node name="MidDirectionX" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Mid/MidDirectionRow" unique_id=1019866600]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="MidDirectionY" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Mid/MidDirectionRow" unique_id=2060717536]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="MidOpacityLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1463851878]
+layout_mode = 2
+text = "Opacity"
+
+[node name="MidOpacity" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=831600781]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="MidContrastLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1678309846]
+layout_mode = 2
+text = "Contrast"
+
+[node name="MidContrast" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1223427201]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 3.0
+step = 0.05
+value = 0.25
+
+[node name="MidTintLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1077421628]
+layout_mode = 2
+text = "Tint"
+
+[node name="MidTint" type="ColorPickerButton" parent="Controls/Margin/VBox/LayerTabs/Mid" unique_id=1519327625]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Foreground" type="VBoxContainer" parent="Controls/Margin/VBox/LayerTabs" unique_id=1173791921]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 2
+
+[node name="ForegroundEnabled" type="CheckButton" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1846415649]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enable Foreground"
+
+[node name="ForegroundSourceLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=941431890]
+layout_mode = 2
+text = "Texture Source"
+
+[node name="ForegroundSource" type="OptionButton" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=634554994]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ForegroundScaleLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1352714743]
+layout_mode = 2
+text = "Scale"
+
+[node name="ForegroundScale" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1373323155]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.05
+value = 0.1
+
+[node name="ForegroundSpeedLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1104962254]
+layout_mode = 2
+text = "Speed"
+
+[node name="ForegroundSpeed" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=902467956]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.05
+step = 0.0005
+
+[node name="ForegroundDirectionLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=564996469]
+layout_mode = 2
+text = "Direction X / Y"
+
+[node name="ForegroundDirectionRow" type="HBoxContainer" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=788892650]
+layout_mode = 2
+
+[node name="ForegroundDirectionX" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Foreground/ForegroundDirectionRow" unique_id=1728610083]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="ForegroundDirectionY" type="SpinBox" parent="Controls/Margin/VBox/LayerTabs/Foreground/ForegroundDirectionRow" unique_id=1420137906]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="ForegroundOpacityLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1655570817]
+layout_mode = 2
+text = "Opacity"
+
+[node name="ForegroundOpacity" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=315498678]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="ForegroundContrastLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1697170564]
+layout_mode = 2
+text = "Contrast"
+
+[node name="ForegroundContrast" type="HSlider" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=2146125359]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 3.0
+step = 0.05
+value = 0.25
+
+[node name="ForegroundTintLabel" type="Label" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=739661637]
+layout_mode = 2
+text = "Tint"
+
+[node name="ForegroundTint" type="ColorPickerButton" parent="Controls/Margin/VBox/LayerTabs/Foreground" unique_id=1880742046]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResetDefaults" type="Button" parent="Controls/Margin/VBox" unique_id=833800640]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Defaults"

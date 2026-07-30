@@ -1,0 +1,185 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/exp_vfx_009_procedural_network/experiment.gd" id="1_script"]
+[ext_resource type="Shader" path="res://experiments/vfx/exp_vfx_009_procedural_network/procedural_network.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_network"]
+shader = ExtResource("2_shader")
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="ProceduralNetworkExperiment" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="NetworkEffect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+material = SubResource("ShaderMaterial_network")
+
+[node name="Controls" type="PanelContainer" parent="."]
+offset_left = 1320.0
+offset_top = 28.0
+offset_right = 1752.0
+offset_bottom = 1018.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Controls"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Margin"]
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Controls/Margin/VBox"]
+text = "EXP-VFX-009 — Procedural Network"
+[node name="PresetLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Preset"
+[node name="PresetSelector" type="OptionButton" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+[node name="ActionRow" type="HBoxContainer" parent="Controls/Margin/VBox"]
+[node name="PauseButton" type="Button" parent="Controls/Margin/VBox/ActionRow"]
+unique_name_in_owner = true
+text = "Pause"
+size_flags_horizontal = 3
+[node name="ResetTimeButton" type="Button" parent="Controls/Margin/VBox/ActionRow"]
+unique_name_in_owner = true
+text = "Reset Time"
+size_flags_horizontal = 3
+[node name="RestorePresetButton" type="Button" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Restore Preset"
+[node name="AnimationEnabled" type="CheckButton" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Animation Enabled"
+button_pressed = true
+
+[node name="ParameterTabs" type="TabContainer" parent="Controls/Margin/VBox"]
+custom_minimum_size = Vector2(390, 520)
+
+[node name="Movement" type="VBoxContainer" parent="Controls/Margin/VBox/ParameterTabs"]
+theme_override_constants/separation = 10
+[node name="NodeSpeedLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+text = "Node Speed"
+[node name="NodeSpeed" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+unique_name_in_owner = true
+max_value = 4.0
+step = 0.05
+[node name="NodeAmplitudeLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+text = "Node Amplitude"
+[node name="NodeAmplitude" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+[node name="DepthSpeedLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+text = "Depth Speed"
+[node name="DepthSpeed" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+unique_name_in_owner = true
+max_value = 0.2
+step = 0.001
+[node name="FlickerSpeedLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+text = "Flicker Speed"
+[node name="FlickerSpeed" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Movement"]
+unique_name_in_owner = true
+max_value = 8.0
+step = 0.1
+
+[node name="Network" type="VBoxContainer" parent="Controls/Margin/VBox/ParameterTabs"]
+visible = false
+theme_override_constants/separation = 10
+[node name="LineWidthLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+text = "Line Width"
+[node name="LineWidth" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+unique_name_in_owner = true
+max_value = 0.05
+step = 0.001
+[node name="ConnectionDistanceLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+text = "Connection Distance"
+[node name="ConnectionDistance" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+unique_name_in_owner = true
+min_value = 0.2
+max_value = 1.5
+step = 0.05
+[node name="ConnectionIntensityLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+text = "Connection Intensity"
+[node name="ConnectionIntensity" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+unique_name_in_owner = true
+max_value = 3.0
+step = 0.05
+[node name="NodeIntensityLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+text = "Node Intensity"
+[node name="NodeIntensity" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Network"]
+unique_name_in_owner = true
+max_value = 3.0
+step = 0.05
+
+[node name="Composition" type="VBoxContainer" parent="Controls/Margin/VBox/ParameterTabs"]
+visible = false
+theme_override_constants/separation = 10
+[node name="OverallScaleLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Overall Scale"
+[node name="OverallScale" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+min_value = 0.1
+max_value = 4.0
+step = 0.05
+[node name="BackgroundIntensityLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Background Intensity"
+[node name="BackgroundIntensity" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+max_value = 0.1
+step = 0.001
+[node name="GlobalIntensityLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Global Intensity"
+[node name="GlobalIntensity" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+max_value = 3.0
+step = 0.05
+[node name="MainColorLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Main Color"
+[node name="MainColor" type="ColorPickerButton" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+color = Color(1, 1, 1, 1)
+[node name="ColorVariationLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Color Variation"
+[node name="ColorVariation" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.05
+[node name="ColorCycleSpeedLabel" type="Label" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+text = "Color Cycle Speed"
+[node name="ColorCycleSpeed" type="SpinBox" parent="Controls/Margin/VBox/ParameterTabs/Composition"]
+unique_name_in_owner = true
+max_value = 6.0
+step = 0.1
+
+[node name="DebugRow" type="HBoxContainer" parent="Controls/Margin/VBox"]
+[node name="NodesOnly" type="CheckButton" parent="Controls/Margin/VBox/DebugRow"]
+unique_name_in_owner = true
+text = "Nodes"
+[node name="ConnectionsOnly" type="CheckButton" parent="Controls/Margin/VBox/DebugRow"]
+unique_name_in_owner = true
+text = "Lines"
+[node name="SingleLayer" type="CheckButton" parent="Controls/Margin/VBox/DebugRow"]
+unique_name_in_owner = true
+text = "1 Layer"
+
+[node name="LocalMetrics" type="Label" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Preset: Original
+Layers: 5
+Animation: Running
+Scale: 1.50"

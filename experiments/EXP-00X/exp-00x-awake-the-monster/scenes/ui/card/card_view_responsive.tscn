@@ -139,7 +139,7 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="DividerTop" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout" unique_id=245131685]
-custom_minimum_size = Vector2(0, 12)
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("5_divider")
@@ -160,19 +160,20 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.105882, 0.0784314, 0.0509804, 1)
 theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.827451, 0.3)
+theme_override_constants/line_separation = 9
+theme_override_constants/paragraph_separation = 30
+theme_override_constants/shadow_outline_size = 5
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
+theme_override_constants/text_highlight_h_padding = 3
 theme_override_fonts/normal_font = ExtResource("4_narrative_font")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 22
 bbcode_enabled = true
 text = "El despertar no fue un tránsito. Fue una fractura.
 La conciencia regresó como un cristal que se astilla y, cuando abrió los ojos, ya estaba allí.
-
 Suspendido sobre una plataforma que parecía recordar haber sido otra cosa, en otro tiempo.
 Bajo la plataforma no había suelo. Solo un vacío tan inmenso que la palabra caída perdía todo su significado.
-
 El aire, rancio de eones, sabía a color olvidado.
-
 No era un sueño: eras el intruso en una arquitectura nunca diseñada para ojos humanos."
 scroll_active = false
 horizontal_alignment = 1
@@ -337,46 +338,6 @@ texture = ExtResource("7_option_normal")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CardThreatBar" parent="CardCenter/CardCanvas" unique_id=1968213748 instance=ExtResource("7_lqdmo")]
-layout_mode = 1
-offset_left = 262.0
-offset_top = 756.0
-offset_right = 162.0
-offset_bottom = 276.0
-
-[node name="AttentionAmount" parent="CardCenter/CardCanvas/CardThreatBar" index="1"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="SanityAmount" parent="CardCenter/CardCanvas/CardThreatBar" index="2"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="StrengthAmount" parent="CardCenter/CardCanvas/CardThreatBar" index="3"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="DamageIndicator" parent="CardCenter/CardCanvas/CardThreatBar" index="4" unique_id=1176558200]
-offset_left = 325.0
-offset_top = 118.0
-offset_right = 391.0
-offset_bottom = 184.0
-
-[node name="DamageIcon" parent="CardCenter/CardCanvas/CardThreatBar/DamageIndicator" index="0" unique_id=314111341]
-texture = ExtResource("8_40c4e")
-
-[node name="DamageText" parent="CardCenter/CardCanvas/CardThreatBar/DamageIndicator" index="1" unique_id=2058455563]
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-
 [node name="CardBorder" type="TextureRect" parent="CardCenter/CardCanvas" unique_id=294561146]
 modulate = Color(0.69411767, 0.5372549, 0, 1)
 layout_mode = 1
@@ -393,4 +354,47 @@ mouse_filter = 2
 texture = ExtResource("2_border")
 expand_mode = 1
 
-[editable path="CardCenter/CardCanvas/CardThreatBar"]
+[node name="CardThreatBar" parent="." unique_id=1968213748 instance=ExtResource("7_lqdmo")]
+layout_mode = 1
+offset_left = 44.0
+offset_top = 381.0
+offset_right = -244.0
+offset_bottom = -347.0
+
+[node name="HBoxContainer" parent="CardThreatBar" index="0" unique_id=1376406867]
+offset_left = 5.0
+offset_top = -18.0
+offset_right = 255.0
+offset_bottom = 42.0
+
+[node name="AttentionAmount" parent="CardThreatBar" index="1" unique_id=37768601]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="SanityAmount" parent="CardThreatBar" index="2" unique_id=2061051547]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="StrengthAmount" parent="CardThreatBar" index="3" unique_id=197565233]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="DamageIndicator" parent="CardThreatBar" index="4" unique_id=1176558200]
+offset_left = 547.0
+offset_top = -12.0
+offset_right = 613.0
+offset_bottom = 54.0
+
+[node name="DamageIcon" parent="CardThreatBar/DamageIndicator" index="0" unique_id=314111341]
+texture = ExtResource("8_40c4e")
+
+[node name="DamageText" parent="CardThreatBar/DamageIndicator" index="1" unique_id=2058455563]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[editable path="CardThreatBar"]

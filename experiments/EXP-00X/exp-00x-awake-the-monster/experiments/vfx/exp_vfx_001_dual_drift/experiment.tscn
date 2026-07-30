@@ -1,0 +1,259 @@
+[gd_scene format=3 uid="uid://cq5rtr4dclqnj"]
+
+[ext_resource type="Script" uid="uid://b6sknd52gswwk" path="res://experiments/vfx/exp_vfx_001_dual_drift/experiment.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://cl3nutcxwj2kg" path="res://experiments/vfx/exp_vfx_001_dual_drift/dual_drift.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" uid="uid://duehknsavd1ah" path="res://experiments/vfx/exp_vfx_001_dual_drift/native_broad.tres" id="3_native"]
+[ext_resource type="Texture2D" uid="uid://cme1fcwf34n6d" path="res://Assets/VisualResearch/azureyoshi_seamless_fogs/Clouds512.png" id="4_clouds"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dual_drift"]
+shader = ExtResource("2_shader")
+shader_parameter/source_a = ExtResource("3_native")
+shader_parameter/source_b = ExtResource("4_clouds")
+shader_parameter/direction_a = Vector2(1, 0.18)
+shader_parameter/direction_b = Vector2(-0.35, 1)
+shader_parameter/speed_a = 0.008
+shader_parameter/speed_b = 0.005
+shader_parameter/scale_a = 1.15
+shader_parameter/scale_b = 1.65
+shader_parameter/opacity = 0.62
+shader_parameter/contrast = 1.35
+shader_parameter/threshold = 0.42
+shader_parameter/fog_tint = Color(0.28, 0.36, 0.44, 1)
+shader_parameter/void_color = Color(0.012, 0.022, 0.04, 1)
+shader_parameter/combination_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="DualDriftExperiment" type="Node2D" unique_id=1361362119]
+script = ExtResource("1_script")
+
+[node name="EffectRoot" type="Node2D" parent="." unique_id=1332875893]
+
+[node name="VoidBase" type="ColorRect" parent="EffectRoot" unique_id=70572035]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.012, 0.022, 0.04, 1)
+
+[node name="DualDriftEffect" type="ColorRect" parent="EffectRoot" unique_id=1653094598]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_dual_drift")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Controls" type="PanelContainer" parent="." unique_id=1383078112]
+offset_left = 1133.0
+offset_top = 89.0
+offset_right = 1565.0
+offset_bottom = 1083.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Controls" unique_id=1641531626]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Margin" unique_id=1911353981]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Controls/Margin/VBox" unique_id=1765820489]
+layout_mode = 2
+text = "EXP-VFX-001 — Dual Drift"
+
+[node name="Description" type="Label" parent="Controls/Margin/VBox" unique_id=655565713]
+layout_mode = 2
+text = "Two grayscale sources drifting independently."
+autowrap_mode = 2
+
+[node name="Separator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=729274992]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Controls/Margin/VBox" unique_id=1330669860]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="SourceModeLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1670182181]
+layout_mode = 2
+text = "Source mode"
+
+[node name="SourceMode" type="OptionButton" parent="Controls/Margin/VBox/Grid" unique_id=1316918043]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SourceALabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=808133231]
+layout_mode = 2
+text = "Source A"
+
+[node name="SourceA" type="OptionButton" parent="Controls/Margin/VBox/Grid" unique_id=433100415]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SourceBLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=138773844]
+layout_mode = 2
+text = "Source B"
+
+[node name="SourceB" type="OptionButton" parent="Controls/Margin/VBox/Grid" unique_id=1597390346]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpeedALabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1894431875]
+layout_mode = 2
+text = "Speed A"
+
+[node name="SpeedA" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=1054489067]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.1
+step = 0.001
+
+[node name="SpeedBLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1278340529]
+layout_mode = 2
+text = "Speed B"
+
+[node name="SpeedB" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=374716432]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.1
+step = 0.001
+
+[node name="DirectionAXLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=580640060]
+layout_mode = 2
+text = "Direction A · X"
+
+[node name="DirectionAX" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=417836121]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="DirectionAYLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1071896695]
+layout_mode = 2
+text = "Direction A · Y"
+
+[node name="DirectionAY" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=769277486]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="DirectionBXLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=509851156]
+layout_mode = 2
+text = "Direction B · X"
+
+[node name="DirectionBX" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=1360867192]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="DirectionBYLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1691627656]
+layout_mode = 2
+text = "Direction B · Y"
+
+[node name="DirectionBY" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=1374432218]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+
+[node name="ScaleALabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=416906596]
+layout_mode = 2
+text = "Scale A"
+
+[node name="ScaleA" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=1552696392]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 8.0
+step = 0.05
+value = 0.25
+
+[node name="ScaleBLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1667938643]
+layout_mode = 2
+text = "Scale B"
+
+[node name="ScaleB" type="SpinBox" parent="Controls/Margin/VBox/Grid" unique_id=57591112]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 8.0
+step = 0.05
+value = 0.25
+
+[node name="OpacityLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=483217455]
+layout_mode = 2
+text = "Opacity"
+
+[node name="Opacity" type="HSlider" parent="Controls/Margin/VBox/Grid" unique_id=56347140]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="ContrastLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=2002519021]
+layout_mode = 2
+text = "Contrast"
+
+[node name="Contrast" type="HSlider" parent="Controls/Margin/VBox/Grid" unique_id=784433252]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 4.0
+step = 0.05
+value = 0.25
+
+[node name="ThresholdLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1696059209]
+layout_mode = 2
+text = "Fog threshold"
+
+[node name="Threshold" type="HSlider" parent="Controls/Margin/VBox/Grid" unique_id=1268477262]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="TintLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=1087819534]
+layout_mode = 2
+text = "Tint"
+
+[node name="Tint" type="ColorPickerButton" parent="Controls/Margin/VBox/Grid" unique_id=1397334244]
+unique_name_in_owner = true
+layout_mode = 2
+color = Color(0.28, 0.36, 0.44, 1)
+
+[node name="CombinationLabel" type="Label" parent="Controls/Margin/VBox/Grid" unique_id=887507386]
+layout_mode = 2
+text = "Combination"
+
+[node name="CombinationMode" type="OptionButton" parent="Controls/Margin/VBox/Grid" unique_id=1777212009]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResetDefaults" type="Button" parent="Controls/Margin/VBox" unique_id=778932130]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Defaults"

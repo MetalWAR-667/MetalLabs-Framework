@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/exp_vfx_005c_flow_deformation/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://experiments/vfx/exp_vfx_005b_structural_ink/experiment.tscn" id="2_base"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="FlowDeformationExperiment" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BaseStructuralInk" parent="." instance=ExtResource("2_base")]
+
+[node name="FlowControls" type="PanelContainer" parent="."]
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 610.0
+offset_bottom = 430.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="FlowControls"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="FlowControls/Margin"]
+theme_override_constants/separation = 9
+
+[node name="Title" type="Label" parent="FlowControls/Margin/VBox"]
+text = "Flow Deformation — Localized Twist"
+
+[node name="Description" type="Label" parent="FlowControls/Margin/VBox"]
+text = "One coherent deformation. No secondary stretch."
+
+[node name="Grid" type="GridContainer" parent="FlowControls/Margin/VBox"]
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 9
+columns = 2
+
+[node name="TwistStrengthLabel" type="Label" parent="FlowControls/Margin/VBox/Grid"]
+text = "Twist Strength"
+[node name="TwistStrength" type="HSlider" parent="FlowControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(330, 0)
+min_value = -3.0
+max_value = 3.0
+step = 0.01
+
+[node name="TwistRadiusLabel" type="Label" parent="FlowControls/Margin/VBox/Grid"]
+text = "Twist Radius"
+[node name="TwistRadius" type="HSlider" parent="FlowControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+min_value = 0.05
+max_value = 1.5
+step = 0.01
+
+[node name="TwistCenterLabel" type="Label" parent="FlowControls/Margin/VBox/Grid"]
+text = "Center X / Y"
+[node name="TwistCenterRow" type="HBoxContainer" parent="FlowControls/Margin/VBox/Grid"]
+[node name="TwistCenterX" type="SpinBox" parent="FlowControls/Margin/VBox/Grid/TwistCenterRow"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+size_flags_horizontal = 3
+[node name="TwistCenterY" type="SpinBox" parent="FlowControls/Margin/VBox/Grid/TwistCenterRow"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+size_flags_horizontal = 3
+
+[node name="TwistSpeedLabel" type="Label" parent="FlowControls/Margin/VBox/Grid"]
+text = "Twist Speed"
+[node name="TwistSpeed" type="HSlider" parent="FlowControls/Margin/VBox/Grid"]
+unique_name_in_owner = true
+max_value = 0.15
+step = 0.001
+
+[node name="ResetFlowDefaults" type="Button" parent="FlowControls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Reset Flow Defaults"

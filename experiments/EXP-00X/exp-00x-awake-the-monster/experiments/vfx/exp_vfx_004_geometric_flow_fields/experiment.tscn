@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://dfrvfbdqpwnrf"]
+
+[ext_resource type="Script" uid="uid://bstr7aapa647p" path="res://experiments/vfx/exp_vfx_004_geometric_flow_fields/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://crofltle2r72j" path="res://experiments/vfx/exp_vfx_003_depth_layers/experiment.tscn" id="2_base"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="GeometricFlowFieldsExperiment" type="Node2D" unique_id=1946780747]
+script = ExtResource("1_script")
+
+[node name="BaseDepthLayers" parent="." unique_id=1723446220 instance=ExtResource("2_base")]
+
+[node name="FieldControls" type="PanelContainer" parent="." unique_id=670929506]
+offset_left = -18.0
+offset_top = 27.0
+offset_right = 604.0
+offset_bottom = 929.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="FieldControls" unique_id=366701690]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="FieldControls/Margin" unique_id=723956417]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="FieldControls/Margin/VBox" unique_id=878885506]
+layout_mode = 2
+text = "EXP-VFX-004 — Geometric Flow Fields"
+
+[node name="ComparisonHeader" type="Label" parent="FieldControls/Margin/VBox" unique_id=1964891631]
+layout_mode = 2
+text = "Comparison"
+
+[node name="ComparisonMode" type="OptionButton" parent="FieldControls/Margin/VBox" unique_id=651068603]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FieldSeparator" type="HSeparator" parent="FieldControls/Margin/VBox" unique_id=1757473487]
+layout_mode = 2
+
+[node name="FieldHeader" type="Label" parent="FieldControls/Margin/VBox" unique_id=1103296999]
+layout_mode = 2
+text = "Geometric Field"
+
+[node name="EnableField" type="CheckButton" parent="FieldControls/Margin/VBox" unique_id=735503215]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enable Field"
+
+[node name="FieldGrid" type="GridContainer" parent="FieldControls/Margin/VBox" unique_id=124124545]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 7
+columns = 2
+
+[node name="FieldTypeLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1926119996]
+layout_mode = 2
+text = "Field Type"
+
+[node name="FieldType" type="OptionButton" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=697658417]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="CenterLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1037401017]
+layout_mode = 2
+text = "Center X / Y"
+
+[node name="CenterRow" type="HBoxContainer" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1836421179]
+layout_mode = 2
+
+[node name="CenterX" type="SpinBox" parent="FieldControls/Margin/VBox/FieldGrid/CenterRow" unique_id=1114231703]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="CenterY" type="SpinBox" parent="FieldControls/Margin/VBox/FieldGrid/CenterRow" unique_id=59922181]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="RadiusLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1216949447]
+layout_mode = 2
+text = "Radius"
+
+[node name="Radius" type="HSlider" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1231887301]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.05
+max_value = 1.2
+step = 0.01
+value = 0.05
+
+[node name="StrengthLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1746288958]
+layout_mode = 2
+text = "Strength"
+
+[node name="Strength" type="HSlider" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=2082096764]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="FalloffLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1219248456]
+layout_mode = 2
+text = "Falloff"
+
+[node name="Falloff" type="HSlider" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=2009180642]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.02
+max_value = 1.0
+step = 0.01
+value = 0.02
+
+[node name="RotationLabel" type="Label" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=1478013767]
+layout_mode = 2
+text = "Rotation / Orientation"
+
+[node name="Rotation" type="HSlider" parent="FieldControls/Margin/VBox/FieldGrid" unique_id=723209417]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -3.1416
+max_value = 3.1416
+step = 0.01
+value = -0.14159999999999995
+
+[node name="InfluenceSeparator" type="HSeparator" parent="FieldControls/Margin/VBox" unique_id=527127792]
+layout_mode = 2
+
+[node name="InfluenceHeader" type="Label" parent="FieldControls/Margin/VBox" unique_id=265524815]
+layout_mode = 2
+text = "Layer Influence"
+
+[node name="InfluenceGrid" type="GridContainer" parent="FieldControls/Margin/VBox" unique_id=339119135]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 7
+columns = 2
+
+[node name="BackgroundInfluenceLabel" type="Label" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=1985689580]
+layout_mode = 2
+text = "Background"
+
+[node name="BackgroundInfluence" type="HSlider" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=714492378]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+max_value = 1.5
+step = 0.01
+
+[node name="MidInfluenceLabel" type="Label" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=594838541]
+layout_mode = 2
+text = "Mid Layer"
+
+[node name="MidInfluence" type="HSlider" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=1102462368]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.5
+step = 0.01
+
+[node name="ForegroundInfluenceLabel" type="Label" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=1883793500]
+layout_mode = 2
+text = "Foreground"
+
+[node name="ForegroundInfluence" type="HSlider" parent="FieldControls/Margin/VBox/InfluenceGrid" unique_id=1091706005]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.5
+step = 0.01
+
+[node name="TemporalSeparator" type="HSeparator" parent="FieldControls/Margin/VBox" unique_id=1398705346]
+layout_mode = 2
+
+[node name="TemporalHeader" type="Label" parent="FieldControls/Margin/VBox" unique_id=560598415]
+layout_mode = 2
+text = "Temporal Behaviour"
+
+[node name="TemporalGrid" type="GridContainer" parent="FieldControls/Margin/VBox" unique_id=548757072]
+layout_mode = 2
+columns = 2
+
+[node name="TemporalDriftLabel" type="Label" parent="FieldControls/Margin/VBox/TemporalGrid" unique_id=660715379]
+layout_mode = 2
+text = "Temporal Drift"
+
+[node name="TemporalDrift" type="HSlider" parent="FieldControls/Margin/VBox/TemporalGrid" unique_id=1194628697]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="DebugSeparator" type="HSeparator" parent="FieldControls/Margin/VBox" unique_id=824882111]
+layout_mode = 2
+
+[node name="DebugHeader" type="Label" parent="FieldControls/Margin/VBox" unique_id=1620751042]
+layout_mode = 2
+text = "Debug"
+
+[node name="FieldDebug" type="CheckButton" parent="FieldControls/Margin/VBox" unique_id=213614621]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Field Debug"
+
+[node name="ResetDefaults" type="Button" parent="FieldControls/Margin/VBox" unique_id=785027947]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Defaults"

@@ -13,10 +13,12 @@ fill_to = Vector2(1, 1)
 
 [node name="PreviewSurface" type="SubViewportContainer"]
 stretch = true
-mouse_filter = 2
+texture_filter = 1
+mouse_filter = 0
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1920, 1080)
+transparent_bg = false
 render_target_update_mode = 4
 
 [node name="ReferenceBackground" type="ColorRect" parent="SubViewport"]

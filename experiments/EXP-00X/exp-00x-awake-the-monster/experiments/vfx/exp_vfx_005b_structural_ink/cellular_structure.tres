@@ -1,0 +1,16 @@
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cellular"]
+seed = 5179
+noise_type = 2
+frequency = 0.028
+cellular_distance_function = 1
+cellular_return_type = 1
+cellular_jitter = 0.88
+
+[resource]
+width = 1024
+height = 1024
+seamless = true
+normalize = true
+noise = SubResource("FastNoiseLite_cellular")

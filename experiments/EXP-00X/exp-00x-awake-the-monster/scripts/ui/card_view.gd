@@ -5,15 +5,15 @@ signal option_selected(option_index: int)
 
 @onready var illustration: TextureRect = %Illustration
 @onready var narrative_text: RichTextLabel = %NarrativeText
-@onready var threat_bar: Control = $CardCenter/CardCanvas/CardThreatBar
-@onready var attention_icon: Sprite2D = $CardCenter/CardCanvas/CardThreatBar/HBoxContainer/AttentionIcon
-@onready var sanity_icon: Sprite2D = $CardCenter/CardCanvas/CardThreatBar/HBoxContainer/SanityIcon
-@onready var strength_icon: Sprite2D = $CardCenter/CardCanvas/CardThreatBar/HBoxContainer/StrengthIcon
-@onready var attention_amount: Label = $CardCenter/CardCanvas/CardThreatBar/AttentionAmount
-@onready var sanity_amount: Label = $CardCenter/CardCanvas/CardThreatBar/SanityAmount
-@onready var strength_amount: Label = $CardCenter/CardCanvas/CardThreatBar/StrengthAmount
-@onready var damage_indicator: Control = $CardCenter/CardCanvas/CardThreatBar/DamageIndicator
-@onready var damage_text: Label = $CardCenter/CardCanvas/CardThreatBar/DamageIndicator/DamageText
+@onready var threat_bar: Control = $CardThreatBar
+@onready var attention_icon: Sprite2D = $CardThreatBar/HBoxContainer/AttentionIcon
+@onready var sanity_icon: Sprite2D = $CardThreatBar/HBoxContainer/SanityIcon
+@onready var strength_icon: Sprite2D = $CardThreatBar/HBoxContainer/StrengthIcon
+@onready var attention_amount: Label = $CardThreatBar/AttentionAmount
+@onready var sanity_amount: Label = $CardThreatBar/SanityAmount
+@onready var strength_amount: Label = $CardThreatBar/StrengthAmount
+@onready var damage_indicator: Control = $CardThreatBar/DamageIndicator
+@onready var damage_text: Label = $CardThreatBar/DamageIndicator/DamageText
 
 @onready var option_buttons: Array[Button] = [
 	%OptionButton01,

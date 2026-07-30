@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://dwr7be3t48ily"]
+
+[ext_resource type="Script" uid="uid://f4ft8827ljwh" path="res://experiments/vfx/exp_vfx_008_visual_hierarchy/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://crofltle2r72j" path="res://experiments/vfx/exp_vfx_003_depth_layers/experiment.tscn" id="2_fog"]
+[ext_resource type="PackedScene" uid="uid://bb2id7530hulp" path="res://experiments/vfx/exp_vfx_005a_ink_exploration/experiment.tscn" id="3_ink"]
+[ext_resource type="PackedScene" uid="uid://bqsxffqvxsa5i" path="res://experiments/vfx/exp_vfx_006_particle_ecology/experiment.tscn" id="4_particles"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="VisualHierarchyExperiment" type="Node2D" unique_id=1447202234]
+script = ExtResource("1_script")
+
+[node name="FogSystem" parent="." unique_id=330863941 instance=ExtResource("2_fog")]
+
+[node name="InkSystem" parent="." unique_id=482070944 instance=ExtResource("3_ink")]
+
+[node name="ParticleSystem" parent="." unique_id=291188994 instance=ExtResource("4_particles")]
+
+[node name="HierarchyControls" type="PanelContainer" parent="." unique_id=576624259]
+z_index = 100
+offset_left = 1095.0
+offset_top = 23.0
+offset_right = 1527.0
+offset_bottom = 595.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="HierarchyControls" unique_id=1285611837]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="HierarchyControls/Margin" unique_id=18246258]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Title" type="Label" parent="HierarchyControls/Margin/VBox" unique_id=706752556]
+layout_mode = 2
+text = "EXP-VFX-008 — Visual Hierarchy"
+
+[node name="ScenarioLabel" type="Label" parent="HierarchyControls/Margin/VBox" unique_id=2054705227]
+layout_mode = 2
+text = "Scenario"
+
+[node name="ScenarioSelector" type="OptionButton" parent="HierarchyControls/Margin/VBox" unique_id=967777845]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SystemsSeparator" type="HSeparator" parent="HierarchyControls/Margin/VBox" unique_id=1733257062]
+layout_mode = 2
+
+[node name="SystemsHeader" type="Label" parent="HierarchyControls/Margin/VBox" unique_id=749807147]
+layout_mode = 2
+text = "Systems / Opacity"
+
+[node name="SystemsGrid" type="GridContainer" parent="HierarchyControls/Margin/VBox" unique_id=1142908752]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 9
+columns = 2
+
+[node name="FogEnabled" type="CheckButton" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=1949202762]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fog"
+
+[node name="FogOpacity" type="SpinBox" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=1323904818]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="InkEnabled" type="CheckButton" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=957481752]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ink"
+
+[node name="InkOpacity" type="SpinBox" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=1936628573]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="ParticlesEnabled" type="CheckButton" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=1247521196]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Particles"
+
+[node name="ParticlesOpacity" type="SpinBox" parent="HierarchyControls/Margin/VBox/SystemsGrid" unique_id=938182501]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="OrderSeparator" type="HSeparator" parent="HierarchyControls/Margin/VBox" unique_id=1755983366]
+layout_mode = 2
+
+[node name="OrderLabel" type="Label" parent="HierarchyControls/Margin/VBox" unique_id=289467067]
+layout_mode = 2
+text = "Draw Order — back to front"
+
+[node name="OrderSelector" type="OptionButton" parent="HierarchyControls/Margin/VBox" unique_id=669520672]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ActiveSeparator" type="HSeparator" parent="HierarchyControls/Margin/VBox" unique_id=480010515]
+layout_mode = 2
+
+[node name="ActiveCombination" type="Label" parent="HierarchyControls/Margin/VBox" unique_id=1209188360]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Active combination: Fog"
+autowrap_mode = 2

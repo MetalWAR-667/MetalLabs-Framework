@@ -1,0 +1,207 @@
+[gd_scene format=3 uid="uid://bqsxffqvxsa5i"]
+
+[ext_resource type="Script" uid="uid://bobpl2jg6fx6a" path="res://experiments/vfx/exp_vfx_006_particle_ecology/experiment.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="ParticleEcologyExperiment" type="Node2D" unique_id=913484617]
+script = ExtResource("1_script")
+
+[node name="DarkBackground" type="ColorRect" parent="." unique_id=1041066839]
+z_index = -10
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.018, 0.022, 0.03, 1)
+
+[node name="Controls" type="PanelContainer" parent="." unique_id=288222748]
+z_index = 10
+offset_left = 1105.0
+offset_top = 3.0
+offset_right = 1537.0
+offset_bottom = 854.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Controls" unique_id=1051868630]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Margin" unique_id=2003224505]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Controls/Margin/VBox" unique_id=1756412580]
+layout_mode = 2
+text = "EXP-VFX-006 — Particle Ecology"
+
+[node name="PresetLabel" type="Label" parent="Controls/Margin/VBox" unique_id=1747886679]
+layout_mode = 2
+text = "Preset"
+
+[node name="PresetSelector" type="OptionButton" parent="Controls/Margin/VBox" unique_id=1718687529]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PopulationSeparator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=1796345862]
+layout_mode = 2
+
+[node name="PopulationHeader" type="Label" parent="Controls/Margin/VBox" unique_id=1947744597]
+layout_mode = 2
+text = "Population"
+
+[node name="PopulationGrid" type="GridContainer" parent="Controls/Margin/VBox" unique_id=1994857680]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="DensityLabel" type="Label" parent="Controls/Margin/VBox/PopulationGrid" unique_id=1658923530]
+layout_mode = 2
+text = "Density"
+
+[node name="DensitySelector" type="OptionButton" parent="Controls/Margin/VBox/PopulationGrid" unique_id=1642506224]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+
+[node name="ScaleLabel" type="Label" parent="Controls/Margin/VBox/PopulationGrid" unique_id=645686135]
+layout_mode = 2
+text = "Scale"
+
+[node name="ScaleSelector" type="OptionButton" parent="Controls/Margin/VBox/PopulationGrid" unique_id=586629839]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BehaviorSeparator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=2027945881]
+layout_mode = 2
+
+[node name="BehaviorHeader" type="Label" parent="Controls/Margin/VBox" unique_id=714865178]
+layout_mode = 2
+text = "Behavior"
+
+[node name="BehaviorGrid" type="GridContainer" parent="Controls/Margin/VBox" unique_id=1638935673]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="BehaviorLabel" type="Label" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=37685474]
+layout_mode = 2
+text = "Family"
+
+[node name="BehaviorSelector" type="OptionButton" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=451102975]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+
+[node name="MovementSpeedLabel" type="Label" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=43999784]
+layout_mode = 2
+text = "Speed"
+
+[node name="MovementSpeed" type="SpinBox" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=80628132]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 120.0
+value = 1.0
+
+[node name="ForceIntensityLabel" type="Label" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=2010237400]
+layout_mode = 2
+text = "Force Intensity"
+
+[node name="ForceIntensity" type="SpinBox" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=2010390991]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 80.0
+
+[node name="InfluenceRadiusLabel" type="Label" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=122222240]
+layout_mode = 2
+text = "Influence Radius"
+
+[node name="InfluenceRadius" type="SpinBox" parent="Controls/Margin/VBox/BehaviorGrid" unique_id=32707222]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 50.0
+max_value = 800.0
+step = 10.0
+value = 50.0
+
+[node name="RhythmSeparator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=357972200]
+layout_mode = 2
+
+[node name="RhythmHeader" type="Label" parent="Controls/Margin/VBox" unique_id=1642983515]
+layout_mode = 2
+text = "Rhythm"
+
+[node name="RhythmGrid" type="GridContainer" parent="Controls/Margin/VBox" unique_id=1531987516]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="RhythmLabel" type="Label" parent="Controls/Margin/VBox/RhythmGrid" unique_id=282015625]
+layout_mode = 2
+text = "Emission"
+
+[node name="RhythmSelector" type="OptionButton" parent="Controls/Margin/VBox/RhythmGrid" unique_id=2037810119]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+
+[node name="PulseDurationLabel" type="Label" parent="Controls/Margin/VBox/RhythmGrid" unique_id=2125168903]
+layout_mode = 2
+text = "Pulse Duration"
+
+[node name="PulseDuration" type="SpinBox" parent="Controls/Margin/VBox/RhythmGrid" unique_id=541153014]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.5
+max_value = 30.0
+step = 0.5
+value = 0.5
+
+[node name="PauseDurationLabel" type="Label" parent="Controls/Margin/VBox/RhythmGrid" unique_id=1533755714]
+layout_mode = 2
+text = "Pause Duration"
+
+[node name="PauseDuration" type="SpinBox" parent="Controls/Margin/VBox/RhythmGrid" unique_id=592568595]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 30.0
+step = 0.5
+
+[node name="DebugSeparator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=1989560014]
+layout_mode = 2
+
+[node name="DebugHeader" type="Label" parent="Controls/Margin/VBox" unique_id=1390017225]
+layout_mode = 2
+text = "Debug"
+
+[node name="ShowInfluenceZone" type="CheckButton" parent="Controls/Margin/VBox" unique_id=165357211]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show influence zone"
+
+[node name="MetricsSeparator" type="HSeparator" parent="Controls/Margin/VBox" unique_id=97934186]
+layout_mode = 2
+
+[node name="LocalMetrics" type="Label" parent="Controls/Margin/VBox" unique_id=1191357521]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Active particles: 0
+Behavior: Drift
+Rhythm: Constant
+Preset: Baseline"

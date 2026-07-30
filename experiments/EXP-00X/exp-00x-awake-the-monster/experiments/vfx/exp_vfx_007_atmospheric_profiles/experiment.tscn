@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://djm1qotitah7"]
+
+[ext_resource type="Script" uid="uid://cc0hmthxxln48" path="res://experiments/vfx/exp_vfx_007_atmospheric_profiles/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://crofltle2r72j" path="res://experiments/vfx/exp_vfx_003_depth_layers/experiment.tscn" id="2_fog"]
+[ext_resource type="PackedScene" uid="uid://bb2id7530hulp" path="res://experiments/vfx/exp_vfx_005a_ink_exploration/experiment.tscn" id="3_ink"]
+[ext_resource type="PackedScene" uid="uid://bqsxffqvxsa5i" path="res://experiments/vfx/exp_vfx_006_particle_ecology/experiment.tscn" id="4_particles"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="AtmosphericProfilesExperiment" type="Node2D" unique_id=1239985533]
+script = ExtResource("1_script")
+
+[node name="FogSystem" parent="." unique_id=364572736 instance=ExtResource("2_fog")]
+
+[node name="InkSystem" parent="." unique_id=1758198371 instance=ExtResource("3_ink")]
+
+[node name="ParticleSystem" parent="." unique_id=1517626421 instance=ExtResource("4_particles")]
+
+[node name="ProfileControls" type="PanelContainer" parent="." unique_id=1324661633]
+z_index = 100
+offset_left = 1052.0
+offset_top = 472.0
+offset_right = 1484.0
+offset_bottom = 824.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="ProfileControls" unique_id=1639294540]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="ProfileControls/Margin" unique_id=439644864]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="ProfileControls/Margin/VBox" unique_id=1962452713]
+layout_mode = 2
+text = "EXP-VFX-007 — Atmospheric Profiles"
+
+[node name="ProfileLabel" type="Label" parent="ProfileControls/Margin/VBox" unique_id=1590259874]
+layout_mode = 2
+text = "Profile"
+
+[node name="ProfileSelector" type="OptionButton" parent="ProfileControls/Margin/VBox" unique_id=1981177964]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Separator" type="HSeparator" parent="ProfileControls/Margin/VBox" unique_id=242280578]
+layout_mode = 2
+
+[node name="FogEnabled" type="CheckButton" parent="ProfileControls/Margin/VBox" unique_id=1228581979]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fog"
+
+[node name="InkEnabled" type="CheckButton" parent="ProfileControls/Margin/VBox" unique_id=1282468445]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ink"
+
+[node name="ParticlesEnabled" type="CheckButton" parent="ProfileControls/Margin/VBox" unique_id=224530983]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Particles"
+
+[node name="ActiveProfile" type="Label" parent="ProfileControls/Margin/VBox" unique_id=1300092659]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Active profile: Calm"

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/exp_vfx_005b_structural_ink/experiment.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://experiments/vfx/exp_vfx_005a_ink_exploration/experiment.tscn" id="2_base"]
+
+[node name="StructuralInkExperiment" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BaseInkExploration" parent="." instance=ExtResource("2_base")]

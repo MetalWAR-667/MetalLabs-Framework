@@ -27,10 +27,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -57,42 +57,50 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ControlsRow" type="HBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout"]
+[node name="ControlsRow" type="VBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PrimaryRow" type="HBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ExperimentLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="ExperimentLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/PrimaryRow"]
 layout_mode = 2
 text = "Experiment"
 
-[node name="ExperimentSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="ExperimentSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/PrimaryRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ActivateButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="ActivateButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/PrimaryRow"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load / Activate"
 
-[node name="ResetButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="ResetButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/PrimaryRow"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Reset"
 
-[node name="PauseButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="PauseButton" type="Button" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/PrimaryRow"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Pause"
 
-[node name="BackgroundLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="SecondaryRow" type="HBoxContainer" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackgroundLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/SecondaryRow"]
 layout_mode = 2
 text = "Background"
 
-[node name="BackgroundSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow"]
+[node name="BackgroundSelector" type="OptionButton" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout/ControlsRow/SecondaryRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 
 [node name="StatusLabel" type="Label" parent="MainMargin/MainLayout/ControlPanel/ControlMargin/ControlLayout"]
@@ -103,10 +111,10 @@ text = "Status: Initializing."
 [node name="Workspace" type="HSplitContainer" parent="MainMargin/MainLayout"]
 layout_mode = 2
 size_flags_vertical = 3
-split_offset = 310
+split_offset = 240
 
 [node name="TelemetryPanel" type="PanelContainer" parent="MainMargin/MainLayout/Workspace"]
-custom_minimum_size = Vector2(240, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
 [node name="TelemetryMargin" type="MarginContainer" parent="MainMargin/MainLayout/Workspace/TelemetryPanel"]
