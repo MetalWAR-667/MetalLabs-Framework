@@ -4,3 +4,6 @@
 /*.exe
 experiments/EXP-00X/exp-00x-awake-the-monster/Godot_v4.7.1-stable_win64.exe
 experiments/EXP-00X/exp-00x-awake-the-monster/Godot_v4.7.1-stable_win64_console.exe
+# EXP-00X — Vídeos pesados y fuentes conceptuales
+experiments/EXP-00X/exp-00x-awake-the-monster/Assets/video/concept_jack.mp4
+experiments/EXP-00X/exp-00x-awake-the-monster/Assets/videos/act1-epilogue.ogv

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://xfrebse03jjo"
+path="res://.godot/imported/Quiz_And_Puzzle_Musical_SFX  (242).wav-62db501c3cc5175376515c22e97661a3.sample"
+
+[deps]
+
+source_file="res://Assets/sounds/events/Quiz_And_Puzzle_Musical_SFX  (242).wav"
+dest_files=["res://.godot/imported/Quiz_And_Puzzle_Musical_SFX  (242).wav-62db501c3cc5175376515c22e97661a3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

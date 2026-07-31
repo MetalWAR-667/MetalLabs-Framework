@@ -18,8 +18,10 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1376406867]
 layout_mode = 0
-offset_right = 250.0
-offset_bottom = 60.0
+offset_left = 26.0
+offset_top = -16.0
+offset_right = 276.0
+offset_bottom = 44.0
 
 [node name="AttentionIcon" type="Sprite2D" parent="HBoxContainer" unique_id=2018070466]
 unique_name_in_owner = true
@@ -78,10 +80,9 @@ vertical_alignment = 1
 [node name="DamageIndicator" type="Control" parent="." unique_id=1176558200]
 unique_name_in_owner = true
 anchors_preset = 0
-offset_left = 526.0
-offset_top = 18.0
-offset_right = 592.0
-offset_bottom = 84.0
+offset_left = 583.0
+offset_right = 649.0
+offset_bottom = 66.0
 mouse_filter = 2
 
 [node name="DamageIcon" type="TextureRect" parent="DamageIndicator" unique_id=314111341]

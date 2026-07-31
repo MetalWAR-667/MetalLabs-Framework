@@ -1,73 +1,57 @@
-Vision
-Objetivo
+# Vision / Narrative Core
 
-Construir un microjuego narrativo de corta duración que permita validar un Narrative Core reutilizable posteriormente en Lands of Folklore.
+**Estado: Vigente para el vertical slice**
 
-El proyecto constituye un experimento de MetalLab y debe mantenerse siempre dentro de un alcance reducido.
+## Propósito
 
-Su duración objetivo será de un mes, con posibilidad de extenderse unas semanas únicamente si resulta necesario para completar el ciclo de desarrollo.
+Construir un microjuego narrativo breve que permita cerrar un ciclo de
+producción y estudiar un núcleo reutilizable de decisiones, Resources y
+presentación para MetalLab y Lands of Folklore.
 
-La Pesadilla
+La reutilización es un aprendizaje, no una obligación de trasladar el código.
 
-El jugador no explora un mundo coherente.
+## Premisa
 
-Explora una sucesión de sueños, recuerdos y lugares imposibles.
+Jack despierta dentro de un sueño que no le pertenece. El mundo parece regido
+por una geometría precisa pero incompatible con la intuición humana. Cada carta
+es un fragmento del viaje y una prueba de interpretación.
 
-Cada carta representa un instante de una pesadilla.
+La experiencia no explica por completo:
 
-Las escenas no necesitan mantener continuidad espacial, temporal ni lógica.
+- quién construyó el sueño;
+- qué relación exacta mantiene Jack con él;
+- si el Fugitivo es una persona, un recuerdo o una forma del propio sueño;
+- qué realidad intenta reconstruir el DreamGraph.
 
-La coherencia surge de un pequeño conjunto de reglas compartidas, no de una geografía o una cronología.
+Estas ambigüedades son deliberadas y no deben rellenarse por documentación
+técnica.
 
-El objetivo no es explicar el mundo.
+## Progresión del capítulo
 
-El objetivo es sobrevivir a él y, quizá, despertar.
+1. Jack despierta y se arroja al vacío.
+2. Aprende a discernir símbolos y atravesar una caída imposible.
+3. El Umbral confronta su apego al objeto elegido.
+4. El Acechador transforma esa decisión en una ruta disponible o bloqueada.
+5. El Refugio introduce al Fugitivo y permite aceptarlo o rechazarlo.
+6. El Icnófago exige decidir quién participa y cierra el capítulo.
+7. El epílogo audiovisual sustituye la explicación literal por una imagen final.
 
-Filosofía narrativa
+## Protagonista y aliado
 
-La inspiración toma elementos de la fantasía onírica de Lord Dunsany y del horror cósmico de Lovecraft, evitando deliberadamente reproducir sus iconos más reconocibles.
+Jack es el único protagonista y siempre participa. El Fugitivo es un aliado
+opcional y limitado a la última carta del slice. Su incorporación no abre un
+sistema de grupo: introduce una decisión sobre ayuda, daño compartido y
+descanso.
 
-No existen tentáculos, cultistas, criaturas famosas ni referencias directas a los Mitos.
+## Lenguaje visual narrativo
 
-Lo importante no son los monstruos.
+El sueño comienza monocromático. Color, niebla geométrica y DreamGraph expresan
+cambio, memoria y reconstrucción sin convertirse en reglas jugables. El grafo
+crece con las cartas, pero su significado exacto permanece abierto.
 
-Lo importante son las reglas extrañas de la realidad.
+## Criterio narrativo
 
-El mundo no es el escenario
+El slice debe cerrar un arco perceptivo, no resolver el misterio. Carta 06 y el
+epílogo terminan el capítulo; la pantalla posterior sigue siendo provisional y
+no añade canon.
 
-El estado persistente reside principalmente en el jugador.
-
-Los sueños pueden cambiar completamente de escenario entre una carta y otra.
-
-Lo que permanece son las consecuencias de las decisiones tomadas, los objetos obtenidos, los conocimientos adquiridos y las reglas descubiertas.
-
-Cartas independientes
-
-Cada carta debe funcionar como un pequeño relato autocontenido.
-
-Una carta responde únicamente a cuatro preguntas:
-
-¿Qué sucede?
-¿Qué puede decidir el jugador?
-¿Qué cambia inmediatamente?
-¿Qué permanece después?
-
-No necesita depender de otras cartas para resultar interesante.
-
-Laboratorio narrativo
-
-El microjuego también actúa como banco de pruebas para ideas reutilizables.
-
-Las situaciones, mecánicas narrativas y estructuras de decisión podrán trasladarse posteriormente a Lands of Folklore.
-
-Sin embargo, las cartas no deberán reutilizarse literalmente.
-
-Se reutilizan las ideas.
-
-No el contenido.
-
-Ley del experimento
-
-Nunca se construye un segundo Lands of Folklore.
-
-Si el alcance comienza a crecer mediante sistemas, mapas, combate, IA, editor o narrativa compleja, el experimento deberá reducirse hasta recuperar su objetivo original.

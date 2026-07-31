@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bef5p0fbshu3l"
+path="res://.godot/imported/Stone Above the Void.mp3-864f7d677ac6a4d1f309bbab98949d4a.mp3str"
+
+[deps]
+
+source_file="res://Assets/music/Stone Above the Void.mp3"
+dest_files=["res://.godot/imported/Stone Above the Void.mp3-864f7d677ac6a4d1f309bbab98949d4a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

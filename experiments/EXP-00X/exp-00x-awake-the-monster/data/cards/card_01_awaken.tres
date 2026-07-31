@@ -12,15 +12,12 @@ text = "Arrojarse al vacío."
 script = ExtResource("1_card_data")
 illustration = ExtResource("2_illustration")
 description = "El despertar no fue un tránsito. Fue una fractura.
-La conciencia regresó como un cristal astillado —y cuando abrió los ojos, ya estaba allí.
+La conciencia regresó como un cristal que se astilla y, cuando abrió los ojos, ya estaba allí.
 En pie.
-
-Suspendido sobre una plataforma inerte, hecha de un material tan extraño como irreconocible, que parecía recordar haber sido otra cosa, en otro tiempo, bajo otra mano.
-Bajo la plataforma no había suelo.
-Solo un vacío tan inmenso que la palabra caída perdía todo su significado.
-
-El aire — si es que aquel hálito estancado de eones merecía ese nombre— se respiraba como quien intenta recordar un color olvidado.
+Suspendido sobre una plataforma que parecía recordar haber sido otra cosa.
+Bajo ella no había suelo.
+Solo un vacío tan inmenso que la palabra “caída” perdía todo su significado.
+El aire era una sustancia equivoca y respirarlo era como intentar recordar un color olvidado.
 No estaba soñando.
-
-Era el intruso de una arquitectura onírica que jamás fue diseñada para ser contemplada por ojos humanos."
+Estoy despierto en un sueño que no me pertenece."
 options = Array[ExtResource("3_card_option")]([SubResource("CardOption_awaken")])

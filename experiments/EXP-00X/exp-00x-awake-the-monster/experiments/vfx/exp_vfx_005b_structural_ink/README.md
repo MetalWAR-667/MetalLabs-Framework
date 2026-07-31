@@ -1,5 +1,8 @@
 # EXP-VFX-005B — Structural Ink
 
+**Status: Closed / Negative result.** La estructura celular mejoró la materia,
+pero no cambió de forma convincente su identidad de humo.
+
 ## Hipótesis
 
 La identidad de la tinta depende principalmente de la estructura espacial de la
@@ -21,5 +24,6 @@ gradientes nubosos continuos.
 
 ## Observaciones
 
-Pendientes de validación visual comparativa. Debe comprobarse qué mejora
-realmente y qué continúa pareciendo humo endurecido.
+Las masas celulares aportan regiones más compactas e invasión desigual, pero la
+lectura dominante continúa siendo humo endurecido. La estructura mejora; la
+categoría perceptiva no cambia.

@@ -6,14 +6,14 @@
 
 [sub_resource type="Resource" id="CardOption_confront"]
 script = ExtResource("3_card_option")
-text = "Hacer frente a la aberración."
+text = "Hacer frente a la aberración. (Fuerza)"
 required_stat = 3
 required_successes = 2
 damage = 2
 
 [sub_resource type="Resource" id="CardOption_sneak"]
 script = ExtResource("3_card_option")
-text = "Deslizarse por la sombra mientras la bestia se alimenta."
+text = "Deslizarse por la sombra mientras la bestia se alimenta. (Atención)"
 required_stat = 1
 damage = 1
 requires_sacrificed_item = true

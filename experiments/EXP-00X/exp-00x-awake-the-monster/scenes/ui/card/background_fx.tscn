@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bo0ddngl068yy"]
 
-[ext_resource type="Material" uid="uid://bt8oa8vukxl4k" path="res://shaders/dream_background_default.tres" id="1_dream_material"]
+[ext_resource type="Material" path="res://shaders/background_fog_material.tres" id="1_fog_material"]
 [ext_resource type="Script" path="res://scripts/ui/background_fx.gd" id="2_background_fx"]
-[ext_resource type="PackedScene" path="res://scenes/ui/card/background_fx/memory_layer_placeholder.tscn" id="3_memory_layer"]
+[ext_resource type="PackedScene" path="res://scenes/ui/card/background_fx/dream_graph.tscn" id="3_dream_graph"]
 [ext_resource type="Script" path="res://scripts/ui/background_fx_transition_controller.gd" id="4_transition_controller"]
 
 [sub_resource type="Gradient" id="Gradient_dream_dust"]
@@ -59,8 +59,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="AtmosphericLayer" unique_id=1974739395]
-material = ExtResource("1_dream_material")
+[node name="FogRect" type="ColorRect" parent="AtmosphericLayer" unique_id=1974739395]
+unique_name_in_owner = true
+material = ExtResource("1_fog_material")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,7 +81,17 @@ randomness = 0.85
 visibility_rect = Rect2(-1000, -600, 2000, 1200)
 process_material = SubResource("ParticleProcessMaterial_dream_dust")
 
-[node name="MemoryLayer" parent="." instance=ExtResource("3_memory_layer")]
+[node name="MemoryLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DreamGraph" parent="MemoryLayer" instance=ExtResource("3_dream_graph")]
 layout_mode = 1
 
 [node name="TransitionController" type="Node" parent="."]

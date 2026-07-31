@@ -4,6 +4,12 @@
 **Scope:** Visual language research closure  
 **Project application:** Awake the Monster
 
+**Production update:** Atmospheric Layer is integrated. Memory Layer now uses
+an original 18-node DreamGraph with fixed progression across Cards 01–06. The
+external procedural-network reference remains research-only; no external shader
+code is required by the production implementation. DreamGraph itself remains
+an experimental integration pending final visual acceptance.
+
 ## 1. Purpose
 
 This research block did not seek a collection of isolated effects. It examined
@@ -205,4 +211,3 @@ Visual inspiration and code provenance are separate matters.
   shader implementation?
 - What is the minimal original implementation capable of communicating the
   idea?
-

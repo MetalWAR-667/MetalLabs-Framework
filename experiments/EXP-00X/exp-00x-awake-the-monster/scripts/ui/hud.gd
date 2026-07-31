@@ -2,7 +2,11 @@ class_name GameHUD
 extends Control
 
 const MAIN_MENU_PATH := "res://scenes/ui/menu/main_menu.tscn"
-const END_SCREEN_PATH := "res://scenes/ui/menu/end_screen.tscn"
+const ACT1_EPILOGUE_PATH := "res://scenes/ui/menu/act1_epilogue.tscn"
+const GAME_OVER_PATH := "res://scenes/ui/menu/game_over.tscn"
+const COMPANION_REVEAL_DURATION := 0.45
+const COMPANION_REVEAL_SCALE := 0.96
+const COMPANION_REVEAL_OFFSET := Vector2(0.0, 12.0)
 
 @export var player_data: ActorData
 @export var companion_data: ActorData
@@ -14,7 +18,9 @@ const END_SCREEN_PATH := "res://scenes/ui/menu/end_screen.tscn"
 @export var sixth_card: CardData
 
 @onready var card_view: CardView = $CardViewResponsive
+@onready var background_fx: BackgroundFX = $BackgroundFX
 @onready var player_actor_panel: ActorPanel = $ActorPanel
+@onready var equipment_slot: EquipmentSlot = $EquipmentSlot
 @onready var companion_actor_panel: ActorPanel = $Companion
 @onready var player_dice: ActorDice = $DicePlayer
 @onready var companion_dice: ActorDice = $DiceCompanion
@@ -22,8 +28,10 @@ const END_SCREEN_PATH := "res://scenes/ui/menu/end_screen.tscn"
 
 var current_card: CardData
 var current_player_health: int
+var current_player_sanity: int
 var is_resolving_test := false
 var selected_item: ItemData
+var selected_item_remaining_uses := 0
 var sacrificed_initial_item := false
 var remaining_threat := 0
 var threat_resolution_active := false
@@ -33,6 +41,14 @@ var ally_current_health := 0
 var ally_participates := false
 var protagonist_roll_result := ""
 var ally_roll_result := ""
+var equipped_bonus_applied := false
+var pending_save_state: Dictionary = {}
+var companion_final_position := Vector2.ZERO
+var companion_final_scale := Vector2.ONE
+var companion_final_mouse_filter := Control.MOUSE_FILTER_STOP
+var companion_is_presented := false
+var companion_reveal_tween: Tween
+var is_game_over := false
 
 
 func _ready() -> void:
@@ -42,18 +58,30 @@ func _ready() -> void:
 	ally_participates = false
 	protagonist_roll_result = ""
 	ally_roll_result = ""
+	_initialize_companion_presentation()
 	companion_dice.hide()
 	current_player_health = player_data.health
+	current_player_sanity = player_data.sanity
 	player_actor_panel.set_actor(player_data)
+	if selected_item != null and selected_item_remaining_uses <= 0:
+		selected_item_remaining_uses = selected_item.uses
+	equipment_slot.equip(selected_item)
 	companion_actor_panel.set_actor(companion_data)
 	if selected_item != null:
 		print_debug("Selected initial item: %s" % selected_item.display_name)
 	pause_menu.resume_requested.connect(_on_pause_resume_requested)
 	pause_menu.main_menu_requested.connect(_on_pause_main_menu_requested)
-	_load_card(initial_card)
+	if pending_save_state.is_empty():
+		_load_card(initial_card)
+	else:
+		_restore_saved_state(pending_save_state)
+		pending_save_state = {}
 
 
 func _on_card_option_selected(option_index: int) -> void:
+	if is_game_over:
+		return
+
 	if current_card == sixth_card:
 		await _resolve_sixth_card_participant_selection(option_index)
 		return
@@ -93,6 +121,8 @@ func _resolve_third_card_option(option_index: int, selected_option: CardOptionDa
 				return
 
 			selected_item = null
+			selected_item_remaining_uses = 0
+			equipment_slot.clear()
 			sacrificed_initial_item = true
 			print_debug("Initial item sacrificed at the Threshold.")
 			_load_card(fourth_card)
@@ -108,10 +138,13 @@ func _resolve_fifth_card_option(option_index: int) -> void:
 		0:
 			current_ally = companion_data
 			ally_current_health = maxi(0, current_ally.health - 1)
+			companion_actor_panel.set_health(ally_current_health)
+			_reveal_companion()
 			_load_card(sixth_card)
 		1:
 			current_ally = null
 			ally_current_health = 0
+			_set_companion_visible_immediately(false)
 			_load_card(sixth_card)
 
 
@@ -140,9 +173,12 @@ func _resolve_sixth_card_participant_selection(option_index: int) -> void:
 			return
 
 	card_view.show_threat(selected_option.required_stat, remaining_threat, selected_option.damage)
-	await _roll_sixth_card_dice()
+	var protagonist_success_bonus := _consume_equipped_success_bonus(
+		selected_option.required_stat
+	)
+	await _roll_sixth_card_dice(protagonist_success_bonus)
 
-	var round_successes := 0
+	var round_successes := protagonist_success_bonus
 	if _rolled_stat_matches(protagonist_roll_result, selected_option.required_stat):
 		round_successes += 1
 	if ally_participates and _rolled_stat_matches(ally_roll_result, selected_option.required_stat):
@@ -157,23 +193,41 @@ func _resolve_sixth_card_participant_selection(option_index: int) -> void:
 	if remaining_threat <= 0:
 		print_debug("Threat neutralized")
 		_resolve_ally_rest()
+		await background_fx.play_success_feedback()
+		SaveManager.clear_save()
 		get_tree().paused = false
-		get_tree().change_scene_to_file(END_SCREEN_PATH)
+		get_tree().change_scene_to_file(ACT1_EPILOGUE_PATH)
 		return
 
 	card_view.show_threat(selected_option.required_stat, remaining_threat, selected_option.damage)
-	_apply_player_damage(selected_option.damage)
+	if await _apply_player_damage(selected_option.damage):
+		return
 	if ally_participates:
 		_apply_ally_damage(selected_option.damage)
 	_prepare_next_sixth_card_round()
+	_autosave()
+	if round_successes > 0:
+		background_fx.play_success_feedback()
+	else:
+		background_fx.play_failure_feedback()
 
 
-func _roll_sixth_card_dice() -> void:
-	protagonist_roll_result = await player_dice.roll(player_data.dice_faces)
+func _roll_sixth_card_dice(protagonist_success_bonus: int) -> void:
+	protagonist_roll_result = await player_dice.roll(
+		player_data.dice_faces,
+		protagonist_success_bonus
+	)
 	print_debug("Card 06 roll — participant: protagonist, actor: %s, symbol: %s" % [
 		player_data.display_name,
 		protagonist_roll_result,
 	])
+	await player_dice.play_resolution_feedback(
+		protagonist_success_bonus > 0
+		or _rolled_stat_matches(
+			protagonist_roll_result,
+			selected_option.required_stat
+		)
+	)
 
 	ally_roll_result = ""
 	if not ally_participates:
@@ -186,10 +240,17 @@ func _roll_sixth_card_dice() -> void:
 		current_ally.display_name,
 		ally_roll_result,
 	])
+	await companion_dice.play_resolution_feedback(
+		_rolled_stat_matches(
+			ally_roll_result,
+			selected_option.required_stat
+		)
+	)
 
 
 func _apply_ally_damage(damage: int) -> void:
 	ally_current_health -= damage
+	companion_actor_panel.set_health(ally_current_health)
 	print_debug("Fugitivo Pálido Health: %d" % ally_current_health)
 
 	if ally_current_health <= 0:
@@ -206,6 +267,7 @@ func _resolve_ally_rest() -> void:
 
 	var previous_health := ally_current_health
 	ally_current_health = mini(ally_current_health + 1, current_ally.health)
+	companion_actor_panel.set_health(ally_current_health)
 	print_debug("Descanso del aliado:\n%s\nSalud anterior: %d\nSalud actual: %d" % [
 		current_ally.display_name,
 		previous_health,
@@ -227,22 +289,43 @@ func _resolve_current_threat_round(completion_card: CardData) -> void:
 		print_debug("Remaining threat: %d" % remaining_threat)
 
 	card_view.show_threat(selected_option.required_stat, remaining_threat, selected_option.damage)
-	var result := await player_dice.roll(player_data.dice_faces)
+	var success_bonus := _consume_equipped_success_bonus(
+		selected_option.required_stat
+	)
+	var result := await player_dice.roll(
+		player_data.dice_faces,
+		success_bonus
+	)
+	var rolled_symbol_succeeded := _rolled_stat_matches(
+		result,
+		selected_option.required_stat
+	)
+	var round_successes := success_bonus
+	if rolled_symbol_succeeded:
+		round_successes += 1
+	await player_dice.play_resolution_feedback(round_successes > 0)
 
-	if _rolled_stat_matches(result, selected_option.required_stat):
-		remaining_threat = maxi(0, remaining_threat - 1)
+	if round_successes > 0:
+		remaining_threat = maxi(0, remaining_threat - round_successes)
 		if remaining_threat > 0:
 			card_view.show_threat(selected_option.required_stat, remaining_threat, selected_option.damage)
 
 	if remaining_threat <= 0:
 		print_debug("Threat neutralized")
+		background_fx.play_success_feedback()
 		_load_card(completion_card)
 		is_resolving_test = false
 		return
 
 	print_debug("Remaining threat: %d" % remaining_threat)
-	_apply_player_damage(selected_option.damage)
+	if await _apply_player_damage(selected_option.damage):
+		return
 	_prepare_next_threat_round()
+	_autosave()
+	if round_successes > 0:
+		background_fx.play_success_feedback()
+	else:
+		background_fx.play_failure_feedback()
 	is_resolving_test = false
 
 
@@ -258,12 +341,65 @@ func _rolled_stat_matches(result: String, required_stat: CardOptionData.StatType
 			return false
 
 
-func _apply_player_damage(damage: int) -> void:
+func _consume_equipped_success_bonus(
+	required_stat: CardOptionData.StatType
+) -> int:
+	if equipped_bonus_applied:
+		return 0
+
+	if selected_item == null or selected_item_remaining_uses <= 0:
+		return 0
+
+	var success_bonus := selected_item.get_success_bonus(required_stat)
+	if success_bonus <= 0:
+		return 0
+
+	equipped_bonus_applied = true
+	selected_item_remaining_uses -= 1
+	if selected_item_remaining_uses <= 0:
+		selected_item_remaining_uses = 0
+		selected_item = null
+		equipment_slot.clear()
+
+	return success_bonus
+
+
+func _apply_player_damage(damage: int) -> bool:
 	current_player_health -= damage
 	player_actor_panel.set_health(current_player_health)
 
 	if current_player_health <= 0:
-		push_warning("Jack has reached %d Health. Defeat is not implemented yet." % current_player_health)
+		await _start_game_over_sequence()
+		return true
+
+	return false
+
+
+func _start_game_over_sequence() -> void:
+	if is_game_over:
+		return
+
+	is_game_over = true
+	card_view.set_options_enabled(false)
+	get_viewport().gui_release_focus()
+	SaveManager.clear_save()
+
+	var fade_overlay := ColorRect.new()
+	fade_overlay.name = "GameOverFade"
+	fade_overlay.color = Color(0.0, 0.0, 0.0, 0.0)
+	fade_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(fade_overlay)
+	fade_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	move_child(fade_overlay, get_child_count() - 1)
+
+	var fade_tween := create_tween()
+	fade_tween.set_trans(Tween.TRANS_SINE)
+	fade_tween.set_ease(Tween.EASE_IN_OUT)
+	fade_tween.tween_property(fade_overlay, "color:a", 1.0, 0.45)
+	await fade_tween.finished
+
+	get_tree().paused = false
+	get_tree().change_scene_to_file(GAME_OVER_PATH)
 
 
 func _prepare_next_threat_round() -> void:
@@ -273,12 +409,14 @@ func _prepare_next_threat_round() -> void:
 		card_view.set_option_enabled(selected_index, true)
 
 
-func _load_card(card: CardData) -> void:
+func _load_card(card: CardData, save_after_load := true) -> void:
 	current_card = card
 	remaining_threat = 0
 	threat_resolution_active = false
+	equipped_bonus_applied = false
 	selected_option = null
 	card_view.set_card(card)
+	background_fx.set_card(card.resource_path, save_after_load)
 	_configure_current_card_options()
 
 	if card == fourth_card:
@@ -301,6 +439,193 @@ func _load_card(card: CardData) -> void:
 			ally_name,
 			ally_current_health,
 		])
+
+	if save_after_load:
+		_autosave()
+
+
+func _autosave() -> void:
+	if current_card == null:
+		return
+
+	var selected_option_index := -1
+	if selected_option != null:
+		selected_option_index = current_card.options.find(selected_option)
+
+	SaveManager.save_game({
+		"card_path": current_card.resource_path,
+		"player_health": current_player_health,
+		"player_sanity": current_player_sanity,
+		"selected_item_path": (
+			selected_item.resource_path if selected_item != null else ""
+		),
+		"item_remaining_uses": selected_item_remaining_uses,
+		"sacrificed_initial_item": sacrificed_initial_item,
+		"ally_present": current_ally != null,
+		"ally_health": ally_current_health,
+		"threat_active": threat_resolution_active,
+		"remaining_threat": remaining_threat,
+		"selected_option_index": selected_option_index,
+		"ally_participates": ally_participates,
+		"bonus_applied": equipped_bonus_applied,
+	})
+
+
+func _restore_saved_state(state: Dictionary) -> void:
+	var saved_card := load(state.card_path) as CardData
+	if saved_card == null or not _is_known_card(saved_card):
+		push_warning("HUD could not restore the saved card. Starting a clean game.")
+		SaveManager.clear_save()
+		_load_card(initial_card)
+		return
+
+	current_player_health = state.player_health
+	current_player_sanity = state.player_sanity
+	player_actor_panel.set_health(current_player_health)
+	player_actor_panel.set_sanity(current_player_sanity)
+	sacrificed_initial_item = state.sacrificed_initial_item
+	ally_current_health = state.ally_health
+	ally_participates = state.ally_participates
+	current_ally = companion_data if state.ally_present else null
+	if current_ally == null:
+		_set_companion_visible_immediately(false)
+	else:
+		companion_actor_panel.set_health(ally_current_health)
+		_set_companion_visible_immediately(true)
+
+	selected_item = null
+	selected_item_remaining_uses = state.item_remaining_uses
+	if not state.selected_item_path.is_empty() and selected_item_remaining_uses > 0:
+		selected_item = load(state.selected_item_path) as ItemData
+		if selected_item == null:
+			push_warning("HUD could not restore the saved item. Starting a clean game.")
+			SaveManager.clear_save()
+			selected_item_remaining_uses = 0
+			equipment_slot.clear()
+			_load_card(initial_card)
+			return
+	if selected_item == null:
+		selected_item_remaining_uses = 0
+		equipment_slot.clear()
+	else:
+		equipment_slot.equip(selected_item)
+
+	_load_card(saved_card, false)
+	threat_resolution_active = state.threat_active
+	remaining_threat = state.remaining_threat
+	equipped_bonus_applied = state.bonus_applied
+
+	var option_index: int = state.selected_option_index
+	if threat_resolution_active:
+		if option_index < 0 or option_index >= current_card.options.size():
+			push_warning("HUD found an incomplete active threat. Starting the card clean.")
+			threat_resolution_active = false
+			remaining_threat = 0
+			equipped_bonus_applied = false
+		else:
+			selected_option = current_card.options[option_index]
+			card_view.show_threat(
+				selected_option.required_stat,
+				remaining_threat,
+				selected_option.damage
+			)
+			if current_card == sixth_card:
+				_prepare_next_sixth_card_round()
+			else:
+				_prepare_next_threat_round()
+
+	print_debug("Prototype save restored: %s" % current_card.resource_path)
+
+
+func _initialize_companion_presentation() -> void:
+	companion_final_position = companion_actor_panel.position
+	companion_final_scale = companion_actor_panel.scale
+	companion_final_mouse_filter = companion_actor_panel.mouse_filter
+	_set_companion_visible_immediately(false)
+
+
+func _reveal_companion() -> void:
+	if companion_is_presented:
+		return
+
+	if companion_reveal_tween != null and companion_reveal_tween.is_valid():
+		companion_reveal_tween.kill()
+
+	companion_is_presented = true
+	companion_actor_panel.position = (
+		companion_final_position + COMPANION_REVEAL_OFFSET
+	)
+	companion_actor_panel.scale = (
+		companion_final_scale * COMPANION_REVEAL_SCALE
+	)
+	companion_actor_panel.modulate.a = 0.0
+	companion_actor_panel.mouse_filter = companion_final_mouse_filter
+	companion_actor_panel.set_process(true)
+	companion_actor_panel.show()
+
+	companion_reveal_tween = create_tween()
+	companion_reveal_tween.set_parallel(true)
+	companion_reveal_tween.set_trans(Tween.TRANS_SINE)
+	companion_reveal_tween.set_ease(Tween.EASE_OUT)
+	companion_reveal_tween.tween_property(
+		companion_actor_panel,
+		"modulate:a",
+		1.0,
+		COMPANION_REVEAL_DURATION
+	)
+	companion_reveal_tween.tween_property(
+		companion_actor_panel,
+		"scale",
+		companion_final_scale,
+		COMPANION_REVEAL_DURATION
+	)
+	companion_reveal_tween.tween_property(
+		companion_actor_panel,
+		"position",
+		companion_final_position,
+		COMPANION_REVEAL_DURATION
+	)
+	companion_reveal_tween.finished.connect(
+		_on_companion_reveal_finished,
+		CONNECT_ONE_SHOT
+	)
+
+
+func _on_companion_reveal_finished() -> void:
+	companion_actor_panel.position = companion_final_position
+	companion_actor_panel.scale = companion_final_scale
+	companion_actor_panel.modulate.a = 1.0
+	companion_reveal_tween = null
+
+
+func _set_companion_visible_immediately(should_be_visible: bool) -> void:
+	if companion_reveal_tween != null and companion_reveal_tween.is_valid():
+		companion_reveal_tween.kill()
+	companion_reveal_tween = null
+
+	companion_is_presented = should_be_visible
+	companion_actor_panel.position = companion_final_position
+	companion_actor_panel.scale = companion_final_scale
+	companion_actor_panel.modulate.a = 1.0
+	companion_actor_panel.mouse_filter = (
+		companion_final_mouse_filter
+		if should_be_visible
+		else Control.MOUSE_FILTER_IGNORE
+	)
+	companion_actor_panel.set_process(should_be_visible)
+	companion_actor_panel.visible = should_be_visible
+	companion_dice.hide()
+
+
+func _is_known_card(card: CardData) -> bool:
+	return card in [
+		initial_card,
+		second_card,
+		third_card,
+		fourth_card,
+		fifth_card,
+		sixth_card,
+	]
 
 
 func _configure_current_card_options() -> void:
@@ -327,6 +652,10 @@ func _configure_current_card_options() -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if is_game_over:
+		get_viewport().set_input_as_handled()
+		return
+
 	if event is not InputEventKey:
 		return
 

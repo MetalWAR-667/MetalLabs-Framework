@@ -15,14 +15,9 @@ script = ExtResource("1_card_data")
 illustration = ExtResource("3_illustration")
 description = "Más allá del refugio, el corredor desemboca en una llanura de sal negra bajo un cielo demasiado cercano. No hay estrellas. En su lugar, miles de huellas luminosas cruzan la bóveda celeste, como si generaciones de viajeros hubieran caminado alguna vez por la cara interior de la noche.
 Una de aquellas huellas se detiene.
-
 Después, desciende.
-
 La criatura que toca la llanura posee seis patas largas y transparentes, articuladas como los dedos de una mano ahogada. Su cuerpo está cubierto por placas de nácar que reflejan lugares donde nunca has estado. No tiene ojos ni boca. En el lugar de la cabeza gira lentamente una cavidad oscura llena de pequeños senderos blancos.
-
 El Fugitivo, si todavía te acompaña, retrocede al reconocerla.
-
 —No devora cuerpos —susurra—. Devora los caminos que conducen fuera de aquí.
-
 El Icnófago inclina su cavidad hacia ti. Las huellas que has dejado atrás comienzan a desprenderse del suelo y vuelan hacia su interior. Si consume la última, olvidarás que alguna vez existió un lugar al que regresar."
 options = Array[ExtResource("2_card_option")]([SubResource("CardOption_remember_path")])

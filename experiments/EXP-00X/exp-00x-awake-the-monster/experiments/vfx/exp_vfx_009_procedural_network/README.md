@@ -1,5 +1,9 @@
 # EXP-VFX-009 — Procedural Network
 
+**Status: Accepted as visual language / Historical experiment.** La red ofreció
+patrones fértiles. La build usa después un DreamGraph original y más contenido,
+no el código ni la tecnología del experimento.
+
 ## Pregunta
 
 ¿Qué lenguaje visual produce una red procedural de nodos móviles y conexiones?

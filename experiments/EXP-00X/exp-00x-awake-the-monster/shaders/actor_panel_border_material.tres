@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/card_border.gdshader" id="1_border_shader"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_border_shader")
+shader_parameter/custom_time = 0.0
+shader_parameter/breath_speed = 0.12
+shader_parameter/glow_intensity = 0.6470000307325
+shader_parameter/tint_indigo = Color(0.1019608, 0.0823529, 0.1568627, 1)
+shader_parameter/wave_amplitude = 0.006000000285
+shader_parameter/wave_frequency = 6.0
+shader_parameter/wave_speed = 0.62000002945

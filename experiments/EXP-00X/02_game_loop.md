@@ -1,228 +1,89 @@
-# 02_game_loop.md
-
 # Game Loop
 
-## Objetivo
+**Estado: Canónico para el vertical slice**
 
-El jugador atraviesa una sucesión de escenas independientes dentro de un sueño que no obedece las reglas de la realidad.
-
-Cada escena se presenta mediante una carta que describe una situación, plantea una decisión y, cuando existe incertidumbre, resuelve el resultado mediante un sistema único de dados.
-
-No existe separación entre exploración, eventos y combate.
-
-Todo se considera un **encuentro**.
-
----
-
-# Filosofía
-
-Cada carta representa un instante del viaje.
-
-Puede tratarse de:
-
-- una criatura;
-- una conversación;
-- una puerta imposible;
-- una pesadilla;
-- un recuerdo;
-- una decisión moral;
-- un lugar.
-
-Todas utilizan exactamente el mismo sistema de resolución.
-
-La diferencia entre unas y otras es únicamente narrativa.
-
----
-
-# Bucle principal
+## Entrada
 
 ```text
-Nueva carta
-      ↓
-Leer la situación
-      ↓
-Elegir una decisión
-      ↓
-Si existe una Amenaza:
-seleccionar participantes
-      ↓
-Resolver la Amenaza, si existe
-      ↓
-Aplicar consecuencias
-      ↓
-Aplicar descanso, si corresponde
-      ↓
-Actualizar estado persistente
-      ↓
-Siguiente carta
+SplashScreen
+→ MainMenu
+  → Nueva partida → ItemSelectionMenu → HUD / Carta 01
+  → Continuar → HUD restaurado
 ```
 
-Este ciclo constituye la totalidad de la experiencia jugable.
+Nueva partida elimina el guardado anterior. Continuar solo está disponible si
+`SaveManager` valida el archivo local.
+
+## Flujo de una carta
+
+```text
+Presentar ilustración y Amenaza contextual
+→ revelar texto progresivamente
+→ completar por tiempo, tecla o click
+→ habilitar opciones
+→ elegir una opción
+→ comprobar condición editorial
+→ resolver Amenaza, si existe
+→ aplicar éxito automático y tiradas
+→ reducir Amenaza o aplicar daño
+→ actualizar estado runtime
+→ autoguardar en un punto coherente
+→ cargar la siguiente carta o repetir ronda
+```
+
+Las opciones se deshabilitan mientras se resuelve una tirada. Una opción que
+inicia una Amenaza queda comprometida; no puede cambiarse entre reintentos.
+
+## Resolución de Amenaza
+
+1. La opción fija símbolo requerido, cantidad y daño.
+2. El objeto equipado puede aportar éxitos automáticos compatibles una sola vez
+   durante esa Amenaza.
+3. Cada participante lanza su dado personalizado.
+4. Cada cara que coincide aporta un éxito.
+5. Los éxitos reducen `remaining_threat`.
+6. Si llega a cero, avanza la historia.
+7. Si queda Amenaza, se aplica daño y se habilita otro intento.
+
+En Carta 06 Jack participa siempre. Si el Fugitivo fue incorporado, el jugador
+elige continuar solo o pedir su ayuda. Si no participa y sobrevive el encuentro,
+recupera un punto de Salud hasta su máximo.
+
+## Objetos
+
+La partida comienza eligiendo Comida, Escopeta o Escudo. El HUD muestra un solo
+slot. Los usos restantes viven en runtime y en el guardado, nunca en el `.tres`.
+
+En el slice actual solo la Escopeta resuelve efecto: garantiza un éxito de
+Fuerza, consume su único uso y desaparece. Comida y Escudo todavía no ejecutan
+las consecuencias descritas en sus recursos.
+
+## Persistencia
+
+El HUD autoguarda al cargar cartas y después de cambios coherentes relevantes,
+incluidos reintentos fallidos. También conserva una Amenaza activa completa
+cuando es seguro reanudarla.
+
+## Derrota y cierre
+
+```text
+Salud de Jack ≤ 0
+→ bloquear interacción
+→ eliminar guardado
+→ fundido a negro
+→ Game Over
+→ Main Menu
+```
+
+```text
+Carta 06 superada
+→ descanso del aliado, si procede
+→ eliminar guardado
+→ epílogo audiovisual
+→ Final Vertical Slice
+→ Main Menu
+```
+
+Completar o perder la partida deshabilita Continuar porque el archivo deja de
+existir.
 
----
-
-# Flujo de una carta
-
-## 1. Presentación
-
-Se muestra una ilustración acompañada por un texto que describe la situación actual.
-
-La carta representa una escena completa.
-
-No existen mapas ni exploración espacial entre encuentros.
-
----
-
-## 2. Decisión
-
-El jugador elige cómo afrontar la situación.
-
-Ejemplos:
-
-- Saltar.
-- Hablar.
-- Observar.
-- Abrir.
-- Esperar.
-- Alejarse.
-
-No todas las cartas necesitan varias opciones.
-
-En ocasiones únicamente existirá una acción posible.
-
----
-
-## 3. Selección de participantes
-
-Cuando una carta contiene una Amenaza, el jugador decide quién interviene antes de comenzar su resolución.
-
-Opciones posibles:
-
-- únicamente el protagonista;
-- protagonista y aliado.
-
-El aliado nunca participa automáticamente.
-
-Su utilización forma parte de la decisión táctica del jugador.
-
----
-
-## 4. Resolución
-
-Si la carta presenta incertidumbre, declara:
-
-- un símbolo objetivo;
-- una cantidad base requerida;
-- el daño por ronda fallida;
-- cualquier consecuencia narrativa especial.
-
-El objetivo es fijo y conocido antes de seleccionar participantes.
-
-Si participa también el aliado, la cantidad requerida se duplica.
-
-Cada participante lanza su único dado de personaje.
-
-Cada unidad obtenida del símbolo requerido neutraliza una unidad del objetivo.
-
-El progreso neutralizado se conserva entre rondas.
-
-Si quedan unidades pendientes:
-
-- la carta aplica su daño;
-- resuelve los efectos especiales indicados;
-- comienza una nueva ronda con el objetivo restante.
-
-Una carta puede declarar como consecuencia especial que una ronda fallida termine el encuentro y conduzca a otra carta.
-
-Cuando esto sucede, el daño se aplica una sola vez, se descarta el progreso de la Amenaza y no comienza otra ronda.
-
-No se lanzan Dados de Amenaza.
-
-La resolución utiliza siempre el mismo sistema, independientemente de que la amenaza represente:
-
-- una criatura;
-- un obstáculo;
-- una conversación;
-- un fenómeno imposible;
-- una situación psicológica.
-
----
-
-## 5. Descanso
-
-Cuando existe un aliado y el jugador decide que no participe en una Amenaza:
-
-- descansa durante todo el encuentro;
-- no recibe beneficios derivados de la resolución;
-- recupera **1 punto de Salud** al finalizar la carta.
-
-El descanso se resuelve una vez por encuentro, no una vez por ronda.
-
-Solo existe descanso cuando el jugador excluye voluntariamente al aliado durante la selección de participantes.
-
-Si el aliado fue seleccionado y una consecuencia le impide actuar durante una ronda, continúa siendo participante:
-
-- no descansa;
-- no recupera Salud por descanso.
-
-Esto introduce una decisión permanente entre:
-
-- aumentar las probabilidades de éxito;
-- conservar recursos para encuentros posteriores.
-
----
-
-## 6. Consecuencias
-
-La carta aplica el resultado obtenido.
-
-Las consecuencias pueden incluir:
-
-- pérdida o recuperación de Salud;
-- obtención o pérdida de objetos;
-- incorporación de un aliado;
-- modificación de variables narrativas;
-- desbloqueo de nuevas cartas;
-- cambios en el estado del sueño.
-
-Cada encuentro deja una huella persistente sobre la partida.
-
----
-
-## 7. Persistencia
-
-Al finalizar una carta únicamente permanece aquello que resulta relevante para el resto de la aventura.
-
-Entre encuentros se conservan:
-
-- Salud del protagonista;
-- aliado actual;
-- Salud del aliado;
-- inventario;
-- variables narrativas imprescindibles;
-- estado visual o narrativo del sueño.
-
-Atención, Fuerza y Cordura son símbolos de los dados, no valores numéricos persistentes.
-
-La propia carta desaparece.
-
-El viaje continúa sobre el nuevo estado generado.
-
----
-
-# Principios de diseño
-
-- Un único sistema resuelve cualquier situación.
-- Las cartas representan escenas, no niveles.
-- Las decisiones siempre producen consecuencias.
-- El jugador administra riesgos, no acciones complejas.
-- El aliado amplía posibilidades sin aumentar la complejidad del sistema.
-- El estado del mundo evoluciona carta tras carta.
-
----
-
-# Resumen
-
-El juego completo puede resumirse en una única frase:
-
-> **Leer una situación, tomar una decisión, afrontar la amenaza y vivir sus consecuencias antes de continuar el viaje por el sueño.**

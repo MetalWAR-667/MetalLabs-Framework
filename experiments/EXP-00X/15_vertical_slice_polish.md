@@ -1,3 +1,14 @@
+# Vertical Slice Polish — registro histórico
+
+**Estado: Histórico / parcialmente ejecutado.**
+
+Este documento fue una lista de trabajo durante el pulido. Varias tareas ya se
+integraron y otras siguen abiertas; no debe utilizarse como checklist actual ni
+como evidencia de publicación. Los pendientes vigentes están consolidados en
+`FUTURE_EXPANSION.md`, `12 Asset Audit.md` y `13 Release Checklist.md`.
+
+---
+
 1. Pulido de UX (Prioridad Alta)
 
 Aquí es donde creo que más va a cambiar el juego sin tocar apenas código.
@@ -93,7 +104,9 @@ partículas
 brillo
 aparición
 impacto
+
 3. Contenido
+4. 
 Cartas
 
 Actualmente:

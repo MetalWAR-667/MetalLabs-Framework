@@ -1,5 +1,14 @@
 # 06_resources.md
 
+> **Estado: Histórico — diseño conceptual de preimplementación.**
+>
+> Este documento propone una arquitectura de Resources más amplia que la build
+> final. `GameState`, `CardResource`, `ThreatResource`, `ConsequenceResource` y
+> `SaveGameResource` no fueron implementados con esos nombres ni
+> responsabilidades. Para el estado real consultar `05 Technical Foundations.md`;
+> para reglas y datos vigentes, `03_core_rules.md`. El contenido siguiente se
+> conserva como razonamiento de diseño, no como contrato de la build.
+
 # Resources
 
 ## Estado

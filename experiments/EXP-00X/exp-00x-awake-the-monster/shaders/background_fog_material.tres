@@ -1,0 +1,43 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/background_fog.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://Assets/VisualResearch/azureyoshi_seamless_fogs/Clouds1024.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://Assets/VisualResearch/azureyoshi_seamless_fogs/Clouds512.png" id="3_mid"]
+[ext_resource type="Texture2D" path="res://Assets/VisualResearch/starshinescribbles_fog_&_noise/Noise 2.png" id="4_foreground"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_shader")
+shader_parameter/background_source = ExtResource("2_background")
+shader_parameter/mid_source = ExtResource("3_mid")
+shader_parameter/foreground_source = ExtResource("4_foreground")
+shader_parameter/background_scale = 0.45
+shader_parameter/background_speed = 0.0015
+shader_parameter/background_direction = Vector2(0.7, 0.2)
+shader_parameter/background_opacity = 0.4
+shader_parameter/background_contrast = 0.75
+shader_parameter/background_tint = Color(0.18, 0.25, 0.32, 1)
+shader_parameter/mid_scale = 1.2
+shader_parameter/mid_speed = 0.006
+shader_parameter/mid_direction = Vector2(-0.35, 0.8)
+shader_parameter/mid_opacity = 0.45
+shader_parameter/mid_contrast = 1.25
+shader_parameter/mid_tint = Color(0.25, 0.33, 0.4, 1)
+shader_parameter/foreground_scale = 2.4
+shader_parameter/foreground_speed = 0.012
+shader_parameter/foreground_direction = Vector2(0.85, -0.25)
+shader_parameter/foreground_opacity = 0.18
+shader_parameter/foreground_contrast = 1.6
+shader_parameter/foreground_tint = Color(0.34, 0.4, 0.45, 1)
+shader_parameter/void_color = Color(0.012, 0.022, 0.04, 1)
+shader_parameter/field_center = Vector2(0.5, 0.5)
+shader_parameter/field_radius = 0.62
+shader_parameter/field_strength = 0.18
+shader_parameter/field_falloff = 0.42
+shader_parameter/temporal_drift = 0.18
+shader_parameter/background_field_influence = 0.22
+shader_parameter/mid_field_influence = 0.82
+shader_parameter/foreground_field_influence = 0.38
+shader_parameter/success_flash = 0.0
+shader_parameter/failure_pulse = 0.0
+shader_parameter/feedback_distortion = 0.0

@@ -1,85 +1,71 @@
-01_scope.md
+# Scope
+
+**Estado: Vertical Slice Complete**
 
 ## Objetivo
 
-Este experimento tiene una doble finalidad:
+Validar en un proyecto pequeño el ciclo completo de una experiencia narrativa:
+preproducción, implementación, arte, audio, persistencia, cierre, prueba humana
+y documentación. EXP-00X sirve como banco de aprendizaje para MetalLab y LoF;
+no como base obligatoria de su arquitectura futura.
 
-1. Objetivo técnico
+## Vertical Slice Scope
 
-Diseñar y validar un Narrative Core reutilizable mediante el desarrollo de un microjuego narrativo de alcance reducido.
+Entró en el corte:
 
-El conocimiento obtenido podrá reutilizarse posteriormente en Lands of Folklore, ya sea mediante código, modelos de datos, arquitectura o decisiones de diseño.
+- una experiencia 2D de escritorio a 1920×1080;
+- seis cartas y un epílogo audiovisual;
+- Jack y un único aliado opcional, el Fugitivo Pálido;
+- tres objetos iniciales y exactamente un slot equipado;
+- tres símbolos: Atención, Cordura y Fuerza;
+- Amenazas, daño, reintentos y selección de participantes en Carta 06;
+- descanso del aliado cuando no participa;
+- persistencia mínima de un slot;
+- pausa, Game Over, final provisional y retorno al menú;
+- presentación completa de carta, dados, audio y BackgroundFX.
 
-2. Objetivo pedagógico adicional
+El límite de un objeto fue deliberado: el problema real era conservar y
+consultar una referencia con usos runtime, no construir un inventario.
 
-Uno de los objetivos del experimento es eliminar la presión asociada al primer lanzamiento público.
+## Contenido efectivo
 
-El desarrollador desea completar, en un proyecto deliberadamente pequeño, todas las fases de producción y publicación de un videojuego independiente antes de afrontar el lanzamiento de Lands of Folklore.
+- 6 cartas.
+- 2 actores.
+- 3 objetos seleccionables.
+- 1 efecto de objeto operativo: Escopeta, +1 éxito automático de Fuerza, un uso.
+- 1 epílogo Ogg Theora con música externa.
+- Duración variable según lectura y reintentos; el capítulo es deliberadamente
+  breve y no pretende alcanzar una duración comercial.
 
-Esto incluye experimentar con aciertos, errores y decisiones reales relacionadas con:
+## Future Expansion
 
-la definición del alcance;
-la planificación;
-la producción;
-la creación de la página del juego;
-la comunicación del proyecto;
-la publicación en itch.io;
-el proceso de distribución en Steam;
-la recepción de comentarios de los jugadores;
-las actualizaciones posteriores al lanzamiento.
+- nuevas cartas y eventos;
+- efectos funcionales de Comida y Escudo;
+- registro automático de contenido;
+- créditos definitivos;
+- DreamGraph reactivo si supera evaluación visual;
+- soporte web tras una investigación específica.
 
-El propósito no es maximizar el éxito comercial del microjuego.
+El detalle está acotado en `FUTURE_EXPANSION.md`.
 
-El propósito es que el primer lanzamiento importante del desarrollador deje de ser Lands of Folklore.
+## Explicitly Out of Scope
 
-Si el experimento comete errores, esos errores habrán cumplido una función pedagógica.
+- inventario múltiple, economía, equipo complejo o loot;
+- combate táctico separado;
+- varios aliados simultáneos;
+- editor narrativo y framework genérico;
+- múltiples slots de guardado, migraciones o nube;
+- soporte web declarado sin validación;
+- publicación, auditoría completa de assets y QA final.
 
-Cuando llegue el momento de publicar Lands of Folklore, ya existirán experiencias previas sobre las que apoyarse.
+## Tiempo
 
-## Modelo de publicación
+El vertical slice funcional se alcanzó en aproximadamente 6–7 días de trabajo
+concentrado. La estimación inicial de 30–45 días sigue siendo razonable para
+contenido adicional, pulido, QA, licencias y publicación.
 
-El objetivo inicial será publicar el proyecto como juego gratuito.
+## Regla de cierre
 
-Esta decisión elimina la presión comercial y permite centrar el experimento en completar el ciclo de desarrollo y distribución.
+El slice demuestra el bucle. La ampliación debe añadir contenido antes que
+infraestructura hipotética.
 
-Si, al finalizar el proyecto, el nivel de calidad alcanzado justifica un precio simbólico, podrá estudiarse una publicación comercial de bajo coste para contribuir a financiar parcialmente herramientas, suscripciones y otros gastos derivados del desarrollo.
-
-La decisión sobre el modelo de negocio se tomará únicamente al finalizar el experimento y no condicionará su diseño.
-
-## Prioridad del proyecto
-
-Lands of Folklore continúa siendo el proyecto principal.
-
-El desarrollo de Editor V2 mantiene prioridad absoluta durante toda la duración del experimento.
-
-El microjuego únicamente podrá desarrollarse en bloques de tiempo reservados entre sesiones del Editor.
-
-Si en cualquier momento el experimento comienza a competir por tiempo, atención o energía con Lands of Folklore, deberá reducir su alcance o detenerse hasta recuperar su función original.
-
-## Presupuesto temporal
-
-El tiempo constituye la principal restricción del experimento.
-
-No se pretende construir un juego comercial de gran alcance, sino validar una hipótesis mediante un producto terminado.
-
-Se establecen los siguientes límites:
-
-Concepto	Objetivo
-Duración objetivo	4 semanas
-Duración máxima prevista	6 semanas
-
-Superar la duración máxima no implica que el proyecto haya fracasado.
-
-Implica que el experimento ha incumplido su restricción de alcance y que será necesario revisar su diseño o reducir funcionalidades antes de continuar.
-
-## Criterio de reducción de alcance
-
-Ante cualquier desviación del presupuesto temporal, la respuesta será siempre reducir alcance, nunca ampliar recursos ni modificar la prioridad de Lands of Folklore.
-
-El objetivo es completar un ciclo de desarrollo, no maximizar el número de características implementadas.
-
-## Regla de oro
-
-Si una funcionalidad pone en riesgo el presupuesto temporal del experimento, esa funcionalidad no pertenece a este experimento.
-
-El éxito del experimento no se medirá por el número de sistemas implementados, sino por la cantidad de conocimiento reutilizable obtenido dentro del tiempo previsto.

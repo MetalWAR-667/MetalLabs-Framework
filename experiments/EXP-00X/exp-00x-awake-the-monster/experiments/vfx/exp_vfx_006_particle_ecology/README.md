@@ -1,5 +1,9 @@
 # EXP-VFX-006 — Particle Ecology
 
+**Status: Accepted / Historical experiment.** A partir de unas 25 partículas el
+efecto cumple su función; alrededor de 50 comunica bien motas ambientales. La
+atracción, repulsión, radio y velocidad demostraron potencial narrativo.
+
 ## Pregunta
 
 ¿Qué combinación mínima de densidad, comportamiento, ritmo y escala hace que el

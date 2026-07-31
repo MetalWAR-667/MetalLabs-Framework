@@ -1,6 +1,9 @@
 extends Control
 
 const HUD_SCENE := preload("res://scenes/ui/hud.tscn")
+const GAMEPLAY_MUSIC: AudioStream = preload(
+	"res://Assets/music/Stone Above the Void.mp3"
+)
 
 @export var food_data: ItemData
 @export var shotgun_data: ItemData
@@ -32,6 +35,7 @@ const HUD_SCENE := preload("res://scenes/ui/hud.tscn")
 
 
 func _ready() -> void:
+	MusicPlayer.play(GAMEPLAY_MUSIC)
 	var items: Array[ItemData] = [food_data, shotgun_data, shield_data]
 
 	for index in range(items.size()):
@@ -64,6 +68,7 @@ func _on_item_chosen(item: ItemData) -> void:
 		return
 
 	hud.selected_item = item
+	hud.selected_item_remaining_uses = item.uses
 
 	var scene_tree := get_tree()
 	var previous_scene := scene_tree.current_scene

@@ -1,119 +1,81 @@
-# Project 00X
+# EXP-00X — Awake the Monster
 
-> *"No estoy soñando. Estoy despierto en un sueño que no es mío."*
+**Status: Vertical Slice Complete**
 
-## ¿Qué es este proyecto?
+EXP-00X es un microjuego narrativo desarrollado en Godot 4.7.1 para validar un
+proceso completo de producción asistida por IA dentro de MetalLab. Su propósito
+no era construir un RPG extensible, sino cerrar un recorrido pequeño y aprender
+qué decisiones técnicas, editoriales y artísticas merecen trasladarse a
+Lands of Folklore.
 
-Este proyecto es un microjuego narrativo experimental desarrollado como parte de **MetalLabs**.
+## Qué contiene
 
-Su propósito no es únicamente crear un juego independiente, sino validar un conjunto de ideas que posteriormente podrán reutilizarse en **Lands of Folklore**, tanto a nivel técnico como creativo.
+- seis cartas narrativas;
+- elección inicial entre tres objetos y un único slot equipado;
+- pruebas de Atención, Cordura y Fuerza mediante dados personalizados;
+- Amenazas persistentes entre rondas, daño y reintentos;
+- un Fugitivo desbloqueable que puede participar o descansar;
+- guardado local de un único slot y opción Continuar;
+- pausa, Game Over y cierre automático de la partida;
+- epílogo audiovisual después de Carta 06;
+- carta con texto progresivo, scroll, slow zoom out y opciones contextuales;
+- BackgroundFX con niebla geométrica, feedback y DreamGraph progresivo;
+- música y efectos funcionales de menú, dados, éxito y fallo.
 
-El experimento explora una forma de narrativa basada en pequeñas escenas independientes donde el jugador debe interpretar las reglas de un mundo onírico que no sigue la lógica de la realidad.
+## Bucle jugable
 
----
+```text
+Splash → Main Menu → Nueva partida → Selección de objeto → HUD
+      → Cartas 01–06 → Epílogo del Acto 1 → Final Vertical Slice
+      → Main Menu
 
-## Objetivos
+Main Menu → Continuar → HUD restaurado
+Salud ≤ 0 → Game Over → Main Menu
+```
 
-Este proyecto persigue tres objetivos principales.
+Cada carta revela texto, presenta opciones y puede activar una Amenaza. Una
+Amenaza exige símbolos; cada éxito reduce su cantidad pendiente y cada ronda
+sin resolver aplica el daño declarado por la opción. La decisión queda
+comprometida hasta cerrar la Amenaza.
 
-### 1. Completar un ciclo de desarrollo
+## Cómo ejecutar
 
-Recorrer de principio a fin todas las etapas de producción de un videojuego independiente:
+Abrir en Godot 4.7.1:
 
-- preproducción;
-- arquitectura;
-- implementación;
-- dirección artística;
-- audio;
-- publicación;
-- mantenimiento.
+`exp-00x-awake-the-monster/project.godot`
 
-El objetivo es que el lanzamiento de *Lands of Folklore* deje de ser el primer lanzamiento público del desarrollador.
+La escena principal es `scenes/ui/menu/splash_screen.tscn`. El proyecto está
+configurado a 1920×1080, Forward+ y D3D12 en Windows.
 
----
+## Estructura
 
-### 2. Validar un Narrative Core
+- `data/`: `ActorData`, `CardData`, `CardOptionData` e `ItemData` en `.tres`.
+- `scenes/ui/`: menús, HUD y componentes visuales.
+- `scripts/ui/hud.gd`: coordinación específica del vertical slice.
+- `scripts/autoload/`: `SaveManager` y `MusicPlayer`.
+- `shaders/`: fondos y marcos integrados.
+- `experiments/vfx/`: laboratorio histórico y conclusiones visuales.
 
-El juego actúa como banco de pruebas para un sistema reutilizable basado en:
+## Documentación
 
-- eventos;
-- decisiones;
-- condiciones;
-- pruebas de habilidad;
-- consecuencias;
-- persistencia.
+Empezar por [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md). Las reglas
+vigentes están en [03_core_rules.md](03_core_rules.md) y la implementación real
+en [05 Technical Foundations.md](05%20Technical%20Foundations.md).
 
-El conocimiento obtenido podrá trasladarse posteriormente a *Lands of Folklore*.
+## Limitaciones conocidas
 
----
+- Solo la Escopeta ejecuta actualmente su efecto; Comida y Escudo siguen siendo
+  selecciones editoriales con efecto runtime pendiente.
+- El contenido está conectado explícitamente para seis cartas; no existe
+  registro automático ni editor narrativo.
+- El final posterior al epílogo es una pantalla provisional, no créditos.
+- No se ha completado auditoría de assets, QA de publicación ni soporte web.
+- DreamGraph permanece como integración experimental pendiente de juicio
+  artístico final.
 
-### 3. Mantener un alcance reducido
+## Siguiente fase
 
-El proyecto está diseñado deliberadamente para poder completarse en aproximadamente un mes.
+El slice está cerrado. Cualquier ampliación debe comenzar por contenido y deuda
+registrada en [FUTURE_EXPANSION.md](FUTURE_EXPANSION.md), sin convertir este
+prototipo en una arquitectura general antes de necesitarla.
 
-El objetivo no es crear un juego grande.
-
-El objetivo es terminar un juego.
-
----
-
-## Filosofía
-
-El jugador no explora mapas.
-
-Explora ideas.
-
-Cada carta representa una pequeña pesadilla, un lugar imposible o un instante suspendido dentro de un sueño ajeno.
-
-Las decisiones no siempre siguen la lógica del mundo real.
-
-El jugador debe aprender progresivamente las reglas del propio sueño.
-
----
-
-## Dirección artística
-
-El proyecto utiliza ilustraciones inspiradas en los antiguos grabados y la ilustración fantástica clásica.
-
-El blanco y negro representa el estado natural del sueño.
-
-El color aparece únicamente cuando el propio sueño cambia.
-
-No como decoración.
-
-Como narrativa.
-
----
-
-## Dirección sonora
-
-La música busca construir atmósfera mediante ambientes, silencios y texturas antes que melodías épicas.
-
-El silencio forma parte de la banda sonora.
-
----
-
-## Principios
-
-- Menos sistemas.
-- Más intención.
-- Menos explicación.
-- Más sugerencia.
-- El misterio es más poderoso que la respuesta.
-- El alcance siempre tiene prioridad sobre la ambición.
-
----
-
-## Estado
-
-Actualmente el proyecto se encuentra en fase de preproducción.
-
-La prioridad principal continúa siendo el desarrollo de **Editor V2** para *Lands of Folklore*.
-
-Este experimento únicamente se desarrolla durante bloques de tiempo reservados entre sesiones del proyecto principal.
-
----
-
-## MetalLab
-
-Este proyecto forma parte de la colección de experimentos de **MetalLab**, cuyo objetivo es estudiar metodologías, herramientas y procesos aplicables al desarrollo independiente de videojuegos asistido por IA.

@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="CardOption_descent"]
 script = ExtResource("3_card_option")
-text = "Discernir una ruta entre las sombras."
+text = "Discernir una ruta entre las sombras. (Atención)"
 required_stat = 1
 damage = 1
 
@@ -15,6 +15,5 @@ script = ExtResource("1_card_data")
 illustration = ExtResource("2_illustration")
 description = "No hay aceleración, solo una suspensión perpetua en el abismo. La gravedad aquí no es una ley física, sino una voluntad que te arrastra hacia una profundidad sin nombre.
 A tu alrededor, el remolino de bruma se ha vuelto frenético. Las sombras se estiran y se contraen, adoptando formas que rozan el borde de tus recuerdos: rostros que nunca conociste, ciudades que se deshacen como ceniza, geometrías que hieren la vista.
-
 El silencio ha sido sustituido por un siseo constante, miles de susurros solapados que intentan decirte algo antes de que el vacío te devore por completo. Si no logras fijar la mirada, si no separas la verdad de la ilusión, te perderás en la bruma mucho antes de llegar al fondo."
 options = Array[ExtResource("3_card_option")]([SubResource("CardOption_descent")])

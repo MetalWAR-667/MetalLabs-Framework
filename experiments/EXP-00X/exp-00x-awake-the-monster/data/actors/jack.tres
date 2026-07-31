@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ActorData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ActorData" format=3 uid="uid://fnmlh1ibqp8a"]
 
-[ext_resource type="Script" path="res://scripts/data/actor_data.gd" id="1_actor_data"]
-[ext_resource type="Texture2D" path="res://Assets/illustrations/Actors/jack_dream.png" id="2_portrait"]
+[ext_resource type="Script" uid="uid://b3c58hsc0x1ra" path="res://scripts/data/actor_data.gd" id="1_actor_data"]
+[ext_resource type="Texture2D" uid="uid://do5jf0wsgg2in" path="res://Assets/illustrations/Actors/jack_dream.png" id="2_portrait"]
 
 [resource]
 script = ExtResource("1_actor_data")
 display_name = "Jack \"The Dreamer\""
 portrait = ExtResource("2_portrait")
-dice_faces = Array[String](["FUERZA", "CORDURA", "ATENCIÓN", "CORDURA", "ATENCIÓN", "CORDURA"])
-health = 18
+dice_faces = Array[String](["FUERZA", "CORDURA", "ATENCIÓN", "CORDURA", "ATENCIÓN", "ATENCIÓN"])
+health = 9
 attention = 3
-sanity = 3
+sanity = 2
 strength = 1

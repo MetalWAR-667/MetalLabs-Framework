@@ -212,3 +212,7 @@ theme_override_font_sizes/font_size = 12
 text = "Greengoth font by Dimitri Antonov / Blue Curve Designstudio (CC BY 4.0)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MenuUIAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Master"

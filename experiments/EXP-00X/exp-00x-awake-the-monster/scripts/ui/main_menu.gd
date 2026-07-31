@@ -1,11 +1,25 @@
 extends Control
 
 const ITEM_SELECTION_SCENE_PATH := "res://scenes/ui/menu/item_selection_menu.tscn"
+const HUD_SCENE := preload("res://scenes/ui/hud.tscn")
+const MENU_MUSIC: AudioStream = preload(
+	"res://Assets/music/Awake the monster_final.mp3"
+)
+const GAMEPLAY_MUSIC: AudioStream = preload(
+	"res://Assets/music/Stone Above the Void.mp3"
+)
+const UI_HOVER_SOUND: AudioStream = preload(
+	"res://Assets/sounds/events/Quiz_And_Puzzle_Musical_SFX  (289).wav"
+)
+const UI_CLICK_SOUND: AudioStream = preload(
+	"res://Assets/sounds/events/Quiz_And_Puzzle_Musical_SFX  (290).wav"
+)
 
 @onready var new_game_button: Button = %NewGameButton
 @onready var continue_button: Button = %ContinueButton
 @onready var fullscreen_button: Button = %FullscreenButton
 @onready var exit_button: Button = %ExitButton
+@onready var menu_ui_audio: AudioStreamPlayer = %MenuUIAudio
 
 # Referencias a los nodos con shaders
 @onready var title_texture: TextureRect = $Background/Title
@@ -17,10 +31,12 @@ var shader_time: float = 0.0
 
 
 func _ready() -> void:
-	continue_button.disabled = true
+	MusicPlayer.play(MENU_MUSIC)
+	continue_button.disabled = not SaveManager.has_valid_save()
 	
 	# Conectar señales de los botones
 	new_game_button.pressed.connect(_on_new_game_pressed)
+	continue_button.pressed.connect(_on_continue_pressed)
 	fullscreen_button.pressed.connect(_on_fullscreen_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
 	
@@ -111,6 +127,7 @@ func _on_button_hover(button: Button) -> void:
 	if button.disabled:
 		return
 
+	_play_ui_sound(UI_HOVER_SOUND)
 	_align_eye_to_button(button, true)
 
 	var tween: Tween = create_tween()
@@ -134,17 +151,45 @@ func _on_button_unhover(button: Button) -> void:
 
 
 func _on_new_game_pressed() -> void:
+	_play_ui_sound(UI_CLICK_SOUND)
+	MusicPlayer.stop()
+	SaveManager.clear_save()
 	var tween: Tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(new_game_button, "scale", Vector2(0.95, 0.95), 0.1)
 	tween.tween_property(new_game_button, "scale", Vector2(1.0, 1.0), 0.1)
 	
-	await get_tree().create_timer(0.1).timeout
+	await menu_ui_audio.finished
 	get_tree().change_scene_to_file(ITEM_SELECTION_SCENE_PATH)
 
 
+func _on_continue_pressed() -> void:
+	var saved_state := SaveManager.load_game()
+	if saved_state.is_empty():
+		continue_button.disabled = true
+		new_game_button.grab_focus()
+		return
+
+	var hud := HUD_SCENE.instantiate() as GameHUD
+	if hud == null:
+		push_error("MainMenu could not instantiate the HUD.")
+		return
+
+	_play_ui_sound(UI_CLICK_SOUND)
+	await menu_ui_audio.finished
+	MusicPlayer.play(GAMEPLAY_MUSIC)
+	hud.pending_save_state = saved_state
+
+	var scene_tree := get_tree()
+	var previous_scene := scene_tree.current_scene
+	scene_tree.root.add_child(hud)
+	scene_tree.current_scene = hud
+	previous_scene.queue_free()
+
+
 func _on_fullscreen_pressed() -> void:
+	_play_ui_sound(UI_CLICK_SOUND)
 	var tween: Tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
@@ -167,14 +212,20 @@ func _on_fullscreen_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
+	_play_ui_sound(UI_CLICK_SOUND)
 	var tween: Tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(exit_button, "scale", Vector2(0.95, 0.95), 0.1)
 	tween.tween_property(exit_button, "scale", Vector2(1.0, 1.0), 0.1)
 	
-	await get_tree().create_timer(0.15).timeout
+	await menu_ui_audio.finished
 	get_tree().quit()
+
+
+func _play_ui_sound(sound: AudioStream) -> void:
+	menu_ui_audio.stream = sound
+	menu_ui_audio.play()
 
 
 func _input(event: InputEvent) -> void:

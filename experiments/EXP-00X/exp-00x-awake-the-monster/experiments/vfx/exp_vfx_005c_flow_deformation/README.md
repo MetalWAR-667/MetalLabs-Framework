@@ -1,5 +1,8 @@
 # EXP-VFX-005C — Flow Deformation
 
+**Status: Closed / Negative result.** La torsión produjo un efecto atractivo de
+visualizador, pero la lectura material continuó siendo humo.
+
 ## Hypothesis
 
 Una torsión local coherente puede transformar masas celulares en pliegues y
@@ -18,8 +21,9 @@ estructura sin hacer girar toda la pantalla.
 
 ## Observations
 
-Técnicamente debe comprobarse continuidad, estabilidad y ausencia de parpadeo.
-La conclusión perceptiva queda pendiente de validación visual.
+La deformación es continua y visualmente atractiva, pero recuerda a un
+visualizador antes que a tinta. La torsión transforma el movimiento sin cambiar
+la identidad material: sigue siendo humo.
 
 ## Performance
 

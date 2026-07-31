@@ -1,5 +1,13 @@
 # 07_runtime_architecture.md
 
+> **Estado: Histórico — arquitectura propuesta antes del vertical slice.**
+>
+> La build no implementa `GameController`, `GameState`, `CardRepository`,
+> `ThreatResolver`, `ConsequenceExecutor` ni `SaveService`. La coordinación real
+> reside en `GameHUD`, con `SaveManager` y `MusicPlayer` como únicos autoloads.
+> Este documento conserva decisiones y alternativas útiles, pero no describe el
+> runtime integrado. La referencia vigente es `05 Technical Foundations.md`.
+
 # Runtime Architecture
 
 ## Estado

@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b8ojwmse46itf"]
 
-[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_item_data"]
-[ext_resource type="Texture2D" path="res://Assets/illustrations/Cards_Scenes/Objects/food.png" id="2_illustration"]
+[ext_resource type="Script" uid="uid://c3fx2tmfrt0ea" path="res://scripts/data/item_data.gd" id="1_item_data"]
+[ext_resource type="Texture2D" uid="uid://bwdpfelqc6axi" path="res://Assets/illustrations/Cards_Scenes/Objects/food.png" id="2_illustration"]
+[ext_resource type="Texture2D" uid="uid://8du7ftv40i0" path="res://Assets/illustrations/Cards_Scenes/Objects/food_icon.png" id="3_hud_icon"]
 
 [resource]
 script = ExtResource("1_item_data")
 display_name = "Comida"
 illustration = ExtResource("2_illustration")
+hud_icon = ExtResource("3_hud_icon")
 description = "Recupera 1 punto de Salud."

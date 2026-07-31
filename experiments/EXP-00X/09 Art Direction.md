@@ -1,5 +1,15 @@
 # 09_art_direction.md
 
+> **Estado de implementación: Integrada con una capa experimental.**
+>
+> La build conserva la carta de grabado monocromático, slow zoom out, color
+> narrativo contenido, shaders de marco y niebla geométrica. BackgroundFX usa
+> composición tranquila en Carta 01, vórtice fijo en Carta 02 y variaciones
+> contenidas en Cartas 03–06. MemoryLayer contiene un DreamGraph original y
+> progresivo, marcado como **Experimental Integration**. Los nombres de presets,
+> inventario, Escudo funcional y créditos descritos más abajo son dirección de
+> producción previa cuando no coinciden con esta síntesis.
+
 # Art Direction
 
 ## Estado

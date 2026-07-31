@@ -1,5 +1,8 @@
 # EXP-VFX-007 — Atmospheric Profiles
 
+**Status: Closed / Negative result.** Los perfiles se leyeron como variaciones
+de intensidad de una misma atmósfera, no como cinco identidades narrativas.
+
 ## Pregunta
 
 ¿Puede un conjunto pequeño de parámetros coordinados transformar la misma escena
@@ -26,6 +29,10 @@ Sin shaders, materiales, assets, iluminación, postprocesado, editor, persistenc
 ni sistema general de perfiles.
 
 ## Observaciones
+
+La evaluación se cerró de forma global: los cinco perfiles modifican mezcla e
+intensidad, pero no producen identidades narrativas separadas. La tabla se
+conserva como plantilla histórica y no como trabajo pendiente.
 
 | Perfil | ¿Lectura inmediata? | ¿Demasiado llamativo? | ¿Distrae? | Observaciones |
 |---|---|---|---|---|

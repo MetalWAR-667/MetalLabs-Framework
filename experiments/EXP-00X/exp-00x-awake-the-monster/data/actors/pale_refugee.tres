@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ActorData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ActorData" format=3 uid="uid://cqa4e3cufl0j2"]
 
-[ext_resource type="Script" path="res://scripts/data/actor_data.gd" id="1_actor_data"]
-[ext_resource type="Texture2D" path="res://Assets/illustrations/Actors/fugitivo_palido.png" id="2_portrait"]
+[ext_resource type="Script" uid="uid://b3c58hsc0x1ra" path="res://scripts/data/actor_data.gd" id="1_actor_data"]
+[ext_resource type="Texture2D" uid="uid://p4lw1t5xktg1" path="res://Assets/illustrations/Actors/fugitivo_palido.png" id="2_portrait"]
 
 [resource]
 script = ExtResource("1_actor_data")
 display_name = "Fugitivo Pálido"
 portrait = ExtResource("2_portrait")
-dice_faces = Array[String](["FUERZA", "CORDURA", "CORDURA", "CORDURA", "ATENCIÓN", "CORDURA"])
+dice_faces = Array[String](["FUERZA", "CORDURA", "FUERZA", "CORDURA", "ATENCIÓN", "ATENCIÓN"])
 health = 10
 attention = 2
 sanity = 2
-strength = 1
+strength = 2

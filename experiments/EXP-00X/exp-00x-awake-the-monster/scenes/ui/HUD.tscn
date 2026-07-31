@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://jao6bafyrh6k"]
 
 [ext_resource type="Script" uid="uid://vjteutemm2or" path="res://scripts/ui/hud.gd" id="1_erw67"]
-[ext_resource type="Resource" path="res://data/actors/jack.tres" id="2_gonto"]
+[ext_resource type="Resource" uid="uid://fnmlh1ibqp8a" path="res://data/actors/jack.tres" id="2_gonto"]
 [ext_resource type="Resource" path="res://data/actors/pale_refugee.tres" id="3_cwdlq"]
 [ext_resource type="Resource" uid="uid://c870ltryhv23l" path="res://data/cards/card_01_awaken.tres" id="4_o6xly"]
 [ext_resource type="Resource" uid="uid://chhlioewjvv5r" path="res://data/cards/card_02_descent.tres" id="5_we3sy"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://d2jdeo7d4bqsf" path="res://scenes/ui/card/actor_panel_responsive.tscn" id="12_d5po8"]
 [ext_resource type="PackedScene" uid="uid://dixp4avlvy51y" path="res://scenes/ui/dice/dice.tscn" id="13_7yoph"]
 [ext_resource type="PackedScene" path="res://scenes/ui/menu/pause_menu.tscn" id="14_qmm8d"]
+[ext_resource type="Gradient" uid="uid://bmkdg15u6n6l" path="res://Assets/ui/dice/dice_green_ghost.tres" id="15_green_dice"]
+[ext_resource type="PackedScene" path="res://scenes/ui/equipment_slot.tscn" id="16_equipment_slot"]
 
 [node name="HUD" type="Control" unique_id=1972780713]
 layout_mode = 3
@@ -37,33 +39,41 @@ layout_mode = 1
 
 [node name="CardViewResponsive" parent="." unique_id=818702790 instance=ExtResource("11_pkwgd")]
 layout_mode = 1
-offset_left = 597.0
-offset_top = 64.0
-offset_right = -641.0
-offset_bottom = -26.0
+offset_left = 28.0
+offset_top = 62.0
+offset_right = -1210.0
 
 [node name="ActorPanel" parent="." unique_id=117018907 instance=ExtResource("12_d5po8")]
 layout_mode = 1
-offset_left = 17.0
-offset_top = 572.0
-offset_right = -1564.0
-offset_bottom = -14.0
+offset_left = 1551.0
+offset_top = 566.0
+offset_right = -30.0
+offset_bottom = -20.0
+
+[node name="EquipmentSlot" parent="." unique_id=1395253794 instance=ExtResource("16_equipment_slot")]
+layout_mode = 0
+offset_left = 1693.0
+offset_top = 979.0
+offset_right = 1759.0
+offset_bottom = 1045.0
 
 [node name="Companion" parent="." unique_id=698740220 instance=ExtResource("12_d5po8")]
+visible = false
 layout_mode = 1
 offset_left = 1557.0
-offset_top = 572.0
+offset_top = 24.0
 offset_right = -24.0
-offset_bottom = -14.0
+offset_bottom = -562.0
 
 [node name="DicePlayer" parent="." unique_id=1170217078 instance=ExtResource("13_7yoph")]
-position = Vector2(103, 751)
+position = Vector2(1644, 738.00006)
 scale = Vector2(3.58, 3.58)
 
 [node name="DiceCompanion" parent="." unique_id=660370 instance=ExtResource("13_7yoph")]
 visible = false
-position = Vector2(1644.0001, 770)
+position = Vector2(1637, 196.00006)
 scale = Vector2(3.58, 3.58)
+colormap_gradient = ExtResource("15_green_dice")
 
 [node name="AnimatedSprite2D" parent="DiceCompanion" index="0" unique_id=1141911594]
 position = Vector2(24.58097, 24.022348)

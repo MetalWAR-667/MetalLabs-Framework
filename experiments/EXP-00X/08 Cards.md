@@ -1,3 +1,33 @@
+# 08 Cards
+
+**Estado: Fuente narrativa e historial editorial.**
+
+La prosa y función narrativa de las seis cartas siguen vigentes. Los Resources
+runtime canónicos son `data/cards/card_01_awaken.tres` hasta
+`card_06_icnophage.tres`. Las IDs `card_001_*`, llamadas `set_next_card`,
+referencias a inventario, uso del Escudo y créditos que aparecen en las notas
+inferiores pertenecen al diseño previo y no describen literalmente la build.
+
+Mapa funcional aceptado:
+
+- Carta 01 presenta el mundo y avanza a Carta 02.
+- Carta 02 introduce Atención ×1 y daño 1.
+- Carta 03 permite sacrificar el objeto, volver a Carta 02 o superar Cordura ×2.
+- Carta 04 ofrece Fuerza ×2 o Atención ×1 condicionada al sacrificio.
+- Carta 05 incorpora o rechaza al Fugitivo.
+- Carta 06 selecciona participantes, resuelve Cordura y abre el epílogo.
+
+El epílogo audiovisual y `EndScreen` sustituyen la antigua secuencia descrita de
+texto final y créditos. Comida y Escudo no ejecutan todavía sus efectos.
+
+---
+
+## Archivo editorial histórico
+
+Las notas siguientes se preservan para trazabilidad narrativa. Cuando difieran
+de `03_core_rules.md` o de los `.tres`, deben interpretarse como decisiones
+anteriores, no como reglas actuales.
+
 08_cards.md (Fragmento)
 
 Configuración previa a la primera carta:
@@ -183,7 +213,7 @@ Texto de la acción: "Hacer frente a la aberración."
 Símbolo objetivo: FUERZA
 Cantidad base: 2
 Daño por ronda fallida: 2 Salud
-Modificador de Objeto: Si el jugador posee la Escopeta u objeto ofensivo, el objetivo se reduce a 1 o recibe un dado extra (según balance).
+Modificador de Objeto: La Escopeta garantiza un éxito automático de Fuerza al comenzar la Amenaza. La bonificación se aplica una sola vez durante el encuentro.
 Consecuencias (Éxito):
 set_next_card: card_005_refugio
 Texto: "La entidad se deshace en un charco de brea y olvido. Has prevalecido, pero tu cuerpo registra cada golpe de esa danza macabra."

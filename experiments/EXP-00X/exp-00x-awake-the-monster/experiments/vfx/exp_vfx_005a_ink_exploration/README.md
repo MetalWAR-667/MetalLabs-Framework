@@ -1,5 +1,8 @@
 # EXP-VFX-005A — Ink Exploration
 
+**Status: Closed / Negative result.** El resultado se percibió como humo
+endurecido, no como tinta.
+
 ## Hypothesis
 
 Una única fuente orgánica puede producir identidad de tinta si se transforma en
@@ -13,8 +16,9 @@ con `smoothstep()`. Incluye cuerpo, núcleo oscuro y halo de difusión.
 
 ## Observations
 
-Pendientes de validación visual. La pregunta activa es si la materia parece tinta
-o todavía se interpreta como humo negro.
+El núcleo, el halo y el umbral endurecen la imagen, pero la estructura espacial
+sigue leyéndose como humo negro muy contrastado. El resultado negativo motivó
+EXP-VFX-005B.
 
 ## Performance
 

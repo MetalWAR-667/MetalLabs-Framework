@@ -1,5 +1,8 @@
 # EXP-VFX-008 — Visual Hierarchy
 
+**Status: Closed / Negative result.** Fog, Ink y Particle Ecology compitieron
+por la atención: tres gallos en el mismo corral.
+
 ## Pregunta
 
 ¿Cuántas capas visuales simultáneas puede procesar el ojo antes de que el espacio
@@ -19,6 +22,10 @@ tener el mismo peso visual.
 - Fog + Ink
 - Ink + Particles
 - Los tres simultáneamente
+
+La evaluación global concluyó que ninguna combinación múltiple establece por sí
+sola una jerarquía estable: las capas compiten por la atención. La tabla se
+conserva como plantilla histórica y no como trabajo pendiente.
 
 | Configuración | ¿Qué domina? | ¿Qué desaparece? | ¿Existe profundidad? | ¿Hay ruido? | Observaciones |
 |---|---|---|---|---|---|

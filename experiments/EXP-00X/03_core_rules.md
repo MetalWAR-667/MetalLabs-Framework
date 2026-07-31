@@ -1,505 +1,195 @@
-# 03_core_rules.md
-
 # Core Rules
 
-## Objetivo
+**Estado: Fuente de verdad del vertical slice**
 
-Este documento define las reglas fundamentales del microjuego.
+Estas reglas describen lo que ejecuta la build actual. Las propuestas de
+arquitectura o balance anteriores no las sustituyen.
 
-Todas las cartas, independientemente de que representen una criatura, un obstáculo, una conversación o una anomalía, utilizan el mismo sistema de resolución.
+## 1. Actores y estado
 
-El juego no dispone de un subsistema independiente de combate.
+Cada `ActorData` define:
 
-Toda situación incierta se resuelve como una **Amenaza**.
+- nombre y retrato;
+- seis caras simbólicas del dado;
+- Salud máxima;
+- valores editoriales de Atención, Cordura y Fuerza.
 
----
+Los valores numéricos se muestran en el panel, pero la resolución actual no los
+suma a las tiradas. La probabilidad procede exclusivamente de la distribución
+de símbolos en `dice_faces`.
 
-# 1. Estado de los personajes
+### Jack
 
-Los personajes utilizan tres capacidades:
+- Salud máxima: 9.
+- Dado: 3 Atención, 2 Cordura y 1 Fuerza.
+- Participa en todas las Amenazas.
 
-- **Atención**
-- **Fuerza**
-- **Cordura**
+### Fugitivo Pálido
 
-Además, cada personaje dispone de **Salud**.
+- Salud máxima: 10.
+- Dado: 2 Atención, 2 Cordura y 2 Fuerza.
+- Solo existe si se acepta su ayuda en Carta 05.
+- Se incorpora con 9 de Salud.
+- Su presencia y Salud se guardan.
 
-Las tres capacidades aparecen como símbolos en los dados y permiten resolver Amenazas.
+## 2. Símbolos y dados
 
-La Salud no aparece como símbolo. Representa el desgaste del personaje y constituye el indicador de derrota.
+Los símbolos canónicos son:
 
----
-
-## 1.1 Atención
-
-Representa la capacidad para:
-
-- observar;
-- interpretar;
-- anticipar;
-- descubrir anomalías;
-- comprender situaciones;
-- actuar con astucia.
-
-El término utilizado por el sistema será **Atención**.
-
-Las referencias anteriores a *Astucia* se consideran parte del mismo concepto y deberán normalizarse durante la documentación.
-
----
-
-## 1.2 Fuerza
-
-Representa la capacidad para:
-
-- resistir físicamente;
-- ejercer fuerza;
-- superar obstáculos;
-- enfrentarse directamente a una amenaza;
-- soportar situaciones de agotamiento.
-
----
-
-## 1.3 Cordura
-
-Representa la capacidad para:
-
-- soportar situaciones imposibles;
-- conservar el control;
-- resistir el miedo;
-- afrontar horrores;
-- aceptar o comprender las leyes del sueño.
-
-La Cordura es una capacidad de resolución, no una segunda barra de vida.
-
----
-
-## 1.4 Salud
-
-Representa el estado físico y el desgaste acumulado de cada personaje.
-
-La Salud puede:
-
-- reducirse como consecuencia de una carta;
-- protegerse mediante el objeto Escudo u otros objetos permitidos;
-- recuperarse mediante descanso;
-- recuperarse mediante determinados objetos.
-
-La Salud es el único recurso general cuya pérdida conduce a la derrota.
-
-Los valores máximos iniciales y las condiciones exactas aplicables al aliado se determinarán durante el ajuste de equilibrio.
-
----
-
-# 2. Personajes
-
-## 2.1 Protagonista
-
-El jugador comienza la partida controlando únicamente al protagonista.
-
-El protagonista posee un dado personalizado de seis caras:
-
-| Cara | Resultado |
-|---:|---|
-| 1 | Fuerza |
-| 2 | Cordura |
-| 3 | Atención |
-| 4 | Cordura |
-| 5 | Atención |
-| 6 | Cordura |
-
-Esta distribución define al protagonista como alguien más preparado para soportar y comprender el sueño que para imponerse mediante fuerza física.
-
----
-
-## 2.2 Aliado
-
-El jugador puede disponer de **un único aliado**.
-
-Nunca existe una party de varios compañeros.
-
-Cada aliado posee:
-
-- su propio dado de seis caras;
-- una distribución característica de los mismos símbolos;
-- Salud propia;
-- una identidad narrativa;
-- una especialización sencilla.
-
-El aliado amplía las posibilidades del jugador sin introducir un sistema de grupo complejo.
-
----
-
-## 2.3 Incorporación de un aliado
-
-Determinadas cartas pueden presentar un posible aliado.
-
-La incorporación puede depender de:
-
-- una decisión;
-- una prueba;
-- una consecuencia narrativa.
-
-Si se cumplen las condiciones de la carta, el aliado pasa a acompañar al protagonista.
-
-Si el jugador ya dispone de aliado, cualquier sustitución deberá resolverse de forma explícita y nunca permitirá conservar más de uno.
-
----
-
-# 3. Dados de personaje
-
-Cada actor posee un dado personalizado de seis caras.
-
-Cada cara representa una única estadística:
-
-- Fuerza;
+- Atención;
 - Cordura;
-- Atención.
+- Fuerza.
 
-Las caras no contienen valores numéricos ni multiplicadores. Una cara produce exactamente un símbolo de la estadística que representa.
+Cada tirada elige una cara del dado del actor. No hay números en las caras, suma
+de estadísticas, dificultad opuesta ni crítico.
 
-La distribución de las seis caras pertenece a los datos del actor y se define mediante su propio `ActorData`.
+## 3. Cartas y opciones
 
-El dado expresa así las aptitudes del actor sin convertir sus caras en modificadores numéricos.
+`CardData` contiene ilustración, narración y una lista de `CardOptionData`.
+Cada opción puede declarar:
 
----
+- texto;
+- símbolo requerido;
+- éxitos necesarios;
+- daño por ronda no resuelta;
+- requisito de haber sacrificado el objeto inicial.
 
-# 4. Opciones y pruebas de la carta
+Una opción con símbolo `NONE` no inicia prueba. Las condiciones no disponibles
+mantienen el botón visible pero deshabilitado cuando así lo exige la carta.
 
-Una carta contiene una o varias opciones.
+## 4. Amenaza
 
-Cada opción constituye una unidad editorial independiente y define su propia acción y consecuencia.
+La Amenaza activa pertenece al estado runtime, no al Resource.
 
-Cuando una opción requiere una prueba, declara:
+1. Al elegir una opción, se fija `selected_option`.
+2. `remaining_threat` comienza con los éxitos requeridos.
+3. La barra muestra símbolo, cantidad restante y daño.
+4. La ruta elegida queda comprometida hasta resolverla.
+5. Cada éxito reduce la cantidad en una unidad.
+6. Si llega a cero, la carta queda superada.
+7. Si queda cantidad, se aplica el daño y puede repetirse la ronda.
 
-- la **estadística requerida**;
-- la **cantidad inicial de unidades de Amenaza**;
-- el **daño por ronda no resuelta**.
+Un éxito parcial se conserva entre rondas.
 
-Dos opciones de una misma carta pueden plantear pruebas diferentes. La prueba pertenece a la opción elegida, no al conjunto de la carta.
+## 5. Éxitos automáticos y objetos
 
-Por tanto, una carta puede contener varias Amenazas potenciales, pero solo la opción elegida origina la **Amenaza activa**.
+La partida empieza eligiendo exactamente un `ItemData`. No existe inventario.
+El objeto pertenece al estado de partida, no a Jack.
 
-Cuando una carta presenta varias opciones, la barra de Amenaza permanece oculta hasta que el jugador selecciona una. En ese momento se revela la estadística y la cantidad correspondientes a la opción elegida.
+`ItemData` contiene presentación y tres campos mecánicos genéricos:
 
-Una vez iniciada la Amenaza, la decisión queda comprometida hasta resolverla. El jugador puede repetir rondas, pero no cambiar a otra opción de la carta durante la resolución.
+- `bonus_symbol`;
+- `automatic_successes`;
+- `uses`.
 
-Ejemplo:
+Si el símbolo del objeto coincide con la Amenaza, sus éxitos se aplican antes
+de evaluar el dado. Un +1 garantiza una unidad de éxito: en una Amenaza de dos,
+queda una unidad pendiente aunque el dado no coincida.
 
-```text
-Estadística:
-ATENCIÓN ×1
+La bonificación se consume una sola vez por Amenaza. Cada aplicación resta un
+uso runtime. Al llegar a cero se eliminan `selected_item` y el icono equipado.
+Los Resources `.tres` nunca se modifican.
 
-Daño por ronda no resuelta:
-1 Salud
-```
+### Estado funcional de los tres objetos
 
-La prueba de cada opción es fija. Cuando una carta contiene una única opción con Amenaza, se muestra al presentar la carta; cuando contiene varias opciones, la Amenaza se revela después de seleccionar una.
+- Escopeta recortada: +1 éxito automático de Fuerza, 1 uso; integrada.
+- Comida: descripción e icono integrados; recuperación de Salud no implementada.
+- Escudo: descripción e icono integrados; prevención de daño no implementada.
 
-No se lanzan Dados de Amenaza.
+No deben inferirse efectos por nombre o descripción.
 
-La dificultad procede de:
+## 6. Daño y derrota
 
-- la estadística requerida;
-- la cantidad inicial de Amenaza;
-- la distribución del dado del actor;
-- el daño por ronda no resuelta visible al revelar la Amenaza.
+Una ronda que no neutraliza la Amenaza aplica el daño declarado por la opción.
+La Salud puede persistir entre cartas y no se recupera automáticamente.
 
-La dificultad no se incrementará añadiendo subsistemas o reglas propias para cada prueba.
+En Carta 06, si participa el Fugitivo y la ronda falla, el mismo daño se aplica
+a Jack y al Fugitivo. La derrota del aliado no tiene todavía flujo propio; el
+código solo registra una advertencia si alcanza cero.
 
----
+Cuando Jack alcanza Salud ≤ 0:
 
-# 5. Resolución de una Amenaza
+- se bloquea la interacción;
+- se elimina el guardado;
+- se reproduce Game Over;
+- se vuelve al menú principal.
 
-## 5.1 Preparación
+No existe reaparición ni Continuar desde un protagonista muerto.
 
-Cuando una opción inicia una prueba:
+## 7. Incorporación y participación del aliado
 
-1. La opción muestra la estadística requerida, la cantidad inicial de Amenaza y el daño por ronda no resuelta.
-2. El jugador selecciona la opción.
-3. La Amenaza restante se inicializa con la cantidad declarada por la opción elegida.
-4. Se lanza el dado del actor participante.
+La primera opción de Carta 05 incorpora al Fugitivo. La segunda continúa sin
+él. La decisión se resuelve en el mismo turno y conduce a Carta 06.
 
-La cantidad restante pertenece al estado runtime del encuentro. No modifica el recurso editorial de la carta.
+En Carta 06:
 
----
+- Jack participa siempre;
+- con aliado presente se ofrecen “Continuar solo” y “Pedir ayuda”;
+- sin aliado solo se ofrece la ruta individual;
+- la elección de participantes queda comprometida durante la Amenaza;
+- si participan dos actores, la Amenaza empieza en 2;
+- cada dado puede aportar como máximo un éxito por ronda.
 
-## 5.2 Comprobación
+## 8. Descanso
 
-Cada símbolo obtenido que coincida con la estadística requerida elimina una unidad de la Amenaza restante.
+El descanso solo se evalúa al superar Carta 06:
 
-Un símbolo que no coincida no reduce la Amenaza.
+- Fugitivo incorporado y no participante: recupera 1 Salud, hasta su máximo.
+- Fugitivo participante: no descansa.
+- Fugitivo ausente: no hay descanso.
 
-Las unidades eliminadas se conservan entre rondas mientras permanezca activo el mismo encuentro.
+Una incapacidad forzada no se considera descanso. Esa situación no aparece en
+las seis cartas implementadas.
+
+## 9. Flujo particular de las cartas
+
+- Carta 01: entrada narrativa sin Amenaza.
+- Carta 02: Atención ×1, daño 1; éxito lleva a Carta 03.
+- Carta 03: sacrificar objeto y avanzar; conservarlo y volver a Carta 02; o
+  Cordura ×2, daño 2, para avanzar a Carta 04.
+- Carta 04: Fuerza ×2, daño 2; o Atención ×1, daño 1, disponible solo si el
+  objeto fue sacrificado. Ambas rutas llevan a Carta 05.
+- Carta 05: incorporar al Fugitivo o continuar solo.
+- Carta 06: Cordura, selección de participantes, daño 1; al superarla termina
+  el capítulo.
+
+## 10. Persistencia
+
+Existe un único archivo JSON: `user://exp_00x_save.json`.
+
+Conserva:
+
+- ruta de carta;
+- Salud y Cordura de Jack;
+- objeto y usos restantes;
+- sacrificio del objeto inicial;
+- presencia y Salud del aliado;
+- Amenaza activa, cantidad restante y opción comprometida;
+- participación del aliado;
+- si la bonificación del objeto ya se aplicó en esa Amenaza.
+
+El guardado ausente deja Continuar deshabilitado. Un archivo incompleto o
+corrupto se rechaza de forma segura. Nueva partida, derrota y final de Carta 06
+eliminan el archivo.
+
+## 11. Límites canónicos
+
+No forman parte del vertical slice:
+
+- inventario múltiple o intercambio;
+- modificadores numéricos generales;
+- habilidades especiales;
+- estados alterados;
+- muerte funcional del aliado;
+- combate independiente;
+- editor de cartas;
+- varios slots de guardado.
+
+## 12. Pendientes reales
+
+- ejecutar los efectos de Comida y Escudo;
+- decidir el comportamiento de un aliado a cero Salud;
+- revisar balance de Salud, daño y distribución de caras;
+- validar visualmente DreamGraph;
+- sustituir el final provisional por créditos cuando se produzcan.
 
-Ejemplo:
-
-```text
-Amenaza restante:
-ATENCIÓN ×2
-
-Resultado:
-ATENCIÓN
-
-Nueva Amenaza restante:
-ATENCIÓN ×1
-```
-
-En este ejemplo existe progreso, pero la Amenaza todavía no ha sido neutralizada.
-
----
-
-## 5.3 Amenaza neutralizada
-
-Si la tirada elimina la última unidad y la Amenaza restante llega a cero, la carta queda superada.
-
-La ronda final que neutraliza la Amenaza no aplica daño.
-
----
-
-## 5.4 Ronda no resuelta
-
-Si después de la tirada todavía queda Amenaza:
-
-1. se conserva cualquier unidad eliminada durante esa tirada;
-2. se aplica el daño por ronda no resuelta;
-3. la Amenaza permanece activa con su cantidad restante;
-4. el jugador puede iniciar otra ronda.
-
-El daño se aplica incluso cuando la tirada eliminó parcialmente una unidad. Solo neutralizar la última unidad evita el daño de esa ronda.
-
----
-
-## 5.5 Abandono del encuentro
-
-Al abandonar una carta o acceder a otra por una ruta diferente:
-
-- la Amenaza activa termina;
-- su cantidad restante se descarta;
-- cualquier encuentro posterior con esa carta comienza nuevamente con la cantidad inicial completa.
-
-El progreso se conserva entre rondas del mismo encuentro, pero nunca entre encuentros distintos.
-
----
-
-# 6. Daño y consecuencias
-
-## 6.1 Daño
-
-El daño de cada carta reduce exclusivamente la **Salud**.
-
-La cantidad de daño por fallo se muestra de forma visible en la esquina inferior derecha de la carta.
-
-El jugador conoce el riesgo antes de decidir si incorpora al aliado o permite que descanse.
-
-La asignación del daño entre los participantes debe ser sencilla, visible y definida de forma explícita por la carta o por una única regla general pendiente de balance.
-
----
-
-## 6.2 Consecuencias especiales
-
-Una carta puede narrar una consecuencia distinta o adicional al daño, por ejemplo:
-
-- perder un objeto porque una criatura lo roba;
-- impedir que un personaje actúe durante la siguiente ronda;
-- impedir temporalmente el uso de objetos;
-- modificar una variable narrativa;
-- acceder a otra carta;
-- cambiar el estado del sueño.
-
-Estas consecuencias pertenecen a la carta.
-
-No crean barras de recursos, estados alterados ni subsistemas generales nuevos.
-
-Cuando la consecuencia deja de ser relevante para esa situación, desaparece.
-
-Impedir que un personaje actúe durante una ronda no modifica la elección de participantes realizada al comenzar la Amenaza.
-
-Un personaje incapacitado continúa siendo participante y no se considera que esté descansando.
-
----
-
-## 6.3 Beneficios
-
-Al superar una Amenaza, la carta puede conceder:
-
-- recuperación de Salud;
-- obtención de un objeto;
-- incorporación de un aliado;
-- modificación de una variable narrativa;
-- acceso a otra carta;
-- cambio del estado del sueño.
-
-No todas las cartas necesitan ofrecer un beneficio material.
-
----
-
-# 7. Escudo y protección
-
-**Escudo** es un objeto consumible.
-
-Cuando el jugador decide utilizarlo, evita una unidad de daño de una ronda fallida.
-
-El Escudo:
-
-- ocupa espacio en el inventario;
-- se elimina del inventario después de proteger contra una unidad de daño;
-- no aparece en las caras de los dados;
-- no modifica el objetivo ni los símbolos obtenidos;
-- no introduce armaduras, resistencias ni cálculos adicionales.
-
-Cuando participan dos personajes, el Escudo protege al destinatario del daño elegido conforme a la asignación declarada por la carta.
-
----
-
-# 8. Participación y descanso
-
-La elección de participantes se realiza al comenzar la Amenaza y se mantiene hasta que la carta termina.
-
-## 8.1 Protagonista solo
-
-El protagonista aporta su dado.
-
-Si existe un aliado y no participa:
-
-- descansa durante todo el encuentro;
-- no recibe beneficios derivados de la resolución;
-- recupera **1 punto de Salud** al finalizar la carta.
-
-El descanso solo se produce cuando el jugador decide voluntariamente no incluir al aliado al seleccionar participantes.
-
-Si el aliado fue seleccionado y una consecuencia le impide actuar durante una o varias rondas:
-
-- continúa siendo participante;
-- no descansa;
-- no recupera Salud por descanso.
-
----
-
-## 8.2 Protagonista y aliado
-
-Ambos personajes aportan sus dados.
-
-El objetivo de la carta duplica su cantidad.
-
-Ninguno descansa y ambos pueden recibir los beneficios que determine la carta.
-
----
-
-## 8.3 Descanso
-
-El descanso se resuelve una vez por encuentro, no una vez por ronda.
-
-El descanso:
-
-- no consume turnos;
-- no requiere una acción independiente;
-- no genera una fase adicional;
-- forma parte automática de la resolución de la carta.
-
-La decisión principal es:
-
-> Afrontar una Amenaza con ambos personajes para repartir el riesgo y aprovechar sus dados, o reservar al aliado para que recupere Salud.
-
----
-
-# 9. Objeto inicial
-
-Al comenzar una nueva partida, el jugador elige exactamente uno de estos tres objetos:
-
-- Comida;
-- Escopeta recortada;
-- Escudo.
-
-Jack porta únicamente el objeto seleccionado durante la sesión.
-
-El objeto elegido forma parte del estado runtime de la partida. No pertenece a `ActorData` y no modifica la definición de Jack.
-
-La Carta 03, **El Umbral**, será la primera carta que consulte esta referencia.
-
-En el estado actual del proyecto no existe un inventario.
-
----
-
-# 11. Estado persistente
-
-Entre cartas se conservan únicamente:
-
-- Salud del protagonista;
-- aliado actual;
-- Salud del aliado;
-- objeto inicial seleccionado;
-- variables narrativas imprescindibles;
-- estado visual o narrativo del sueño.
-
-Atención, Fuerza y Cordura son símbolos de los dados, no valores numéricos persistentes.
-
-No se añadirán nuevos recursos o estados generales durante la producción inicial.
-
----
-
-# 12. Límites del sistema
-
-El sistema queda limitado a:
-
-- un protagonista;
-- un aliado máximo;
-- tres símbolos de resolución;
-- Salud como único recurso general de desgaste y derrota;
-- un dado personalizado por personaje;
-- pruebas fijas declaradas por las cartas;
-- progreso de Amenaza conservado entre rondas del mismo encuentro;
-- daño visible y definido por cada carta;
-- un único objeto inicial conservado como estado runtime;
-- consecuencias especiales contenidas en las cartas.
-
-No forman parte del alcance:
-
-- Dados de Amenaza;
-- combate táctico independiente;
-- iniciativa;
-- posicionamiento;
-- clases;
-- niveles;
-- experiencia;
-- habilidades activas;
-- barras de recursos adicionales;
-- sistema general de estados alterados;
-- enemigos con reglas propias;
-- progresión compleja;
-- equipo por ranuras;
-- economía;
-- crafting.
-
----
-
-# 13. Principios de diseño
-
-> **El sistema es pequeño. Las cartas son expresivas.**
-
-> **La profundidad debe proceder de elegir una opción, comprender su riesgo y decidir si volver a intentarlo; nunca de añadir sistemas nuevos.**
-
-El jugador debe poder responder de inmediato a tres preguntas:
-
-1. ¿Qué estadística exige la prueba?
-2. ¿Cuántos éxitos necesito?
-3. ¿Cuánto daño recibiré si fallo?
-
----
-
-# 14. Elementos pendientes de balance
-
-Los siguientes valores deberán decidirse mediante prototipado y pruebas:
-
-- Salud máxima del protagonista;
-- Salud máxima de los aliados;
-- condición exacta de derrota o retirada del aliado;
-- cantidad máxima práctica de símbolos requeridos;
-- asignación del daño cuando participan dos personajes;
-- distribuciones definitivas de los dados de aliado;
-- tamaño exacto del inventario;
-- efecto final de cada uno de los 10–12 objetos;
-- condiciones exactas de derrota.
-
-Estos ajustes no pueden introducir nuevas mecánicas.
-
-Solo deben concretar números y comportamientos dentro del sistema definido.

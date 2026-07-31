@@ -19,3 +19,8 @@ func play(stream: AudioStream, fade_in: float = 0.0) -> void:
 	if fade_in > 0.0:
 		var tween: Tween = create_tween()
 		tween.tween_property(_player, "volume_db", 0.0, fade_in)
+
+
+func stop() -> void:
+	_player.stop()
+	_player.stream = null

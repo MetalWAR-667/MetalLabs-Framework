@@ -7,21 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://dtbj5xi3b262s" path="res://Assets/ui/card/divider.png" id="5_divider"]
 [ext_resource type="FontFile" uid="uid://evvuq3mt2yen" path="res://Assets/fonts/GGBotNet Fonts CC0/Jupiteroid/OpenType (.otf)/Jupiteroid-Bold.otf" id="6_option_font"]
 [ext_resource type="PackedScene" uid="uid://515q527gw4l4" path="res://scenes/ui/card/card_threat_bar.tscn" id="7_lqdmo"]
-[ext_resource type="Texture2D" uid="uid://b5nbskqp48lr5" path="res://Assets/ui/card/option_button_normal.png" id="7_option_normal"]
 [ext_resource type="Texture2D" uid="uid://d2cd28kwx6cda" path="res://Assets/ui/card/health_actor_icon2.png" id="8_40c4e"]
 [ext_resource type="Script" uid="uid://b1aus3ydxwipe" path="res://scripts/ui/card_view.gd" id="9_card_view_script"]
+[ext_resource type="Material" uid="uid://bm3usu071uf7y" path="res://shaders/card_border_material.tres" id="10_card_border_material"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_normal"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
 bg_color = Color(0.427451, 0.294118, 0.14902, 0.22)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
-bg_color = Color(0.427451, 0.294118, 0.14902, 0.12)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -95,6 +88,7 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 
 [node name="ImageRegion" type="Control" parent="CardCenter/CardCanvas/MainLayout" unique_id=782127018]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 420)
 clip_contents = true
 layout_mode = 2
@@ -107,6 +101,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -128,15 +123,62 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -348.0
-offset_top = -692.0
-offset_right = 1022.0
-offset_bottom = 651.0
+offset_left = -5.0
+offset_top = -516.0
+offset_right = 677.0
+offset_bottom = -11.0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("3_illustration")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="CardThreatBar" parent="CardCenter/CardCanvas/MainLayout/ImageRegion" unique_id=1121836331 instance=ExtResource("7_lqdmo")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+offset_left = 12.0
+offset_top = -80.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_vertical = 0
+
+[node name="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar" index="0" unique_id=1376406867]
+offset_left = 5.0
+offset_top = -18.0
+offset_right = 255.0
+offset_bottom = 42.0
+
+[node name="AttentionAmount" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar" index="1" unique_id=37768601]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="SanityAmount" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar" index="2" unique_id=2061051547]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="StrengthAmount" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar" index="3" unique_id=197565233]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 30.0
+
+[node name="DamageIndicator" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar" index="4" unique_id=1176558200]
+offset_left = 547.0
+offset_top = -12.0
+offset_right = 613.0
+offset_bottom = 54.0
+
+[node name="DamageIcon" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar/DamageIndicator" index="0" unique_id=314111341]
+texture = ExtResource("8_40c4e")
+
+[node name="DamageText" parent="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar/DamageIndicator" index="1" unique_id=2058455563]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="DividerTop" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout" unique_id=245131685]
 custom_minimum_size = Vector2(0, 10)
@@ -161,7 +203,7 @@ mouse_filter = 2
 theme_override_colors/default_color = Color(0.105882, 0.0784314, 0.0509804, 1)
 theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.827451, 0.3)
 theme_override_constants/line_separation = 9
-theme_override_constants/paragraph_separation = 30
+theme_override_constants/paragraph_separation = 16
 theme_override_constants/shadow_outline_size = 5
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
@@ -175,8 +217,10 @@ Suspendido sobre una plataforma que parecía recordar haber sido otra cosa, en o
 Bajo la plataforma no había suelo. Solo un vacío tan inmenso que la palabra caída perdía todo su significado.
 El aire, rancio de eones, sabía a color olvidado.
 No era un sueño: eras el intruso en una arquitectura nunca diseñada para ojos humanos."
-scroll_active = false
+scroll_following = true
+scroll_following_visible_characters = true
 horizontal_alignment = 1
+visible_characters_behavior = 1
 
 [node name="DividerBottom" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout" unique_id=639527414]
 custom_minimum_size = Vector2(0, 12)
@@ -187,6 +231,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="DecisionsRegion" type="VBoxContainer" parent="CardCenter/CardCanvas/MainLayout" unique_id=1755943953]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 offset_transform_enabled = true
@@ -204,42 +249,44 @@ theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 
-[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=22276820]
+[node name="OptionHoverBackground01" type="ColorRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=2145385649]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.427451, 0.294118, 0.14902, 0.12)
+
+[node name="OptionContent01" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=22276820]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
 offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="OptionText01" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01/OptionContent" unique_id=707660654]
+[node name="OptionText01" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01/OptionContent01" unique_id=707660654]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("6_option_font")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Saltar al vacío"
 vertical_alignment = 1
-
-[node name="OptionIndicator01" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton01" unique_id=44329453]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 3.0
-offset_top = 2.0
-offset_right = 55.0
-offset_bottom = 54.0
-mouse_filter = 2
-texture = ExtResource("7_option_normal")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="OptionButton02" type="Button" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion" unique_id=1765630138]
 unique_name_in_owner = true
@@ -253,42 +300,44 @@ theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 
-[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1171711584]
+[node name="OptionHoverBackground02" type="ColorRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1858169924]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.427451, 0.294118, 0.14902, 0.12)
+
+[node name="OptionContent02" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1171711584]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
 offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="OptionText02" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02/OptionContent" unique_id=385082613]
+[node name="OptionText02" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02/OptionContent02" unique_id=385082613]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("6_option_font")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Opción 2"
 vertical_alignment = 1
-
-[node name="OptionIndicator02" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton02" unique_id=1405350724]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 3.0
-offset_top = 2.0
-offset_right = 55.0
-offset_bottom = 54.0
-mouse_filter = 2
-texture = ExtResource("7_option_normal")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="OptionButton03" type="Button" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion" unique_id=1676827549]
 unique_name_in_owner = true
@@ -301,45 +350,48 @@ theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 
-[node name="OptionContent" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=1776068385]
+[node name="OptionHoverBackground03" type="ColorRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=998909835]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.427451, 0.294118, 0.14902, 0.12)
+
+[node name="OptionContent03" type="HBoxContainer" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=1776068385]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
 offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="OptionText03" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03/OptionContent" unique_id=1155142545]
+[node name="OptionText03" type="Label" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03/OptionContent03" unique_id=1155142545]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.105882, 0.0745098, 0.0431373, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("6_option_font")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Opción 3"
 vertical_alignment = 1
 
-[node name="OptionIndicator03" type="TextureRect" parent="CardCenter/CardCanvas/MainLayout/DecisionsRegion/OptionButton03" unique_id=487293239]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 3.0
-offset_top = 2.0
-offset_right = 55.0
-offset_bottom = 54.0
-mouse_filter = 2
-texture = ExtResource("7_option_normal")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="CardBorder" type="TextureRect" parent="CardCenter/CardCanvas" unique_id=294561146]
 modulate = Color(0.69411767, 0.5372549, 0, 1)
+material = ExtResource("10_card_border_material")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -354,47 +406,4 @@ mouse_filter = 2
 texture = ExtResource("2_border")
 expand_mode = 1
 
-[node name="CardThreatBar" parent="." unique_id=1968213748 instance=ExtResource("7_lqdmo")]
-layout_mode = 1
-offset_left = 44.0
-offset_top = 381.0
-offset_right = -244.0
-offset_bottom = -347.0
-
-[node name="HBoxContainer" parent="CardThreatBar" index="0" unique_id=1376406867]
-offset_left = 5.0
-offset_top = -18.0
-offset_right = 255.0
-offset_bottom = 42.0
-
-[node name="AttentionAmount" parent="CardThreatBar" index="1" unique_id=37768601]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="SanityAmount" parent="CardThreatBar" index="2" unique_id=2061051547]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="StrengthAmount" parent="CardThreatBar" index="3" unique_id=197565233]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 30.0
-
-[node name="DamageIndicator" parent="CardThreatBar" index="4" unique_id=1176558200]
-offset_left = 547.0
-offset_top = -12.0
-offset_right = 613.0
-offset_bottom = 54.0
-
-[node name="DamageIcon" parent="CardThreatBar/DamageIndicator" index="0" unique_id=314111341]
-texture = ExtResource("8_40c4e")
-
-[node name="DamageText" parent="CardThreatBar/DamageIndicator" index="1" unique_id=2058455563]
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-
-[editable path="CardThreatBar"]
+[editable path="CardCenter/CardCanvas/MainLayout/ImageRegion/CardThreatBar"]
