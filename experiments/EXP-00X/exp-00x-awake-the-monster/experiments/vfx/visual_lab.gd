@@ -55,6 +55,10 @@ const EXPERIMENTS: Array[Dictionary] = [
 		"id": "exp_vfx_009_procedural_network",
 		"label": "EXP-VFX-009 - Procedural Network",
 	},
+	{
+		"id": "exp_vfx_012_analytical_dreamgraph",
+		"label": "EXP-VFX-012 - Analytical DreamGraph",
+	},
 ]
 
 const EXPERIMENT_SCENES := {
@@ -70,6 +74,7 @@ const EXPERIMENT_SCENES := {
 	"exp_vfx_007_atmospheric_profiles": "res://experiments/vfx/exp_vfx_007_atmospheric_profiles/experiment.tscn",
 	"exp_vfx_008_visual_hierarchy": "res://experiments/vfx/exp_vfx_008_visual_hierarchy/experiment.tscn",
 	"exp_vfx_009_procedural_network": "res://experiments/vfx/exp_vfx_009_procedural_network/experiment.tscn",
+	"exp_vfx_012_analytical_dreamgraph": "res://experiments/vfx/exp_vfx_012_analytical_dreamgraph/experiment.tscn",
 }
 
 @onready var experiment_selector: OptionButton = %ExperimentSelector

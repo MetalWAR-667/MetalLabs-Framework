@@ -52,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_main_menu_script")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2021221265]
@@ -213,6 +214,6 @@ text = "Greengoth font by Dimitri Antonov / Blue Curve Designstudio (CC BY 4.0)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuUIAudio" type="AudioStreamPlayer" parent="."]
+[node name="MenuUIAudio" type="AudioStreamPlayer" parent="." unique_id=1782401971]
 unique_name_in_owner = true
-bus = &"Master"
+volume_db = -4.0

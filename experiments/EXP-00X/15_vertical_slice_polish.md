@@ -104,9 +104,7 @@ partículas
 brillo
 aparición
 impacto
-
 3. Contenido
-4. 
 Cartas
 
 Actualmente:

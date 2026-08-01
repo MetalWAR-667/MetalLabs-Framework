@@ -1,0 +1,171 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://experiments/vfx/exp_vfx_012_analytical_dreamgraph/experiment.gd" id="1_script"]
+[ext_resource type="Shader" path="res://experiments/vfx/exp_vfx_012_analytical_dreamgraph/analytical_dreamgraph.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_graph"]
+shader = ExtResource("2_shader")
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.035, 0.055, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.27, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="AnalyticalDreamGraphExperiment" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="GraphRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.004, 0.006, 0.014, 1)
+material = SubResource("ShaderMaterial_graph")
+
+[node name="Controls" type="PanelContainer" parent="."]
+offset_left = 1520.0
+offset_top = 12.0
+offset_right = 1908.0
+offset_bottom = 1068.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Controls"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Margin"]
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="Controls/Margin/VBox"]
+text = "EXP-VFX-012 — Analytical DreamGraph"
+
+[node name="Actions" type="HBoxContainer" parent="Controls/Margin/VBox"]
+
+[node name="AddNodeButton" type="Button" parent="Controls/Margin/VBox/Actions"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "Add Node"
+
+[node name="ResetGraphButton" type="Button" parent="Controls/Margin/VBox/Actions"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "Reset Graph"
+
+[node name="GraphLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "ANALYTICAL GRAPH"
+
+[node name="NodeSizeLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Node Size"
+[node name="NodeSize" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = 0.001
+max_value = 0.025
+step = 0.0002
+value = 0.006
+
+[node name="NodeGlowLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Node Glow"
+[node name="NodeGlow" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+max_value = 0.01
+step = 0.0001
+value = 0.0018
+
+[node name="LineWidthLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Line Width"
+[node name="LineWidth" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = 0.0002
+max_value = 0.012
+step = 0.0001
+value = 0.0022
+
+[node name="LineGlowLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Line Glow"
+[node name="LineGlow" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+max_value = 0.004
+step = 0.00002
+value = 0.00034
+
+[node name="BreathAmountLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Breath Amount"
+[node name="BreathAmount" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+max_value = 0.8
+step = 0.01
+value = 0.24
+
+[node name="BreathSpeedLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Breath Speed"
+[node name="BreathSpeed" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = 0.02
+max_value = 1.0
+step = 0.01
+value = 0.16
+
+[node name="ExposureLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Exposure"
+[node name="Exposure" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = 0.1
+max_value = 3.0
+step = 0.02
+value = 1.15
+
+[node name="LensSeparator" type="HSeparator" parent="Controls/Margin/VBox"]
+[node name="LensLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "COSMIC LENS — FIVE LEVERS"
+
+[node name="EnableCosmicLens" type="CheckButton" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+button_pressed = true
+text = "Enable Cosmic Lens"
+
+[node name="LensRadiusLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Lens Radius"
+[node name="LensRadius" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = 0.15
+max_value = 0.7
+step = 0.01
+value = 0.46
+
+[node name="LensStrengthLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Lens Strength"
+[node name="LensStrength" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+value = 0.72
+
+[node name="LensEdgeLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Lens Edge"
+[node name="LensEdge" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+max_value = 1.0
+step = 0.01
+value = 0.42
+
+[node name="LensRefractionLabel" type="Label" parent="Controls/Margin/VBox"]
+text = "Lens Refraction"
+[node name="LensRefraction" type="HSlider" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+min_value = -0.8
+max_value = 0.8
+step = 0.01
+value = 0.28
+
+[node name="LocalMetrics" type="Label" parent="Controls/Margin/VBox"]
+unique_name_in_owner = true
+text = "Nodes: 18 / 32\nConnections: 32 / 64\nLens: On"

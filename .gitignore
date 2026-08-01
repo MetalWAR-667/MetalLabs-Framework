@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 experiments/EXP-00X/exp-00x-awake-the-monster/*.exe
 # EXP-00X — Vídeos pesados y fuentes conceptuales
-experiments/EXP-00X/exp-00x-awake-the-monster/Assets/video/concept_jack.mp4
-experiments/EXP-00X/exp-00x-awake-the-monster/Assets/videos/act1-epilogue.ogv
+experiments/EXP-00X/exp-00x-awake-the-monster/Assets/video/*.mp4
+experiments/EXP-00X/exp-00x-awake-the-monster/Assets/videos/*.ogv
