@@ -82,8 +82,10 @@ var options_available := false
 var requested_option_enabled: Array[bool] = [false, false, false]
 var options_fade_tween: Tween
 var illustration_tween: Tween
+var damage_feedback_tween: Tween
 var hover_tweens: Array[Tween] = [null, null, null]
 var border_shader_time := 0.0
+var interaction_locked := false
 
 
 func _ready() -> void:
@@ -159,6 +161,8 @@ func set_card(card_data: CardData) -> void:
 
 
 func set_options_enabled(enabled: bool) -> void:
+	if enabled:
+		interaction_locked = false
 	for index in range(option_buttons.size()):
 		if option_buttons[index].visible:
 			requested_option_enabled[index] = enabled
@@ -172,6 +176,28 @@ func set_option_enabled(option_index: int, enabled: bool) -> void:
 		return
 
 	requested_option_enabled[option_index] = enabled
+	_apply_requested_option_states()
+
+
+func reset_option_interaction_state() -> void:
+	# Touch interfaces can retain focus/hover after a button disables itself
+	# during its pressed signal. Clear every transient visual/input state before
+	# the committed option becomes available for another threat round.
+	for button in option_buttons:
+		button.set_pressed_no_signal(false)
+		button.release_focus()
+	get_viewport().gui_release_focus()
+	_reset_option_hover()
+
+
+func prepare_option_retry(option_index: int) -> void:
+	if option_index < 0 or option_index >= option_buttons.size():
+		return
+	reset_option_interaction_state()
+	options_available = true
+	for index in range(requested_option_enabled.size()):
+		requested_option_enabled[index] = index == option_index
+	interaction_locked = false
 	_apply_requested_option_states()
 
 
@@ -199,6 +225,35 @@ func show_threat(required_stat: CardOptionData.StatType, amount: int, damage: in
 	strength_amount.text = amount_text
 	damage_indicator.visible = damage > 0
 	damage_text.text = str(damage)
+
+
+func play_damage_feedback() -> void:
+	if not damage_indicator.visible:
+		return
+
+	if damage_feedback_tween != null and damage_feedback_tween.is_valid():
+		damage_feedback_tween.kill()
+
+	damage_indicator.pivot_offset = damage_indicator.size / 2.0
+	damage_indicator.scale = Vector2.ONE
+	damage_text.modulate = Color(1, 1, 1, 1)
+
+	damage_feedback_tween = create_tween()
+	damage_feedback_tween.set_parallel(true)
+	damage_feedback_tween.set_trans(Tween.TRANS_BACK)
+	damage_feedback_tween.set_ease(Tween.EASE_OUT)
+	damage_feedback_tween.tween_property(
+		damage_indicator, "scale", Vector2.ONE * 1.5, 0.12
+	)
+	damage_feedback_tween.tween_property(
+		damage_text, "modulate", Color(1.0, 0.25, 0.2, 1.0), 0.1
+	)
+	damage_feedback_tween.chain().tween_property(
+		damage_indicator, "scale", Vector2.ONE, 0.35
+	)
+	damage_feedback_tween.tween_property(
+		damage_text, "modulate", Color(1, 1, 1, 1), 0.35
+	)
 
 
 func hide_threat() -> void:
@@ -371,6 +426,7 @@ func _cancel_card_presentation() -> void:
 	reveal_generation += 1
 	text_revealing = false
 	options_available = false
+	interaction_locked = false
 	if options_fade_tween != null and options_fade_tween.is_valid():
 		options_fade_tween.kill()
 	if illustration_tween != null and illustration_tween.is_valid():
@@ -388,9 +444,32 @@ func _on_option_pressed(option_index: int) -> void:
 	if option_index < 0 or option_index >= option_buttons.size():
 		return
 
+	var diagnostic_button := option_buttons[option_index]
+	print(
+		"[RETRY-01] OPTION INPUT",
+		" index=", option_index,
+		" pressed=", diagnostic_button.button_pressed,
+		" disabled=", diagnostic_button.disabled,
+		" visible=", diagnostic_button.visible
+	)
+	print(
+		"[RETRY-02] CARDVIEW STATE",
+		" index=", option_index,
+		" interaction_locked=", interaction_locked,
+		" options_available=", options_available,
+		" requested_enabled=", requested_option_enabled[option_index]
+	)
+	if interaction_locked:
+		return
+
 	var selected_button := option_buttons[option_index]
 	if not selected_button.visible or selected_button.disabled or text_revealing:
 		return
 
-	set_options_enabled(false)
+	# Do not disable a BaseButton from inside its own pressed callback. Mobile
+	# browsers may then lose the touch release and retain the pressed capture.
+	# Logical locking blocks repeated input while allowing the touch lifecycle
+	# to finish normally.
+	interaction_locked = true
+	print("[RETRY-03] CARDVIEW EMIT", " index=", option_index)
 	option_selected.emit(option_index)

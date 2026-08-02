@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 MusicPlayer="*res://scripts/autoload/music_player.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
+OrientationGuard="*res://scenes/ui/orientation_guard.tscn"
 
 [display]
 
@@ -27,6 +28,7 @@ window/size/viewport_height=1080
 window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/handheld/orientation=4
 
 [physics]
 
@@ -35,3 +37,4 @@ window/stretch/aspect="expand"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true

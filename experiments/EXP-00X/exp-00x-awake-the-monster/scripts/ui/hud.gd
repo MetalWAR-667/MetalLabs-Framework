@@ -7,6 +7,8 @@ const GAME_OVER_PATH := "res://scenes/ui/menu/game_over.tscn"
 const COMPANION_REVEAL_DURATION := 0.45
 const COMPANION_REVEAL_SCALE := 0.96
 const COMPANION_REVEAL_OFFSET := Vector2(0.0, 12.0)
+const ACTOR_LAYOUT_REFERENCE_SIZE := Vector2(1920.0, 1080.0)
+const ACTOR_LAYOUT_RIGHT_SAFE_INSET := 48.0
 
 @export var player_data: ActorData
 @export var companion_data: ActorData
@@ -36,6 +38,7 @@ var sacrificed_initial_item := false
 var remaining_threat := 0
 var threat_resolution_active := false
 var selected_option: CardOptionData
+var selected_option_index := -1
 var current_ally: ActorData
 var ally_current_health := 0
 var ally_participates := false
@@ -49,10 +52,25 @@ var companion_final_mouse_filter := Control.MOUSE_FILTER_STOP
 var companion_is_presented := false
 var companion_reveal_tween: Tween
 var is_game_over := false
+var actor_layout_reference: Dictionary = {}
 
 
 func _ready() -> void:
+	print(
+		"[RETRY-00] INPUT CONFIG",
+		" emulate_mouse_from_touch=",
+		ProjectSettings.get_setting(
+			"input_devices/pointing/emulate_mouse_from_touch"
+		),
+		" emulate_touch_from_mouse=",
+		ProjectSettings.get_setting(
+			"input_devices/pointing/emulate_touch_from_mouse"
+		)
+	)
 	card_view.option_selected.connect(_on_card_option_selected)
+	_capture_actor_layout_reference()
+	resized.connect(_on_hud_resized)
+	_apply_responsive_actor_layout()
 	current_ally = null
 	ally_current_health = 0
 	ally_participates = false
@@ -75,10 +93,132 @@ func _ready() -> void:
 		_load_card(initial_card)
 	else:
 		_restore_saved_state(pending_save_state)
-		pending_save_state = {}
+	pending_save_state = {}
+
+
+func _capture_actor_layout_reference() -> void:
+	# Actor cards keep their authored 1920x1080 composition. Only the complete
+	# actor assemblies are positioned and scaled responsively by the HUD.
+	actor_layout_reference = {
+		"player_panel_position": player_actor_panel.position,
+		"player_panel_scale": player_actor_panel.scale,
+		"companion_panel_position": companion_actor_panel.position,
+		"companion_panel_scale": companion_actor_panel.scale,
+		"equipment_position": equipment_slot.position,
+		"equipment_scale": equipment_slot.scale,
+		"player_dice_position": player_dice.position,
+		"player_dice_scale": player_dice.scale,
+		"companion_dice_position": companion_dice.position,
+		"companion_dice_scale": companion_dice.scale,
+	}
+
+
+func _on_hud_resized() -> void:
+	_apply_responsive_actor_layout()
+
+
+func _apply_responsive_actor_layout() -> void:
+	if actor_layout_reference.is_empty():
+		return
+
+	var viewport_size := size
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return
+
+	var layout_scale := minf(
+		viewport_size.x / ACTOR_LAYOUT_REFERENCE_SIZE.x,
+		viewport_size.y / ACTOR_LAYOUT_REFERENCE_SIZE.y
+	)
+	var vertical_offset := (
+		viewport_size.y - ACTOR_LAYOUT_REFERENCE_SIZE.y * layout_scale
+	) * 0.5
+
+	player_actor_panel.position = _responsive_actor_position(
+		actor_layout_reference["player_panel_position"],
+		viewport_size,
+		layout_scale,
+		vertical_offset
+	)
+	player_actor_panel.scale = (
+		actor_layout_reference["player_panel_scale"] * layout_scale
+	)
+	equipment_slot.position = _responsive_actor_position(
+		actor_layout_reference["equipment_position"],
+		viewport_size,
+		layout_scale,
+		vertical_offset
+	)
+	equipment_slot.scale = actor_layout_reference["equipment_scale"] * layout_scale
+	var responsive_player_dice_position := _responsive_actor_position(
+		actor_layout_reference["player_dice_position"],
+		viewport_size,
+		layout_scale,
+		vertical_offset
+	)
+	var responsive_player_dice_scale: Vector2 = (
+		actor_layout_reference["player_dice_scale"] * layout_scale
+	)
+	player_dice.set_layout_transform(
+		responsive_player_dice_position,
+		responsive_player_dice_scale
+	)
+
+	companion_final_position = _responsive_actor_position(
+		actor_layout_reference["companion_panel_position"],
+		viewport_size,
+		layout_scale,
+		vertical_offset
+	)
+	companion_final_scale = (
+		actor_layout_reference["companion_panel_scale"] * layout_scale
+	)
+	var responsive_companion_dice_position := _responsive_actor_position(
+		actor_layout_reference["companion_dice_position"],
+		viewport_size,
+		layout_scale,
+		vertical_offset
+	)
+	var responsive_companion_dice_scale: Vector2 = (
+		actor_layout_reference["companion_dice_scale"] * layout_scale
+	)
+	companion_dice.set_layout_transform(
+		responsive_companion_dice_position,
+		responsive_companion_dice_scale
+	)
+
+	if companion_reveal_tween != null and companion_reveal_tween.is_valid():
+		companion_reveal_tween.kill()
+		companion_reveal_tween = null
+	companion_actor_panel.position = companion_final_position
+	companion_actor_panel.scale = companion_final_scale
+	companion_actor_panel.modulate.a = 1.0
+
+
+func _responsive_actor_position(
+		reference_position: Vector2,
+		viewport_size: Vector2,
+		layout_scale: float,
+		vertical_offset: float
+) -> Vector2:
+	var reference_right_margin := (
+		ACTOR_LAYOUT_REFERENCE_SIZE.x - reference_position.x
+	)
+	return Vector2(
+		viewport_size.x
+		- (reference_right_margin + ACTOR_LAYOUT_RIGHT_SAFE_INSET)
+		* layout_scale,
+		vertical_offset + reference_position.y * layout_scale
+	)
 
 
 func _on_card_option_selected(option_index: int) -> void:
+	print(
+		"[RETRY-04] HUD RECEIVED",
+		" index=", option_index,
+		" is_resolving_test=", is_resolving_test,
+		" remaining_threat=", remaining_threat,
+		" selected_option_index=", selected_option_index
+	)
 	if is_game_over:
 		return
 
@@ -103,11 +243,13 @@ func _on_card_option_selected(option_index: int) -> void:
 		_load_card(second_card)
 	elif current_card == second_card and not is_resolving_test:
 		selected_option = requested_option
+		selected_option_index = option_index
 		await _resolve_current_threat_round(third_card)
 	elif current_card == third_card and not is_resolving_test:
 		await _resolve_third_card_option(option_index, requested_option)
 	elif current_card == fourth_card and not is_resolving_test:
 		selected_option = requested_option
+		selected_option_index = option_index
 		await _resolve_current_threat_round(fifth_card)
 	elif current_card == fifth_card:
 		_resolve_fifth_card_option(option_index)
@@ -130,6 +272,7 @@ func _resolve_third_card_option(option_index: int, selected_option: CardOptionDa
 			_load_card(second_card)
 		2:
 			self.selected_option = selected_option
+			selected_option_index = option_index
 			await _resolve_current_threat_round(fourth_card)
 
 
@@ -162,6 +305,7 @@ func _resolve_sixth_card_participant_selection(option_index: int) -> void:
 			ally_participates = option_index == 1
 
 		selected_option = current_card.options[0]
+		selected_option_index = 0
 		remaining_threat = 2 if ally_participates else selected_option.required_successes
 		threat_resolution_active = true
 		print_debug("Card 06 participants — protagonist: true, ally: %s" % ally_participates)
@@ -276,9 +420,8 @@ func _resolve_ally_rest() -> void:
 
 
 func _prepare_next_sixth_card_round() -> void:
-	card_view.set_options_enabled(false)
 	var committed_option_index := 1 if ally_participates else 0
-	card_view.set_option_enabled(committed_option_index, true)
+	card_view.prepare_option_retry(committed_option_index)
 
 
 func _resolve_current_threat_round(completion_card: CardData) -> void:
@@ -292,6 +435,7 @@ func _resolve_current_threat_round(completion_card: CardData) -> void:
 	var success_bonus := _consume_equipped_success_bonus(
 		selected_option.required_stat
 	)
+	print("[RETRY-05] HUD START ROLL", " index=", selected_option_index)
 	var result := await player_dice.roll(
 		player_data.dice_faces,
 		success_bonus
@@ -303,6 +447,10 @@ func _resolve_current_threat_round(completion_card: CardData) -> void:
 	var round_successes := success_bonus
 	if rolled_symbol_succeeded:
 		round_successes += 1
+	if round_successes > 0:
+		background_fx.start_success_feedback()
+	else:
+		background_fx.start_failure_feedback()
 	await player_dice.play_resolution_feedback(round_successes > 0)
 
 	if round_successes > 0:
@@ -312,21 +460,28 @@ func _resolve_current_threat_round(completion_card: CardData) -> void:
 
 	if remaining_threat <= 0:
 		print_debug("Threat neutralized")
-		background_fx.play_success_feedback()
-		_load_card(completion_card)
 		is_resolving_test = false
+		_load_card(completion_card)
 		return
 
 	print_debug("Remaining threat: %d" % remaining_threat)
 	if await _apply_player_damage(selected_option.damage):
 		return
-	_prepare_next_threat_round()
-	_autosave()
-	if round_successes > 0:
-		background_fx.play_success_feedback()
-	else:
-		background_fx.play_failure_feedback()
+	print(
+		"[RETRY-06] FAILURE RESOLVED",
+		" is_resolving_test=", is_resolving_test,
+		" remaining_threat=", remaining_threat
+	)
 	is_resolving_test = false
+	_prepare_next_threat_round()
+	print(
+		"[RETRY-07] RETRY READY",
+		" interaction_locked=", card_view.interaction_locked,
+		" options_available=", card_view.options_available,
+		" is_resolving_test=", is_resolving_test,
+		" selected_option_index=", selected_option_index
+	)
+	_autosave()
 
 
 func _rolled_stat_matches(result: String, required_stat: CardOptionData.StatType) -> bool:
@@ -365,6 +520,7 @@ func _consume_equipped_success_bonus(
 
 
 func _apply_player_damage(damage: int) -> bool:
+	card_view.play_damage_feedback()
 	current_player_health -= damage
 	player_actor_panel.set_health(current_player_health)
 
@@ -403,10 +559,7 @@ func _start_game_over_sequence() -> void:
 
 
 func _prepare_next_threat_round() -> void:
-	card_view.set_options_enabled(false)
-	var selected_index := current_card.options.find(selected_option)
-	if selected_index >= 0:
-		card_view.set_option_enabled(selected_index, true)
+	card_view.prepare_option_retry(selected_option_index)
 
 
 func _load_card(card: CardData, save_after_load := true) -> void:
@@ -415,6 +568,7 @@ func _load_card(card: CardData, save_after_load := true) -> void:
 	threat_resolution_active = false
 	equipped_bonus_applied = false
 	selected_option = null
+	selected_option_index = -1
 	card_view.set_card(card)
 	background_fx.set_card(card.resource_path, save_after_load)
 	_configure_current_card_options()
@@ -447,10 +601,6 @@ func _load_card(card: CardData, save_after_load := true) -> void:
 func _autosave() -> void:
 	if current_card == null:
 		return
-
-	var selected_option_index := -1
-	if selected_option != null:
-		selected_option_index = current_card.options.find(selected_option)
 
 	SaveManager.save_game({
 		"card_path": current_card.resource_path,
@@ -524,6 +674,7 @@ func _restore_saved_state(state: Dictionary) -> void:
 			equipped_bonus_applied = false
 		else:
 			selected_option = current_card.options[option_index]
+			selected_option_index = option_index
 			card_view.show_threat(
 				selected_option.required_stat,
 				remaining_threat,

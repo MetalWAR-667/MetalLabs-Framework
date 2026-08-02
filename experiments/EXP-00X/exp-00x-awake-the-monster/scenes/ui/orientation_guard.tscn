@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/orientation_guard.gd" id="1_script"]
+
+[node name="OrientationGuard" type="CanvasLayer"]
+layer = 1000
+script = ExtResource("1_script")
+
+[node name="PortraitBlocker" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Background" type="ColorRect" parent="PortraitBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.008, 0.01, 0.018, 1)
+
+[node name="Margin" type="MarginContainer" parent="PortraitBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="PortraitBlocker/Margin"]
+layout_mode = 2
+
+[node name="Message" type="Label" parent="PortraitBlocker/Margin/Center"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.84, 0.9, 1)
+theme_override_font_sizes/font_size = 28
+text = "Gira el dispositivo\n\nAwake the Monster requiere orientación horizontal."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

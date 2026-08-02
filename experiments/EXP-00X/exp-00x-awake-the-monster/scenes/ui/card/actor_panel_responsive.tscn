@@ -11,15 +11,9 @@
 [ext_resource type="Material" path="res://shaders/actor_panel_border_material.tres" id="9_border_material"]
 
 [node name="ActorPanel" type="Control" unique_id=117018907]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 2.0
-offset_right = -1579.0
-offset_bottom = -586.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_right = 339.0
+offset_bottom = 494.0
 script = ExtResource("7_actor_panel_script")
 
 [node name="ActorIllustration" parent="." unique_id=1238908066 instance=ExtResource("1_xi2hd")]

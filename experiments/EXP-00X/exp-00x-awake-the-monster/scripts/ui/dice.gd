@@ -62,6 +62,17 @@ func _ready() -> void:
 	hide()
 
 
+func set_layout_transform(target_position: Vector2, target_scale: Vector2) -> void:
+	# The HUD owns responsive placement. Keep the presentation baseline in sync
+	# so entrance, feedback, shake and restoration return to the responsive
+	# transform instead of the 1920x1080 authored transform captured in _ready().
+	presentation_position = target_position
+	presentation_scale = target_scale
+	if not is_rolling:
+		position = presentation_position
+		scale = presentation_scale
+
+
 func roll(faces: Array[String], success_bonus: int = 0) -> String:
 	if is_rolling:
 		return ""

@@ -66,10 +66,16 @@ mouse_filter = 2
 color = Color(0.0352941, 0.0313726, 0.0431373, 1)
 
 [node name="BackgroundImage" type="TextureRect" parent="Background" unique_id=916250006]
-layout_mode = 0
-offset_right = 1922.0
-offset_bottom = 1079.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2_5ssjm")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="MistVortex" type="ColorRect" parent="Background" unique_id=555000333]
 unique_name_in_owner = true

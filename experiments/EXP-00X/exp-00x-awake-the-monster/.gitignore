@@ -2,7 +2,9 @@
 .godot/
 /android/
 /*.exe
+/*.zip
+/*.pck
 experiments/EXP-00X/exp-00x-awake-the-monster/Godot_v4.7.1-stable_win64.exe
 experiments/EXP-00X/exp-00x-awake-the-monster/Godot_v4.7.1-stable_win64_console.exe
-/Assets/video/*.mp4
-/Assets/videos/*.ogv
+WEB5 BUILD/game/index.pck
+WEB5 BUILD/game.zip

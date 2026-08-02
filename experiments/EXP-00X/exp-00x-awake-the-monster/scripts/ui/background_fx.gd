@@ -106,6 +106,11 @@ func fade_to_memory() -> void:
 
 
 func play_success_feedback() -> void:
+	var tween := start_success_feedback()
+	await tween.finished
+
+
+func start_success_feedback() -> Tween:
 	_stop_feedback()
 	var duration := success_feedback_duration
 	feedback_tween = create_tween()
@@ -136,10 +141,15 @@ func play_success_feedback() -> void:
 		duration * 0.40
 	)
 	feedback_tween.tween_callback(_reset_feedback)
-	await feedback_tween.finished
+	return feedback_tween
 
 
 func play_failure_feedback() -> void:
+	var tween := start_failure_feedback()
+	await tween.finished
+
+
+func start_failure_feedback() -> Tween:
 	_stop_feedback()
 	var duration := failure_feedback_duration
 	feedback_tween = create_tween()
@@ -170,7 +180,7 @@ func play_failure_feedback() -> void:
 		duration * 0.35
 	)
 	feedback_tween.tween_callback(_reset_feedback)
-	await feedback_tween.finished
+	return feedback_tween
 
 
 func _set_success_feedback(intensity: float) -> void:
