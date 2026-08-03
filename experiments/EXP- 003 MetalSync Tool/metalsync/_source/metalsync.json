@@ -1,0 +1,34 @@
+{
+    "source": "C:/Lof-GIT",
+    "destination": "G:/Mi unidad/Lof-GIT",
+    "exclude_directories": [
+        ".godot",
+        ".git",
+        ".import",
+        "__pycache__",
+        "build",
+        "builds",
+        "export",
+        "exports"
+    ],
+    "exclude_extensions": [
+        ".import",
+        ".tmp",
+        ".temp",
+        ".bak",
+        ".swp",
+        ".swo",
+        ".pyc",
+        ".pyo"
+    ],
+    "exclude_files": [
+        ".DS_Store",
+        "Thumbs.db",
+        "desktop.ini"
+    ],
+    "exclude_globs": [
+        "*~",
+        "*.autosave",
+        "*.old"
+    ]
+}
